@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #f7f6f2;
+    --surface: #fff;
+    --surface2: #f3f0ec;
+    --text: #28251d;
+    --muted: #7a7974;
+    --border: #d4d1ca;
+    --primary: #01696f;
+    --primary2: #0c4e54;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  [data-theme='dark'] {
+    --bg: #171614;
+    --surface: #1c1b19;
+    --surface2: #22211f;
+    --text: #e7e4df;
+    --muted: #a09d96;
+    --border: #393836;
+    --primary: #4f98a3;
+    --primary2: #77b4bd;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Satoshi', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  button, input {
+    font: inherit;
+  }
+}
+
+@layer utilities {
+  .bracket-grid {
+    display: grid;
+    /* R1(128) | Semis+Final(192) | Cup(128) | Semis+Final(192) | R1(128) */
+    /* Semis+Final is 192px so semis sit at left=0 and finals at left=64 (midpoint) */
+    grid-template-columns: 128px 192px 128px 192px 128px;
+    column-gap: 23px;
+    row-gap: 0;
+    align-items: start;
+    min-width: 860px; /* 128+192+128+192+128 + 4×23 */
+  }
+}
