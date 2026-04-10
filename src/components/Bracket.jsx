@@ -99,8 +99,8 @@ export default function Bracket({ picks, onPick, mode, seriesLengths, onSeriesLe
           <BracketColumn matches={westR1}            picks={picks} onPick={onPick} tops={R1_TOPS}             colHeight={COL_H} mode={mode} seriesLengths={seriesLengths} onSeriesLength={onSeriesLength} />
           {/* Col 2: West Semis + Conference Final */}
           <BracketColumn matches={westSemisAndFinal} picks={picks} onPick={onPick} tops={SEMIS_AND_FINAL_TOPS} lefts={WEST_SEMIS_LEFTS} colHeight={COL_H} mode={mode} seriesLengths={seriesLengths} onSeriesLength={onSeriesLength} />
-          {/* Col 3: Stanley Cup */}
-          <BracketColumn matches={[cup]}             picks={picks} onPick={onPick} tops={CUP_TOPS}            colHeight={COL_H} mode={mode} seriesLengths={seriesLengths} onSeriesLength={onSeriesLength} />
+          {/* Col 3: Stanley Cup — 176px column, card centered with 24px left offset */}
+          <BracketColumn matches={[cup]}             picks={picks} onPick={onPick} tops={CUP_TOPS} lefts={[24]} colHeight={COL_H} mode={mode} seriesLengths={seriesLengths} onSeriesLength={onSeriesLength} />
           {/* Col 4: East Semis + Conference Final */}
           <BracketColumn matches={eastSemisAndFinal} picks={picks} onPick={onPick} tops={SEMIS_AND_FINAL_TOPS} lefts={EAST_SEMIS_LEFTS} colHeight={COL_H} mode={mode} seriesLengths={seriesLengths} onSeriesLength={onSeriesLength} />
           {/* Col 5: East R1 */}

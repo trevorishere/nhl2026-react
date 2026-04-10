@@ -48,10 +48,10 @@
     display: grid;
     /* R1(128) | Semis+Final(192) | Cup(128) | Semis+Final(192) | R1(128) */
     /* Semis+Final is 192px so semis sit at left=0 and finals at left=64 (midpoint) */
-    grid-template-columns: 128px 192px 128px 192px 128px;
-    column-gap: 23px;
+    grid-template-columns: 128px 192px 176px 192px 128px;
+    column-gap: 40px;
     row-gap: 0;
     align-items: start;
-    min-width: 860px; /* 128+192+128+192+128 + 4×23 */
+    min-width: 976px; /* 128+192+176+192+128 + 4×40 */
   }
 }
