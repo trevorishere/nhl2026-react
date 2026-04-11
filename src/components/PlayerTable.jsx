@@ -100,7 +100,7 @@ function SortableRow({ player, globalRank, editMode }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function PlayerTable({ picks, mode, seriesLengths }) {
+export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect, selectedPlayer }) {
   const [sortConfig, setSortConfig]       = useState({ key: 'dynamicPoints', direction: 'desc' });
   const [hoveredHeader, setHoveredHeader] = useState(null);
 
@@ -417,8 +417,14 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
             </DndContext>
           ) : (
             <tbody>
-              {displayRows.map((p, i) => (
-                <tr key={i} className="hover:bg-surface2 transition-colors">
+              {displayRows.map((p, i) => {
+                const isSelected = selectedPlayer && p.name === selectedPlayer.name && p.team === selectedPlayer.team;
+                return (
+                <tr
+                  key={i}
+                  onClick={() => onPlayerSelect?.(isSelected ? null : p)}
+                  className={`transition-colors cursor-pointer ${isSelected ? 'bg-surface2' : 'hover:bg-surface2'}`}
+                >
                   <td className="px-2 py-2.5 border-b border-border text-muted">{i + 1}</td>
                   <td className="px-2 py-2.5 border-b border-border font-medium">{p.name}</td>
                   <td className="px-2 py-2.5 border-b border-border text-muted">{p.team}</td>
@@ -429,7 +435,8 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
                   <td className="px-2 py-2.5 border-b border-border text-right">{p.SeasonPPG.toFixed(2)}</td>
                   <td className="px-2 py-2.5 border-b border-border text-muted text-right">{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           )}
         </table>
