@@ -64,8 +64,8 @@ export default function App() {
 
       {/* Main grid */}
       <div className="flex flex-col gap-5">
-        {/* Bracket card */}
-        <section className="bg-surface border border-border rounded-card shadow-card p-4">
+        {/* Bracket — no card wrapper, sits on bare background */}
+        <section className="px-2 pt-2">
           {/* Normal / Advanced toggle */}
           <div className="flex gap-2 mb-4">
             <button
