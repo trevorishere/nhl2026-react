@@ -1,26 +1,14 @@
 import { useState, useEffect } from 'react';
 import Bracket from './components/Bracket';
 import PlayerTable from './components/PlayerTable';
+import PlayerDetailPanel from './components/PlayerDetailPanel';
 import { CHALK_PICKS, PICK_DEPS } from './data/constants';
 
-function getInitialTheme() {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
 export default function App() {
-  const [theme, setTheme] = useState(getInitialTheme);
   const [picks, setPicks] = useState({});
   const [mode, setMode] = useState('normal');
   const [seriesLengths, setSeriesLengths] = useState({});
-
-  // Apply theme to <html>
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  function toggleTheme() {
-    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
-  }
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   function makePick(matchId, team) {
     setPicks((prev) => {
@@ -65,9 +53,6 @@ export default function App() {
           </p>
         </div>
         <div className="flex gap-3 flex-wrap items-center">
-          <button className={btnBase} onClick={toggleTheme} aria-label="Toggle theme">
-            Theme
-          </button>
           <button className={btnBase} onClick={resetBracket}>
             Reset bracket
           </button>
@@ -79,8 +64,8 @@ export default function App() {
 
       {/* Main grid */}
       <div className="flex flex-col gap-5">
-        {/* Bracket card */}
-        <section className="bg-surface border border-border rounded-card shadow-card p-4">
+        {/* Bracket — no card wrapper, sits on bare background */}
+        <section className="px-2 pt-2">
           {/* Normal / Advanced toggle */}
           <div className="flex gap-2 mb-4">
             <button
@@ -116,7 +101,27 @@ export default function App() {
         {/* Player rankings card */}
         <section className="bg-surface border border-border rounded-card shadow-card p-4">
           <h2 className="text-[18px] font-bold m-0 mb-3 text-app-text">Player rankings</h2>
-          <PlayerTable picks={picks} mode={mode} seriesLengths={seriesLengths} />
+          <div className="flex gap-6 items-start">
+            {/* Table — shrinks when panel is open */}
+            <div className={selectedPlayer ? 'flex-1 min-w-0' : 'w-full'}>
+              <PlayerTable
+                picks={picks}
+                mode={mode}
+                seriesLengths={seriesLengths}
+                onPlayerSelect={setSelectedPlayer}
+                selectedPlayer={selectedPlayer}
+              />
+            </div>
+            {/* Detail panel — 320px, appears inline */}
+            {selectedPlayer && (
+              <div className="w-80 flex-shrink-0 sticky top-4">
+                <PlayerDetailPanel
+                  player={selectedPlayer}
+                  onClose={() => setSelectedPlayer(null)}
+                />
+              </div>
+            )}
+          </div>
         </section>
       </div>
     </div>

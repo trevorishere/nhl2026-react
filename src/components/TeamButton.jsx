@@ -1,6 +1,27 @@
-import { Check } from 'lucide-react';
 import { SEEDS, TEAM_STYLES } from '../data/constants';
 import { LOGOS } from '../data/logos';
+
+// Per-team logo position extracted from Figma design.
+// Each team's logo has its own natural proportions and is anchored to the
+// right side of the 156×58px card, intentionally bleeding above the top edge.
+const LOGO_POS = {
+  ANA: { left: 40, top: -22, width: 153, height: 99 },
+  BOS: { left: 48, top: -19, width: 144, height: 96 },
+  BUF: { left: 50, top: -20, width: 145, height: 95 },
+  CAR: { left: 59, top: -24, width: 136, height: 91 },
+  COL: { left: 52, top: -28, width: 140, height: 93 },
+  DAL: { left: 45, top: -24, width: 156, height: 103 },
+  EDM: { left: 35, top: -23, width: 159, height: 105 },
+  LAK: { left: 50, top: -17, width: 138, height: 92 },
+  MIN: { left: 39, top: -22, width: 147, height: 98 },
+  MTL: { left: 55, top: -18, width: 135, height: 88 },
+  OTT: { left: 48, top: -14, width: 132, height: 87 },
+  PHI: { left: 59, top: -12, width: 131, height: 87 },
+  PIT: { left: 54, top: -12, width: 130, height: 86 },
+  TBL: { left: 56, top: -22, width: 129, height: 85 },
+  UTA: { left: 54, top: -16, width: 132, height: 87 },
+  VGK: { left: 37, top: -27, width: 150, height: 99 },
+};
 
 function teamBackground(team) {
   const s = TEAM_STYLES[team];
@@ -9,48 +30,52 @@ function teamBackground(team) {
   return `linear-gradient(rgba(0,0,0,${s.overlay}),rgba(0,0,0,${s.overlay})),linear-gradient(${s.bg},${s.bg})`;
 }
 
-export default function TeamButton({ team, matchId, isFirst, picks, onPick }) {
+export default function TeamButton({ team, matchId, picks, onPick }) {
   // Blank / TBD slot
   if (!team) {
     return (
       <div
-        className="h-[58px] w-[128px] shrink-0 relative"
+        className="h-[58px] w-[156px] shrink-0 relative"
         style={{ background: 'rgba(255,255,255,0.05)' }}
       />
     );
   }
 
-  const picked  = picks[matchId] || null;
-  const isWinner     = picked === team;
+  const picked       = picks[matchId] || null;
   const isEliminated = !!(picked && picked !== team);
 
-  const background = isEliminated
-    ? 'rgba(255,255,255,0.05)'
-    : teamBackground(team);
-
-  const logoUri = LOGOS[team] || '';
+  const background = isEliminated ? 'rgba(255,255,255,0.05)' : teamBackground(team);
+  const logoUri    = LOGOS[team] || '';
+  const logoPos    = LOGO_POS[team] ?? { left: 50, top: -20, width: 140, height: 93 };
 
   return (
     <button
       type="button"
       onClick={(e) => { e.stopPropagation(); onPick(matchId, team); }}
-      className="h-[58px] w-[128px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
+      className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
       style={{ background }}
     >
-      {/* Logo — bleeds in from left edge */}
+      {/* Logo — per-team position from Figma, bleeds above and right */}
       {logoUri && (
         <img
           src={logoUri}
           alt={team}
-          className={`absolute block pointer-events-none ${isEliminated ? 'opacity-25' : ''}`}
-          style={{ left: -23, top: 1, width: 84, height: 56, objectFit: 'contain', ...(isEliminated && { filter: 'grayscale(1)' }) }}
+          className="absolute block pointer-events-none"
+          style={{
+            left: logoPos.left,
+            top: logoPos.top,
+            width: logoPos.width,
+            height: logoPos.height,
+            objectFit: 'contain',
+            ...(isEliminated && { opacity: 0.2, filter: 'grayscale(1)' }),
+          }}
         />
       )}
 
-      {/* Abbr + Seed text */}
+      {/* Team abbr + seed — left-aligned */}
       <div
-        className={`absolute inset-y-0 flex flex-col justify-center gap-[2px] whitespace-nowrap ${isEliminated ? 'opacity-25' : ''}`}
-        style={{ left: 56 }}
+        className={`absolute inset-y-0 flex flex-col justify-center gap-[2px] whitespace-nowrap ${isEliminated ? 'opacity-30' : ''}`}
+        style={{ left: 16 }}
       >
         <span
           className="text-white text-[16px] font-bold leading-normal"
@@ -65,22 +90,6 @@ export default function TeamButton({ team, matchId, isFirst, picks, onPick }) {
           {SEEDS[team] || ''}
         </span>
       </div>
-
-      {/* Checkmark for winner */}
-      {isWinner && (
-        <div
-          className="absolute flex items-center justify-center"
-          style={{ left: 98, top: 9, width: 18, height: 18 }}
-        >
-          <Check
-            size={16}
-            strokeWidth={3}
-            strokeLinecap="square"
-            strokeLinejoin="miter"
-            color="white"
-          />
-        </div>
-      )}
     </button>
   );
 }

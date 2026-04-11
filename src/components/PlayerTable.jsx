@@ -100,7 +100,7 @@ function SortableRow({ player, globalRank, editMode }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function PlayerTable({ picks, mode, seriesLengths }) {
+export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect, selectedPlayer }) {
   const [sortConfig, setSortConfig]       = useState({ key: 'dynamicPoints', direction: 'desc' });
   const [hoveredHeader, setHoveredHeader] = useState(null);
 
@@ -336,16 +336,7 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
         </div>
       )}
 
-      {/* ── Formula note ─────────────────────────────────────────────────── */}
-      <p className="text-[13px] text-muted">
-        Formula: Projected Points = Season PPG × Playoff Factor × Expected Games.
-        Playoff factor: superstar (≥0.95 PPG) = 97.5%, top-6 (0.56–0.94) = 90%, depth (≤0.55) = 82.5%.
-        Unpicked series use chalk projections.
-        {mode === 'normal'
-          ? ' Normal mode assumes 6 games per series.'
-          : ' Advanced mode uses your per-series game picks (default 6).'}
-      </p>
-      <div className="h-3" />
+      <div className="h-1" />
 
       {/* ── Table ─────────────────────────────────────────────────────────── */}
       <div className="max-h-[50vh] overflow-auto border border-border rounded-xl max-w-4xl mx-auto">
@@ -417,8 +408,14 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
             </DndContext>
           ) : (
             <tbody>
-              {displayRows.map((p, i) => (
-                <tr key={i} className="hover:bg-surface2 transition-colors">
+              {displayRows.map((p, i) => {
+                const isSelected = selectedPlayer && p.name === selectedPlayer.name && p.team === selectedPlayer.team;
+                return (
+                <tr
+                  key={i}
+                  onClick={() => onPlayerSelect?.(isSelected ? null : p)}
+                  className={`transition-colors cursor-pointer ${isSelected ? 'bg-surface2' : 'hover:bg-surface2'}`}
+                >
                   <td className="px-2 py-2.5 border-b border-border text-muted">{i + 1}</td>
                   <td className="px-2 py-2.5 border-b border-border font-medium">{p.name}</td>
                   <td className="px-2 py-2.5 border-b border-border text-muted">{p.team}</td>
@@ -429,7 +426,8 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
                   <td className="px-2 py-2.5 border-b border-border text-right">{p.SeasonPPG.toFixed(2)}</td>
                   <td className="px-2 py-2.5 border-b border-border text-muted text-right">{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           )}
         </table>
