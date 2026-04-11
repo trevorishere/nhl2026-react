@@ -4,25 +4,11 @@ import PlayerTable from './components/PlayerTable';
 import PlayerDetailPanel from './components/PlayerDetailPanel';
 import { CHALK_PICKS, PICK_DEPS } from './data/constants';
 
-function getInitialTheme() {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
 export default function App() {
-  const [theme, setTheme] = useState(getInitialTheme);
   const [picks, setPicks] = useState({});
   const [mode, setMode] = useState('normal');
   const [seriesLengths, setSeriesLengths] = useState({});
   const [selectedPlayer, setSelectedPlayer] = useState(null);
-
-  // Apply theme to <html>
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  function toggleTheme() {
-    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
-  }
 
   function makePick(matchId, team) {
     setPicks((prev) => {
@@ -67,9 +53,6 @@ export default function App() {
           </p>
         </div>
         <div className="flex gap-3 flex-wrap items-center">
-          <button className={btnBase} onClick={toggleTheme} aria-label="Toggle theme">
-            Theme
-          </button>
           <button className={btnBase} onClick={resetBracket}>
             Reset bracket
           </button>

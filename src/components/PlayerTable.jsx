@@ -336,16 +336,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
         </div>
       )}
 
-      {/* ── Formula note ─────────────────────────────────────────────────── */}
-      <p className="text-[13px] text-muted">
-        Formula: Projected Points = Season PPG × Playoff Factor × Expected Games.
-        Playoff factor: superstar (≥0.95 PPG) = 97.5%, top-6 (0.56–0.94) = 90%, depth (≤0.55) = 82.5%.
-        Unpicked series use chalk projections.
-        {mode === 'normal'
-          ? ' Normal mode assumes 6 games per series.'
-          : ' Advanced mode uses your per-series game picks (default 6).'}
-      </p>
-      <div className="h-3" />
+      <div className="h-1" />
 
       {/* ── Table ─────────────────────────────────────────────────────────── */}
       <div className="max-h-[50vh] overflow-auto border border-border rounded-xl max-w-4xl mx-auto">

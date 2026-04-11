@@ -4,18 +4,6 @@
 
 @layer base {
   :root {
-    --bg: #f7f6f2;
-    --surface: #fff;
-    --surface2: #f3f0ec;
-    --text: #28251d;
-    --muted: #7a7974;
-    --border: #d4d1ca;
-    --primary: #01696f;
-    --primary2: #0c4e54;
-    --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  }
-
-  [data-theme='dark'] {
     --bg: #171614;
     --surface: #1c1b19;
     --surface2: #22211f;
