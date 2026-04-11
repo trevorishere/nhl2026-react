@@ -21,6 +21,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
           {match.label}
         </p>
       )}
+
       {/* Two team cards with 2px gap */}
       <div className="flex flex-col gap-[2px]">
         {teams.map((team, i) => (
@@ -28,23 +29,29 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
             key={i}
             team={team}
             matchId={match.id}
-            isFirst={i === 0}
             picks={picks}
             onPick={onPick}
           />
         ))}
       </div>
+
       {/* Advanced mode: series length selector */}
       {mode === 'advanced' && (
-        <div className="flex justify-center gap-1 mt-2">
+        <div className="flex items-center gap-1.5 mt-2 px-1">
+          <span
+            className="text-[9px] font-bold uppercase tracking-widest mr-0.5"
+            style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Figtree, sans-serif' }}
+          >
+            G
+          </span>
           {[4, 5, 6, 7].map((n) => (
             <button
               key={n}
               onClick={() => onSeriesLength(match.id, n)}
-              className={`text-[11px] font-bold w-7 h-6 rounded-md transition-colors cursor-pointer ${
+              className={`text-[11px] font-bold w-6 h-6 rounded-full transition-colors cursor-pointer flex-shrink-0 ${
                 selectedGames === n
                   ? 'bg-primary text-white'
-                  : 'bg-surface2 text-muted hover:text-app-text'
+                  : 'bg-white/10 text-white/50 hover:bg-white/20 hover:text-white/80'
               }`}
             >
               {n}
