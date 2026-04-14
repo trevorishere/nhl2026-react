@@ -79,7 +79,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   const picked       = picks[matchId] || null;
   const isWinner     = picked === team;
   const isEliminated = !!(picked && picked !== team);
-  const isNonSelected = !isWinner;
+  const isNonSelected = isEliminated || (!isWinner && !isEliminated); // default + eliminated
 
   const baseColor     = TEAM_STYLES[team]?.bg ?? '#333';
   const darkerColor   = `color-mix(in srgb, ${baseColor} 95%, black 5%)`;
@@ -87,7 +87,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
 
   const glowSrc    = GLOW_COLOR[team] ?? baseColor;
   const glowBright = toRgba(glowSrc, 0.85);
-  const glowDim    = toRgba(glowSrc, 0.80);
+  const glowDim    = toRgba(glowSrc, 0.40);
 
   // ── Button style ─────────────────────────────────────────────────────────
   let buttonStyle;
@@ -100,16 +100,18 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
       '--glow-bright': glowBright,
       '--glow-dim':    glowDim,
     };
-  } else {
-    // Default + eliminated: 50% opacity, team colour on hover, grey when not
-    const bg = isEliminated
-      ? (hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)')
-      : teamBackground(team);
-
+  } else if (isEliminated) {
+    // Eliminated: 50% opacity, restores colour + opacity on hover
     buttonStyle = {
-      background:  bg,
+      background:  hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)',
       opacity:     hovering ? 1 : 0.5,
       transition:  TRANSITION,
+      '--glow-bright': glowBright,
+    };
+  } else {
+    // Default (no pick made): full opacity, no animation
+    buttonStyle = {
+      background:      teamBackground(team),
       '--glow-bright': glowBright,
     };
   }
