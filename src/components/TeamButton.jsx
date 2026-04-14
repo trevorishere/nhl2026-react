@@ -32,6 +32,12 @@ const GLOW_COLOR = {
   VGK: '#B9975B',
   BUF: '#FFB81C',
   TBL: '#2185FF',
+  EDM: '#FF886E',
+  ANA: '#FF886E',
+  COL: '#44A9F9',
+  DAL: '#00E96C',
+  CAR: '#FF233F',
+  MTL: '#FF233F',
 };
 
 // Convert hex OR rgb() colour string → rgba(r,g,b,alpha)
@@ -81,7 +87,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
 
   const glowSrc    = GLOW_COLOR[team] ?? baseColor;
   const glowBright = toRgba(glowSrc, 0.85);
-  const glowDim    = toRgba(glowSrc, 0.60);
+  const glowDim    = toRgba(glowSrc, 0.80);
 
   // Button styles per state
   let buttonStyle;
