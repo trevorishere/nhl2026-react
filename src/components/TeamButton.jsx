@@ -73,7 +73,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   // Glow: yellow for BOS/PIT, otherwise the badge's own background colour
   const glowSrc   = YELLOW_GLOW.has(team) ? '#FFD700' : baseColor;
   const glowBright = toRgba(glowSrc, 0.85);
-  const glowDim    = toRgba(glowSrc, 0.18);
+  const glowDim    = toRgba(glowSrc, 0.50);
 
   // Burst: rise = 100ms (peak 11%), fall = 825ms → 0.925s total.
   // After burst ends, teamPulseGlow owns box-shadow (no inline override needed).
