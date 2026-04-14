@@ -33,19 +33,19 @@
 
 /* ── Team badge animations ───────────────────────────────────────────────── */
 
-/* Click burst: rise = 100ms (peak at 11%), fall = 825ms → 0.925s total.
+/* Click burst: rise = 25ms (peak at 3%), fall = 825ms → 0.85s total.
    --glow-bright / --glow-dim set inline per team. */
 @keyframes teamGlowBurst {
   0%   { box-shadow: 0 0 0px 0px transparent; }
-  11%  { box-shadow: 0 0 18px 10px var(--glow-bright); }
+  3%   { box-shadow: 0 0 16px 4px var(--glow-bright); }
   100% { box-shadow: 0 0 10px 3px var(--glow-dim); }
 }
 
-/* Post-burst: team-colour halo (front) + white pulse shadow (behind) breathes 8px → 32px */
+/* Post-burst: team-colour halo (front) + white pulse shadow (behind) breathes 1px → 8px */
 @keyframes teamPulseGlow {
-  0%   { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.25); }
-  50%  { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0 32px 0 rgba(255, 255, 255, 0.25); }
-  100% { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.25); }
+  0%   { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0 1px 0 rgba(255, 255, 255, 0.25); }
+  50%  { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0 8px 0 rgba(255, 255, 255, 0.25); }
+  100% { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0 1px 0 rgba(255, 255, 255, 0.25); }
 }
 
 /* Selected state: 5s looping gradient shimmer */

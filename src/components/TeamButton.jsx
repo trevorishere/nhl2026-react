@@ -82,7 +82,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
         background: `linear-gradient(8deg, ${darkerColor}, ${brighterColor}, ${darkerColor})`,
         backgroundSize: '200% 200%',
         animation: bursting
-          ? 'teamGlowBurst 0.925s ease-out forwards'
+          ? 'teamGlowBurst 0.85s ease-out forwards'
           : 'teamGradientShift 5s ease-in-out infinite, teamPulseGlow 2s ease-in-out infinite',
         '--glow-bright': glowBright,
         '--glow-dim': glowDim,
@@ -120,6 +120,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
             height: logoPos.height,
             objectFit: 'contain',
             ...(isEliminated && { opacity: 0.2, filter: 'grayscale(1)' }),
+            ...(isWinner && { filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.7))' }),
           }}
         />
       )}
