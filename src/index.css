@@ -43,9 +43,9 @@
 
 /* Post-burst: team-colour halo (front) + white pulse shadow (behind) breathes 8px → 32px */
 @keyframes teamPulseGlow {
-  0%   { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.05); }
-  50%  { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0 32px 0 rgba(255, 255, 255, 0.05); }
-  100% { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.05); }
+  0%   { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.25); }
+  50%  { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0 32px 0 rgba(255, 255, 255, 0.25); }
+  100% { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.25); }
 }
 
 /* Selected state: 5s looping gradient shimmer */
