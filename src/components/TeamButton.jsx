@@ -22,8 +22,17 @@ const LOGO_POS = {
   PHI: { left: 34,  top: -23,   width: 155, height: 103 },
 };
 
-// Teams whose glow uses yellow instead of their badge colour
-const YELLOW_GLOW = new Set(['BOS', 'PIT']);
+// Per-team glow colour overrides; falls back to badge bg for unlisted teams
+const GLOW_COLOR = {
+  BOS: '#FFD700',
+  PIT: '#FFD700',
+  LAK: '#A2AAAD',
+  MIN: '#FF1235',
+  OTT: '#FF2649',
+  VGK: '#B9975B',
+  BUF: '#FFB81C',
+  TBL: '#2185FF',
+};
 
 // Convert hex OR rgb() colour string → rgba(r,g,b,alpha)
 function toRgba(color, alpha) {
@@ -70,9 +79,9 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   const darkerColor  = `color-mix(in srgb, ${baseColor} 95%, black 5%)`;
   const brighterColor = `color-mix(in srgb, ${baseColor} 85%, white 15%)`;
 
-  const glowSrc    = YELLOW_GLOW.has(team) ? '#FFD700' : baseColor;
+  const glowSrc    = GLOW_COLOR[team] ?? baseColor;
   const glowBright = toRgba(glowSrc, 0.85);
-  const glowDim    = toRgba(glowSrc, 0.50);
+  const glowDim    = toRgba(glowSrc, 0.60);
 
   // Button styles per state
   let buttonStyle;
