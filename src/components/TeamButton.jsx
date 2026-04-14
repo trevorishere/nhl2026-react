@@ -3,23 +3,24 @@ import { SEEDS, TEAM_STYLES } from '../data/constants';
 import { LOGOS } from '../data/logos';
 
 // Per-team logo position extracted from Figma design.
+// Logo positions extracted exactly from Figma frame 123:29
 const LOGO_POS = {
-  ANA: { left: 40, top: -22, width: 153, height: 99 },
-  BOS: { left: 48, top: -19, width: 144, height: 96 },
-  BUF: { left: 50, top: -20, width: 145, height: 95 },
-  CAR: { left: 59, top: -24, width: 136, height: 91 },
-  COL: { left: 52, top: -28, width: 140, height: 93 },
-  DAL: { left: 45, top: -24, width: 156, height: 103 },
-  EDM: { left: 35, top: -23, width: 159, height: 105 },
-  LAK: { left: 50, top: -17, width: 138, height: 92 },
-  MIN: { left: 39, top: -22, width: 147, height: 98 },
-  MTL: { left: 55, top: -18, width: 135, height: 88 },
-  OTT: { left: 48, top: -14, width: 132, height: 87 },
-  PHI: { left: 59, top: -12, width: 131, height: 87 },
-  PIT: { left: 54, top: -12, width: 130, height: 86 },
-  TBL: { left: 56, top: -22, width: 129, height: 85 },
-  UTA: { left: 54, top: -16, width: 132, height: 87 },
-  VGK: { left: 37, top: -27, width: 150, height: 99 },
+  COL: { left: 37,  top: -20,   width: 147, height: 98  },
+  LAK: { left: 41,  top: -18,   width: 140, height: 93  },
+  DAL: { left: 37,  top: -27,   width: 159, height: 106 },
+  MIN: { left: 39,  top: -18,   width: 142, height: 95  },
+  EDM: { left: 32,  top: -23,   width: 157, height: 105 },
+  UTA: { left: 42,  top: -18,   width: 135, height: 90  },
+  ANA: { left: 43,  top: -12,   width: 134, height: 89  },
+  VGK: { left: 36,  top: -21,   width: 149, height: 99  },
+  TBL: { left: 41,  top: -15,   width: 133, height: 89  },
+  BOS: { left: 42,  top: -16,   width: 135, height: 90  },
+  BUF: { left: 40,  top: -19,   width: 141, height: 94  },
+  MTL: { left: 44,  top: -15,   width: 132, height: 88  },
+  CAR: { left: 44,  top: -17,   width: 136, height: 91  },
+  OTT: { left: 41,  top: -16,   width: 135, height: 90  },
+  PIT: { left: 49,  top: -11,   width: 129, height: 86  },
+  PHI: { left: 34,  top: -23,   width: 155, height: 103 },
 };
 
 // Teams whose glow uses yellow instead of their badge colour
