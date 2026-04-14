@@ -33,16 +33,22 @@
 
 /* ── Team badge animations ───────────────────────────────────────────────── */
 
-/* Click burst: glow erupts instantly (peak at 5% = 300% faster rise),
-   then fades slowly (100% extended fall) over 0.87s total.
-   --glow-bright / --glow-dim are set inline per team. */
+/* Click burst: rise = 100ms (peak at 11%), fall = 825ms → 0.925s total.
+   --glow-bright / --glow-dim set inline per team. */
 @keyframes teamGlowBurst {
   0%   { box-shadow: 0 0 0px 0px transparent; }
-  5%   { box-shadow: 0 0 18px 10px var(--glow-bright); }
+  11%  { box-shadow: 0 0 18px 10px var(--glow-bright); }
   100% { box-shadow: 0 0 10px 3px var(--glow-dim); }
 }
 
-/* Selected state: 5s looping shimmer */
+/* Post-burst: team-colour halo (front) + white pulse shadow (behind) breathes 8px → 32px */
+@keyframes teamPulseGlow {
+  0%   { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.05); }
+  50%  { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0 32px 0 rgba(255, 255, 255, 0.05); }
+  100% { box-shadow: 0 0 10px 3px var(--glow-dim), 0 0  8px 0 rgba(255, 255, 255, 0.05); }
+}
+
+/* Selected state: 5s looping gradient shimmer */
 @keyframes teamGradientShift {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }

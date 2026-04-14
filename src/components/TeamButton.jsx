@@ -75,16 +75,15 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   const glowBright = toRgba(glowSrc, 0.85);
   const glowDim    = toRgba(glowSrc, 0.18);
 
-  // Burst timing: rise 300% faster (÷3) → peak at 5%; fall extended 100% (×2) → 0.87s total
+  // Burst: rise = 100ms (peak 11%), fall = 825ms → 0.925s total.
+  // After burst ends, teamPulseGlow owns box-shadow (no inline override needed).
   const buttonStyle = isWinner
     ? {
         background: `linear-gradient(8deg, ${darkerColor}, ${brighterColor}, ${darkerColor})`,
         backgroundSize: '200% 200%',
         animation: bursting
-          ? 'teamGlowBurst 0.87s ease-out forwards'
-          : 'teamGradientShift 5s ease-in-out infinite',
-        boxShadow: bursting ? undefined : `0 0 10px 3px ${glowDim}`,
-        // CSS custom props used by the @keyframes
+          ? 'teamGlowBurst 0.925s ease-out forwards'
+          : 'teamGradientShift 5s ease-in-out infinite, teamPulseGlow 2s ease-in-out infinite',
         '--glow-bright': glowBright,
         '--glow-dim': glowDim,
       }
@@ -105,7 +104,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
     <button
       type="button"
       onClick={handleClick}
-      onAnimationEnd={() => setBursting(false)}
+      onAnimationEnd={(e) => { if (e.animationName === 'teamGlowBurst') setBursting(false); }}
       className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
       style={buttonStyle}
     >
