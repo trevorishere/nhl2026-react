@@ -88,13 +88,8 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   } else if (isEliminated) {
     buttonStyle = { background: 'rgba(255,255,255,0.05)' };
   } else {
-    // Default: hover eases box-shadow from nothing → burst-peak levels
     buttonStyle = {
-      background:  teamBackground(team),
-      transition:  HOVER_TRANSITION,
-      boxShadow:   hovering
-        ? `0 0 16px 4px ${glowBright}`
-        : '0 0 1px 0 transparent',
+      background:      teamBackground(team),
       '--glow-bright': glowBright,
     };
   }
