@@ -31,6 +31,22 @@
   }
 }
 
+/* ── Team badge animations ───────────────────────────────────────────────── */
+
+/* Click burst: warm-white glow erupts from edges, then settles into soft halo */
+@keyframes teamGlowBurst {
+  0%   { box-shadow: 0 0 0px 0px rgba(255, 248, 210, 0); }
+  25%  { box-shadow: 0 0 18px 10px rgba(255, 248, 210, 0.85); }
+  100% { box-shadow: 0 0 10px 3px rgba(255, 248, 210, 0.18); }
+}
+
+/* Selected state: gradient position shifts slowly for a looping shimmer */
+@keyframes teamGradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 @layer utilities {
   .bracket-grid {
     display: grid;

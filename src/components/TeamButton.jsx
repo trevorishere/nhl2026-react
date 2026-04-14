@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { SEEDS, TEAM_STYLES } from '../data/constants';
 import { LOGOS } from '../data/logos';
 
@@ -31,6 +32,8 @@ function teamBackground(team) {
 }
 
 export default function TeamButton({ team, matchId, picks, onPick }) {
+  const [bursting, setBursting] = useState(false);
+
   // Blank / TBD slot
   if (!team) {
     return (
@@ -42,18 +45,42 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   }
 
   const picked       = picks[matchId] || null;
+  const isWinner     = picked === team;
   const isEliminated = !!(picked && picked !== team);
 
-  const background = isEliminated ? 'rgba(255,255,255,0.05)' : teamBackground(team);
-  const logoUri    = LOGOS[team] || '';
-  const logoPos    = LOGO_POS[team] ?? { left: 50, top: -20, width: 140, height: 93 };
+  const baseColor   = TEAM_STYLES[team]?.bg ?? '#333';
+  const brightColor = `color-mix(in srgb, ${baseColor} 95%, white 5%)`;
+
+  // Selected badge: animated gradient; bursting = click burst overrides the shimmer
+  const buttonStyle = isWinner
+    ? {
+        background: `linear-gradient(8deg, ${baseColor}, ${brightColor}, ${baseColor})`,
+        backgroundSize: '200% 200%',
+        animation: bursting
+          ? 'teamGlowBurst 0.55s ease-out forwards'
+          : 'teamGradientShift 3s ease-in-out infinite',
+        boxShadow: bursting ? undefined : '0 0 10px 3px rgba(255, 248, 210, 0.18)',
+      }
+    : isEliminated
+    ? { background: 'rgba(255,255,255,0.05)' }
+    : { background: teamBackground(team) };
+
+  const logoUri = LOGOS[team] || '';
+  const logoPos = LOGO_POS[team] ?? { left: 50, top: -20, width: 140, height: 93 };
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    onPick(matchId, team);
+    setBursting(true);
+  };
 
   return (
     <button
       type="button"
-      onClick={(e) => { e.stopPropagation(); onPick(matchId, team); }}
+      onClick={handleClick}
+      onAnimationEnd={() => setBursting(false)}
       className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
-      style={{ background }}
+      style={buttonStyle}
     >
       {/* Logo — per-team position from Figma, bleeds above and right */}
       {logoUri && (
