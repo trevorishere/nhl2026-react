@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { SEEDS, TEAM_STYLES } from '../data/constants';
 import { LOGOS } from '../data/logos';
 
-// Per-team logo position extracted from Figma design.
 // Logo positions extracted exactly from Figma frame 123:29
 const LOGO_POS = {
   COL: { left: 37,  top: -20,   width: 147, height: 98  },
@@ -28,14 +27,10 @@ const YELLOW_GLOW = new Set(['BOS', 'PIT']);
 
 // Convert hex OR rgb() colour string → rgba(r,g,b,alpha)
 function toRgba(color, alpha) {
-  // Already rgb(...) format
   const rgbMatch = color.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/);
   if (rgbMatch) return `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${alpha})`;
-  // Hex format
   const h = color.replace('#', '');
-  const full = h.length === 3
-    ? h[0]+h[0]+h[1]+h[1]+h[2]+h[2]
-    : h;
+  const full = h.length === 3 ? h[0]+h[0]+h[1]+h[1]+h[2]+h[2] : h;
   const r = parseInt(full.slice(0, 2), 16);
   const g = parseInt(full.slice(2, 4), 16);
   const b = parseInt(full.slice(4, 6), 16);
@@ -49,8 +44,12 @@ function teamBackground(team) {
   return `linear-gradient(rgba(0,0,0,${s.overlay}),rgba(0,0,0,${s.overlay})),linear-gradient(${s.bg},${s.bg})`;
 }
 
+const HOVER_TRANSITION = 'box-shadow 0.25s ease-in-out';
+const LOGO_TRANSITION  = 'filter 0.25s ease-in-out';
+
 export default function TeamButton({ team, matchId, picks, onPick }) {
-  const [bursting, setBursting] = useState(false);
+  const [bursting, setBursting]   = useState(false);
+  const [hovering, setHovering]   = useState(false);
 
   // Blank / TBD slot
   if (!team) {
@@ -65,32 +64,54 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   const picked       = picks[matchId] || null;
   const isWinner     = picked === team;
   const isEliminated = !!(picked && picked !== team);
+  const isDefault    = !isWinner && !isEliminated;
 
   const baseColor    = TEAM_STYLES[team]?.bg ?? '#333';
-  // Gradient: darker stop (5% darker) → lighter stop (15% white = 10% more than before)
   const darkerColor  = `color-mix(in srgb, ${baseColor} 95%, black 5%)`;
   const brighterColor = `color-mix(in srgb, ${baseColor} 85%, white 15%)`;
 
-  // Glow: yellow for BOS/PIT, otherwise the badge's own background colour
-  const glowSrc   = YELLOW_GLOW.has(team) ? '#FFD700' : baseColor;
+  const glowSrc    = YELLOW_GLOW.has(team) ? '#FFD700' : baseColor;
   const glowBright = toRgba(glowSrc, 0.85);
   const glowDim    = toRgba(glowSrc, 0.50);
 
-  // Burst: rise = 100ms (peak 11%), fall = 825ms → 0.925s total.
-  // After burst ends, teamPulseGlow owns box-shadow (no inline override needed).
-  const buttonStyle = isWinner
-    ? {
-        background: `linear-gradient(8deg, ${darkerColor}, ${brighterColor}, ${darkerColor})`,
-        backgroundSize: '200% 200%',
-        animation: bursting
-          ? 'teamGlowBurst 0.85s ease-out forwards'
-          : 'teamGradientShift 5s ease-in-out infinite, teamPulseGlow 2s ease-in-out infinite',
-        '--glow-bright': glowBright,
-        '--glow-dim': glowDim,
-      }
-    : isEliminated
-    ? { background: 'rgba(255,255,255,0.05)' }
-    : { background: teamBackground(team) };
+  // Button styles per state
+  let buttonStyle;
+  if (isWinner) {
+    buttonStyle = {
+      background: `linear-gradient(8deg, ${darkerColor}, ${brighterColor}, ${darkerColor})`,
+      animation: bursting
+        ? 'teamGlowBurst 0.85s ease-out forwards'
+        : 'teamPulseGlow 2s ease-in-out infinite',
+      '--glow-bright': glowBright,
+      '--glow-dim':    glowDim,
+    };
+  } else if (isEliminated) {
+    buttonStyle = { background: 'rgba(255,255,255,0.05)' };
+  } else {
+    // Default: hover eases box-shadow from nothing → burst-peak levels
+    buttonStyle = {
+      background:  teamBackground(team),
+      transition:  HOVER_TRANSITION,
+      boxShadow:   hovering
+        ? `0 0 16px 4px ${glowBright}`
+        : '0 0 1px 0 transparent',
+      '--glow-bright': glowBright,
+    };
+  }
+
+  // Logo filter per state
+  let logoFilter, logoTransition;
+  if (isEliminated) {
+    logoFilter = 'grayscale(1)';
+  } else if (isWinner) {
+    logoFilter = 'drop-shadow(0 0 4px rgba(255,255,255,0.7))';
+  } else {
+    // Default: hover eases logo glow from 1px → 4px blur
+    logoFilter     = hovering
+      ? 'drop-shadow(0 0 4px rgba(255,255,255,0.7))'
+      : 'drop-shadow(0 0 1px rgba(255,255,255,0))';
+    logoTransition = LOGO_TRANSITION;
+  }
 
   const logoUri = LOGOS[team] || '';
   const logoPos = LOGO_POS[team] ?? { left: 50, top: -20, width: 140, height: 93 };
@@ -105,6 +126,8 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
     <button
       type="button"
       onClick={handleClick}
+      onMouseEnter={() => { if (isDefault) setHovering(true);  }}
+      onMouseLeave={() => setHovering(false)}
       onAnimationEnd={(e) => { if (e.animationName === 'teamGlowBurst') setBursting(false); }}
       className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
       style={buttonStyle}
@@ -115,13 +138,14 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
           alt={team}
           className="absolute block pointer-events-none"
           style={{
-            left: logoPos.left,
-            top: logoPos.top,
-            width: logoPos.width,
-            height: logoPos.height,
-            objectFit: 'contain',
-            ...(isEliminated && { opacity: 0.2, filter: 'grayscale(1)' }),
-            ...(isWinner && { filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.7))' }),
+            left:       logoPos.left,
+            top:        logoPos.top,
+            width:      logoPos.width,
+            height:     logoPos.height,
+            objectFit:  'contain',
+            opacity:    isEliminated ? 0.2 : undefined,
+            filter:     logoFilter,
+            transition: logoTransition,
           }}
         />
       )}
