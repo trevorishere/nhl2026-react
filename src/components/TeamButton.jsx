@@ -3,8 +3,6 @@ import { SEEDS, TEAM_STYLES } from '../data/constants';
 import { LOGOS } from '../data/logos';
 
 // Per-team logo position extracted from Figma design.
-// Each team's logo has its own natural proportions and is anchored to the
-// right side of the 156×58px card, intentionally bleeding above the top edge.
 const LOGO_POS = {
   ANA: { left: 40, top: -22, width: 153, height: 99 },
   BOS: { left: 48, top: -19, width: 144, height: 96 },
@@ -23,6 +21,25 @@ const LOGO_POS = {
   UTA: { left: 54, top: -16, width: 132, height: 87 },
   VGK: { left: 37, top: -27, width: 150, height: 99 },
 };
+
+// Teams whose glow uses yellow instead of their badge colour
+const YELLOW_GLOW = new Set(['BOS', 'PIT']);
+
+// Convert hex OR rgb() colour string → rgba(r,g,b,alpha)
+function toRgba(color, alpha) {
+  // Already rgb(...) format
+  const rgbMatch = color.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/);
+  if (rgbMatch) return `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${alpha})`;
+  // Hex format
+  const h = color.replace('#', '');
+  const full = h.length === 3
+    ? h[0]+h[0]+h[1]+h[1]+h[2]+h[2]
+    : h;
+  const r = parseInt(full.slice(0, 2), 16);
+  const g = parseInt(full.slice(2, 4), 16);
+  const b = parseInt(full.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
 
 function teamBackground(team) {
   const s = TEAM_STYLES[team];
@@ -48,18 +65,28 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   const isWinner     = picked === team;
   const isEliminated = !!(picked && picked !== team);
 
-  const baseColor   = TEAM_STYLES[team]?.bg ?? '#333';
-  const brightColor = `color-mix(in srgb, ${baseColor} 95%, white 5%)`;
+  const baseColor    = TEAM_STYLES[team]?.bg ?? '#333';
+  // Gradient: darker stop (5% darker) → lighter stop (15% white = 10% more than before)
+  const darkerColor  = `color-mix(in srgb, ${baseColor} 95%, black 5%)`;
+  const brighterColor = `color-mix(in srgb, ${baseColor} 85%, white 15%)`;
 
-  // Selected badge: animated gradient; bursting = click burst overrides the shimmer
+  // Glow: yellow for BOS/PIT, otherwise the badge's own background colour
+  const glowSrc   = YELLOW_GLOW.has(team) ? '#FFD700' : baseColor;
+  const glowBright = toRgba(glowSrc, 0.85);
+  const glowDim    = toRgba(glowSrc, 0.18);
+
+  // Burst timing: rise 300% faster (÷3) → peak at 5%; fall extended 100% (×2) → 0.87s total
   const buttonStyle = isWinner
     ? {
-        background: `linear-gradient(8deg, ${baseColor}, ${brightColor}, ${baseColor})`,
+        background: `linear-gradient(8deg, ${darkerColor}, ${brighterColor}, ${darkerColor})`,
         backgroundSize: '200% 200%',
         animation: bursting
-          ? 'teamGlowBurst 0.55s ease-out forwards'
-          : 'teamGradientShift 3s ease-in-out infinite',
-        boxShadow: bursting ? undefined : '0 0 10px 3px rgba(255, 248, 210, 0.18)',
+          ? 'teamGlowBurst 0.87s ease-out forwards'
+          : 'teamGradientShift 5s ease-in-out infinite',
+        boxShadow: bursting ? undefined : `0 0 10px 3px ${glowDim}`,
+        // CSS custom props used by the @keyframes
+        '--glow-bright': glowBright,
+        '--glow-dim': glowDim,
       }
     : isEliminated
     ? { background: 'rgba(255,255,255,0.05)' }
@@ -82,7 +109,6 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
       className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
       style={buttonStyle}
     >
-      {/* Logo — per-team position from Figma, bleeds above and right */}
       {logoUri && (
         <img
           src={logoUri}
@@ -99,7 +125,6 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
         />
       )}
 
-      {/* Team abbr + seed — left-aligned */}
       <div
         className={`absolute inset-y-0 flex flex-col justify-center gap-[2px] whitespace-nowrap ${isEliminated ? 'opacity-30' : ''}`}
         style={{ left: 16 }}
