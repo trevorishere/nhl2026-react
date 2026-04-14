@@ -59,19 +59,19 @@ function teamBackground(team) {
   return `linear-gradient(rgba(0,0,0,${s.overlay}),rgba(0,0,0,${s.overlay})),linear-gradient(${s.bg},${s.bg})`;
 }
 
-const HOVER_TRANSITION = 'box-shadow 0.25s ease-in-out';
-const LOGO_TRANSITION  = 'filter 0.25s ease-in-out';
+const TRANSITION = 'opacity 0.25s ease-in-out, filter 0.25s ease-in-out';
+const LOGO_TRANSITION = 'filter 0.25s ease-in-out';
 
 export default function TeamButton({ team, matchId, picks, onPick }) {
-  const [bursting, setBursting]   = useState(false);
-  const [hovering, setHovering]   = useState(false);
+  const [bursting, setBursting] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   // Blank / TBD slot
   if (!team) {
     return (
       <div
         className="h-[58px] w-[156px] shrink-0 relative"
-        style={{ background: 'rgba(255,255,255,0.05)' }}
+        style={{ background: 'rgba(255,255,255,0.05)', opacity: 0.5 }}
       />
     );
   }
@@ -79,17 +79,17 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
   const picked       = picks[matchId] || null;
   const isWinner     = picked === team;
   const isEliminated = !!(picked && picked !== team);
-  const isDefault    = !isWinner && !isEliminated;
+  const isNonSelected = !isWinner;
 
-  const baseColor    = TEAM_STYLES[team]?.bg ?? '#333';
-  const darkerColor  = `color-mix(in srgb, ${baseColor} 95%, black 5%)`;
+  const baseColor     = TEAM_STYLES[team]?.bg ?? '#333';
+  const darkerColor   = `color-mix(in srgb, ${baseColor} 95%, black 5%)`;
   const brighterColor = `color-mix(in srgb, ${baseColor} 85%, white 15%)`;
 
   const glowSrc    = GLOW_COLOR[team] ?? baseColor;
   const glowBright = toRgba(glowSrc, 0.85);
   const glowDim    = toRgba(glowSrc, 0.80);
 
-  // Button styles per state
+  // ── Button style ─────────────────────────────────────────────────────────
   let buttonStyle;
   if (isWinner) {
     buttonStyle = {
@@ -100,27 +100,31 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
       '--glow-bright': glowBright,
       '--glow-dim':    glowDim,
     };
-  } else if (isEliminated) {
-    buttonStyle = { background: 'rgba(255,255,255,0.05)' };
   } else {
+    // Default + eliminated: 50% opacity, team colour on hover, grey when not
+    const bg = isEliminated
+      ? (hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)')
+      : teamBackground(team);
+
     buttonStyle = {
-      background:      teamBackground(team),
+      background:  bg,
+      opacity:     hovering ? 1 : 0.5,
+      transition:  TRANSITION,
       '--glow-bright': glowBright,
     };
   }
 
-  // Logo filter per state
-  let logoFilter, logoTransition;
-  if (isEliminated) {
-    logoFilter = 'grayscale(1)';
-  } else if (isWinner) {
+  // ── Logo style ───────────────────────────────────────────────────────────
+  let logoFilter;
+  if (isWinner) {
     logoFilter = 'drop-shadow(0 0 4px rgba(255,255,255,0.7))';
+  } else if (hovering) {
+    // Hover: full colour + glow (also de-greys eliminated logos)
+    logoFilter = 'drop-shadow(0 0 4px rgba(255,255,255,0.7))';
+  } else if (isEliminated) {
+    logoFilter = 'grayscale(1)';
   } else {
-    // Default: hover eases logo glow from 1px → 4px blur
-    logoFilter     = hovering
-      ? 'drop-shadow(0 0 4px rgba(255,255,255,0.7))'
-      : 'drop-shadow(0 0 1px rgba(255,255,255,0))';
-    logoTransition = LOGO_TRANSITION;
+    logoFilter = 'drop-shadow(0 0 1px rgba(255,255,255,0))';
   }
 
   const logoUri = LOGOS[team] || '';
@@ -136,7 +140,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
     <button
       type="button"
       onClick={handleClick}
-      onMouseEnter={() => { if (isDefault) setHovering(true);  }}
+      onMouseEnter={() => { if (isNonSelected) setHovering(true); }}
       onMouseLeave={() => setHovering(false)}
       onAnimationEnd={(e) => { if (e.animationName === 'teamGlowBurst') setBursting(false); }}
       className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
@@ -153,15 +157,14 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
             width:      logoPos.width,
             height:     logoPos.height,
             objectFit:  'contain',
-            opacity:    isEliminated ? 0.2 : undefined,
             filter:     logoFilter,
-            transition: logoTransition,
+            transition: isNonSelected ? LOGO_TRANSITION : undefined,
           }}
         />
       )}
 
       <div
-        className={`absolute inset-y-0 flex flex-col justify-center gap-[2px] whitespace-nowrap ${isEliminated ? 'opacity-30' : ''}`}
+        className="absolute inset-y-0 flex flex-col justify-center gap-[2px] whitespace-nowrap"
         style={{ left: 16 }}
       >
         <span
