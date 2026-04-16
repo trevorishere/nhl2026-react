@@ -1,0 +1,1055 @@
+{
+  "updatedAt": "2026-04-15T02:21:21.511Z",
+  "players": {
+    "cutter gauthier": {
+      "name": "Cutter Gauthier",
+      "team": "Anaheim Ducks",
+      "type": "Upper Body",
+      "note": "Gauthier did not play on Tuesday's (Apr. 7) game versus the Predators.",
+      "date": "Mon, Mar 30, 2026"
+    },
+    "radko gudas": {
+      "name": "Radko Gudas",
+      "team": "Anaheim Ducks",
+      "type": "Lower-body",
+      "note": "The Ducks said on Tuesday (Apr. 7) that Gudas remains without a clear recovery timeline but is progressing well, per Zach Cavanagh of The Sporting Tribune.",
+      "date": "Wed, Apr 1, 2026"
+    },
+    "jansen harkins": {
+      "name": "Jansen Harkins",
+      "team": "Anaheim Ducks",
+      "type": "Upper Body",
+      "note": "The Ducks said that Harkins had hand surgery on Monday (Mar. 30) and is expected to miss about four weeks.",
+      "date": "Tue, Mar 24, 2026"
+    },
+    "ross johnston": {
+      "name": "Ross Johnston",
+      "team": "Anaheim Ducks",
+      "type": "Lower-body",
+      "note": "The Ducks said on Wednesday (Mar. 18) that Johnston is OUT for approximately 3-4 weeks, per Derek Lee of The Hockey News.",
+      "date": "Tue, Mar 17, 2026"
+    },
+    "petr mrazek": {
+      "name": "Petr Mrazek",
+      "team": "Anaheim Ducks",
+      "type": "Lower-Body",
+      "note": "The Anaheim Ducks announced G Petr Mrazek underwent hip surgery on Tuesday (Feb. 17) and will be out for the remainder of the season.",
+      "date": "Mon, Jan 5, 2026"
+    },
+    "viktor arvidsson": {
+      "name": "Viktor Arvidsson",
+      "team": "Boston Bruins",
+      "type": "Rest",
+      "note": "Arvidsson did not play in Sunday's (Apr. 12) gamea gainst the Blue Jackets.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "hampus lindholm": {
+      "name": "Hampus Lindholm",
+      "team": "Boston Bruins",
+      "type": "Rest",
+      "note": "Lindholm did not play in Sunday's (Apr. 12) gamea gainst the Blue Jackets.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "charlie mcavoy": {
+      "name": "Charlie McAvoy",
+      "team": "Boston Bruins",
+      "type": "Rest",
+      "note": "McAvoy did not play in Sunday's (Apr. 12) gamea gainst the Blue Jackets.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "pavel zacha": {
+      "name": "Pavel Zacha",
+      "team": "Boston Bruins",
+      "type": "Rest",
+      "note": "Zacha did not play in Sunday's (Apr. 12) gamea gainst the Blue Jackets.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "sam carrick": {
+      "name": "Sam Carrick",
+      "team": "Buffalo Sabres",
+      "type": "Arm",
+      "note": "The Sabres said on Thursday (Apr. 2) that Carrick is week to week with an arm injury, per Mike Harrington of The Buffalo News.",
+      "date": "Tue, Mar 31, 2026"
+    },
+    "justin danforth": {
+      "name": "Justin Danforth",
+      "team": "Buffalo Sabres",
+      "type": "Lower Body",
+      "note": "The Buffalo Sabres said on Monday (Jan. 26) that Danforth is trending toward a post-Olympic return to action, per Bill Hoppe of the Olean Times Herald.",
+      "date": "Wed, Oct 15, 2025"
+    },
+    "jiri kulich": {
+      "name": "Jiri Kulich",
+      "team": "Buffalo Sabres",
+      "type": "Ear",
+      "note": "The Sabres said that Kulich is expected to miss the remainder of the 2025-26 season.",
+      "date": "Tue, Nov 4, 2025"
+    },
+    "alex lyon": {
+      "name": "Alex Lyon",
+      "team": "Buffalo Sabres",
+      "type": "Lower Body",
+      "note": "Lyon is likely to be out for about a week, per Mike Harrington of The Buffalo News.",
+      "date": "Wed, Apr 8, 2026"
+    },
+    "noah ostlund": {
+      "name": "Noah Ostlund",
+      "team": "Buffalo Sabres",
+      "type": "Upper-Body",
+      "note": "The Sabres said on Saturday (Apr. 11) that Ostlund likely won't play before the end of the regular season, according to Heather Engel of NHL.com.",
+      "date": "Thu, Mar 26, 2026"
+    },
+    "kevin bahl": {
+      "name": "Kevin Bahl",
+      "team": "Calgary Flames",
+      "type": "Lower Body",
+      "note": "The Flames said on Thursday (Apr. 9) that Bahl has returned to Calgary for evaluation and will miss the rest of the team's road trip, per Pat Steinberg of Sportsnet 960 The Fan.",
+      "date": "Tue, Apr 7, 2026"
+    },
+    "jake bean": {
+      "name": "Jake Bean",
+      "team": "Calgary Flames",
+      "type": "Undisclosed",
+      "note": "The Flames said on Thursday (Dec. 18) that Bean will need to undergo surgery and is expected to be sidelined indefinitely, per Pat Steinberg of Sportsnet 960 The Fan.",
+      "date": "Sat, Dec 6, 2025"
+    },
+    "matvei gridin": {
+      "name": "Matvei Gridin",
+      "team": "Calgary Flames",
+      "type": "Illness",
+      "note": "Gridin did not play in Sunday's (Apr. 12) game against the Mammoth.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "joel hanley": {
+      "name": "Joel Hanley",
+      "team": "Calgary Flames",
+      "type": "Upper-Body",
+      "note": "According to Pat Steinberg of Sportsnet 960 The Fan on Saturday (Mar. 28), Hanley will miss the remainder of the 2025-26 regular season.",
+      "date": "Sat, Mar 28, 2026"
+    },
+    "samuel honzek": {
+      "name": "Samuel Honzek",
+      "team": "Calgary Flames",
+      "type": "Upper Body",
+      "note": "The Flames announced that Honzek has returned to skating but will not return this season.",
+      "date": "Sat, Nov 15, 2025"
+    },
+    "jonathan huberdeau": {
+      "name": "Jonathan Huberdeau",
+      "team": "Calgary Flames",
+      "type": "Hip",
+      "note": "The Calgary Flames placed F Jonathan Huberdeau on injured reserve on Saturday (Feb. 21).",
+      "date": "Thu, Feb 5, 2026"
+    },
+    "yan kuznetsov": {
+      "name": "Yan Kuznetsov",
+      "team": "Calgary Flames",
+      "type": "Upper Body",
+      "note": "Kuznetsov will be sidelined against the Mammoth on Sunday due to an upper-body injury is day-to-day.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "sebastian aho": {
+      "name": "Sebastian Aho",
+      "team": "Carolina Hurricanes",
+      "type": "Undisclosed",
+      "note": "Aho did not play for Monday's (Apr. 13) game against the Flyers for an undisclosed reason.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "shayne gostisbehere": {
+      "name": "Shayne Gostisbehere",
+      "team": "Carolina Hurricanes",
+      "type": "Undisclosed",
+      "note": "Gostisbehere did not play for Monday's (Apr. 13) game against the Flyers for an undisclosed reason.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "seth jarvis": {
+      "name": "Seth Jarvis",
+      "team": "Carolina Hurricanes",
+      "type": "Undisclosed",
+      "note": "Jarvis did not play for Monday's (Apr. 13) game against the Flyers for an undisclosed reason.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "jaccob slavin": {
+      "name": "Jaccob Slavin",
+      "team": "Carolina Hurricanes",
+      "type": "Undisclosed",
+      "note": "Slavin did not play on Monday's (Apr. 13) game against the Flyers for an undisclosed reason,.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "jordan staal": {
+      "name": "Jordan Staal",
+      "team": "Carolina Hurricanes",
+      "type": "Undisclosed",
+      "note": "Staal did not play versus the Flyers on Monday (Apr. 13) due to an undisclosed injury.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "andrei svechnikov": {
+      "name": "Andrei Svechnikov",
+      "team": "Carolina Hurricanes",
+      "type": "Undisclosed",
+      "note": "Svechnikov did not play versus the Flyers on Monday (Apr. 13).",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "matt grzelcyk": {
+      "name": "Matt Grzelcyk",
+      "team": "Chicago Blackhawks",
+      "type": "Upper-Body",
+      "note": "The Blackhawks said on Tuesday (Mar. 31) that Grzelcyk will miss the remainder of the 2025-26 regular season, according to Ben Pope of the Chicago Sun-Times.",
+      "date": "Sun, Mar 22, 2026"
+    },
+    "artyom levshunov": {
+      "name": "Artyom Levshunov",
+      "team": "Chicago Blackhawks",
+      "type": "Hand",
+      "note": "The Blackhawks said on Tuesday (Mar. 31) that Levshunov will miss the remainder of the 2025-26 regular season, according to Ben Pope of the Chicago Sun-Times.",
+      "date": "Sun, Mar 29, 2026"
+    },
+    "andrew mangiapane": {
+      "name": "Andrew Mangiapane",
+      "team": "Chicago Blackhawks",
+      "type": "Undisclosed",
+      "note": "Mangiapane did not play against Buffalo on Monday (Apr. 13).",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "oliver moore": {
+      "name": "Oliver Moore",
+      "team": "Chicago Blackhawks",
+      "type": "Lower Body",
+      "note": "Moore did not play against Buffalo on Monday (Apr. 13).",
+      "date": "Sun, Mar 8, 2026"
+    },
+    "shea weber": {
+      "name": "Shea Weber",
+      "team": "Chicago Blackhawks",
+      "type": "Ankle",
+      "note": "The Chicago Blackhawks placed D Shea Weber on injured reserve on Monday (Oct. 6).",
+      "date": "Mon, Oct 6, 2025"
+    },
+    "nazem kadri": {
+      "name": "Nazem Kadri",
+      "team": "Colorado Avalanche",
+      "type": "Finger",
+      "note": "Kadri did not play against Calgary on Tuesday (Apr. 13).",
+      "date": "Tue, Apr 7, 2026"
+    },
+    "artturi lehkonen": {
+      "name": "Artturi Lehkonen",
+      "team": "Colorado Avalanche",
+      "type": "Undisclosed",
+      "note": "Lehkonen did not play on for Monday's (Apr. 13) matchup in Edmonton.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "cale makar": {
+      "name": "Cale Makar",
+      "team": "Colorado Avalanche",
+      "type": "Upper Body",
+      "note": "Makar did not play against Edmonton on Monday (Apr. 13).",
+      "date": "Mon, Mar 30, 2026"
+    },
+    "josh manson": {
+      "name": "Josh Manson",
+      "team": "Colorado Avalanche",
+      "type": "Upper Body",
+      "note": "Manson did not play versus the Oilers on Monday (Apr. 13).",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "mathieu olivier": {
+      "name": "Mathieu Olivier",
+      "team": "Columbus Blue Jackets",
+      "type": "Upper Body",
+      "note": "The Blue Jackets said on Tuesday (Mar. 31) that Olivier is expected to be out for a couple of weeks, Jeff Svoboda of the team's official site.",
+      "date": "Sun, Mar 29, 2026"
+    },
+    "damon severson": {
+      "name": "Damon Severson",
+      "team": "Columbus Blue Jackets",
+      "type": "Shoulder",
+      "note": "The Blue Jackets announced on Friday (Apr. 3) that Severson underwent successful shoulder surgery and will miss the rest of the season.",
+      "date": "Thu, Mar 26, 2026"
+    },
+    "brendan smith": {
+      "name": "Brendan Smith",
+      "team": "Columbus Blue Jackets",
+      "type": "Knee",
+      "note": "The Columbus Blue Jackets said on Thursday (Jan. 8) that Smith underwent successful surgery to repair a torn meniscus in his knee and is expected to make a full recovery in 3-4 months.",
+      "date": "Mon, Dec 29, 2025"
+    },
+    "dmitri voronkov": {
+      "name": "Dmitri Voronkov",
+      "team": "Columbus Blue Jackets",
+      "type": "Hand",
+      "note": "The Blue Jackets announced on Wednesday (Apr. 1) that Voronkov is expected to be sidelined for at least 10 days due to his hand injury, per Jeff Svoboda of the Blue Jackets' official site.",
+      "date": "Sat, Mar 28, 2026"
+    },
+    "nathan bastian": {
+      "name": "Nathan Bastian",
+      "team": "Dallas Stars",
+      "type": "Hand",
+      "note": "HC Glen Gulutzan said on Monday (Apr. 6) that Bastian will be sidelined for 3-4 weeks, as per Lia Assimakopoulos of The Dallas Morning News.",
+      "date": "Sat, Mar 28, 2026"
+    },
+    "miro heiskanen": {
+      "name": "Miro Heiskanen",
+      "team": "Dallas Stars",
+      "type": "Lower Body",
+      "note": "Heiskanen is Questionable for Game 1 against the Wild in the first round of the 2026 postseason.",
+      "date": "Thu, Apr 9, 2026"
+    },
+    "roope hintz": {
+      "name": "Roope Hintz",
+      "team": "Dallas Stars",
+      "type": "Lower Body",
+      "note": "The Stars reported on Friday (Apr. 10) that Hintz is expected to miss the remainder of the regular season and is questionable for Game 1 of the postseason, per Lia Assimakopoulos of The Dallas Morning News.",
+      "date": "Fri, Mar 6, 2026"
+    },
+    "nils lundkvist": {
+      "name": "Nils Lundkvist",
+      "team": "Dallas Stars",
+      "type": "Illness",
+      "note": "Lundkvist did not play on Monday's (Apr. 13) matchup against the Maple Leafs.",
+      "date": "Thu, Apr 9, 2026"
+    },
+    "tyler seguin": {
+      "name": "Tyler Seguin",
+      "team": "Dallas Stars",
+      "type": "ACL",
+      "note": "The Stars said on Friday (Feb. 27) that Seguin will miss the remainder of the 2025-26 campaign and the entirety of the playoffs, per Elliotte Friedman of Sportsnet.",
+      "date": "Tue, Dec 2, 2025"
+    },
+    "sam steel": {
+      "name": "Sam Steel",
+      "team": "Dallas Stars",
+      "type": "Hip",
+      "note": "Steel is questionable to play in Wednesday's (Apr. 15) road game against the Sabres.",
+      "date": "Thu, Mar 26, 2026"
+    },
+    "mason appleton": {
+      "name": "Mason Appleton",
+      "team": "Detroit Red Wings",
+      "type": "Upper-Body",
+      "note": "Appleton did not play on Monday's (Apr. 13) game against the Lightning.",
+      "date": "Sat, Apr 4, 2026"
+    },
+    "michael rasmussen": {
+      "name": "Michael Rasmussen",
+      "team": "Detroit Red Wings",
+      "type": "Lower Body",
+      "note": "Rasmussen will miss some games after exiting Tuesday's (Apr. 7) game versus the Blue Jackets, per Ansar Khan of MLive.com.",
+      "date": "Tue, Apr 7, 2026"
+    },
+    "jason dickinson": {
+      "name": "Jason Dickinson",
+      "team": "Edmonton Oilers",
+      "type": "Leg",
+      "note": "Dickinson will be reevaluated ahead of the postseason, ruling him out for the next two games, Tony Brar of Oilers TV.",
+      "date": "Wed, Apr 8, 2026"
+    },
+    "leon draisaitl": {
+      "name": "Leon Draisaitl",
+      "team": "Edmonton Oilers",
+      "type": "Lower-Body",
+      "note": "Draisaitl participated in Monday's (Apr. 13) morning skate and should return to the lineup sometime in the opening round of the playoffs, Tony Brar of Oilers TV.",
+      "date": "Mon, Mar 16, 2026"
+    },
+    "zach hyman": {
+      "name": "Zach Hyman",
+      "team": "Edmonton Oilers",
+      "type": "Undisclosed",
+      "note": "Hyman isn't expected to play before the end of the regular season, Jamie Umbach of the Oilers' official site reports Monday.",
+      "date": "Thu, Apr 2, 2026"
+    },
+    "mattias janmark": {
+      "name": "Mattias Janmark",
+      "team": "Edmonton Oilers",
+      "type": "Undisclosed",
+      "note": "The Edmonton Oilers said on Friday (Mar. 6) that Janmark underwent season-ending surgery, per Mark Spector of Sportsnet.",
+      "date": "Thu, Feb 26, 2026"
+    },
+    "max jones": {
+      "name": "Max Jones",
+      "team": "Edmonton Oilers",
+      "type": "Lower-Body",
+      "note": "Jones will be out of action for 3-4 weeks, according to Tony Brar of Oilers TV on Monday (Apr. 13).",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "uvis balinskis": {
+      "name": "Uvis Balinskis",
+      "team": "Florida Panthers",
+      "type": "Foot",
+      "note": "The Panthers said on Monday (Mar. 23) that Balinskis has a fracture and is slated to miss 4-6 weeks, per Jameson Olive of the Panthers' official site.",
+      "date": "Thu, Mar 12, 2026"
+    },
+    "aleksander barkov": {
+      "name": "Aleksander Barkov",
+      "team": "Florida Panthers",
+      "type": "Knee",
+      "note": "The Panthers said on Monday (Mar. 30) Barkov won't return before the end of the 2025-26 season, as per George Richards of Florida Hockey Now.",
+      "date": "Thu, Sep 25, 2025"
+    },
+    "sam bennett": {
+      "name": "Sam Bennett",
+      "team": "Florida Panthers",
+      "type": "Undisclosed",
+      "note": "Bennett did not play against the Rangers on Monday (Apr. 13).",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "aaron ekblad": {
+      "name": "Aaron Ekblad",
+      "team": "Florida Panthers",
+      "type": "Finger",
+      "note": "The Panthers said on Thursday (Apr. 2) that Ekblad could be gone for the remainder of the season, per Jameson Olive of the Panthers' official site.",
+      "date": "Tue, Mar 31, 2026"
+    },
+    "jonah gadjovich": {
+      "name": "Jonah Gadjovich",
+      "team": "Florida Panthers",
+      "type": "Upper Body",
+      "note": "The Panthers said on Tuesday (Mar. 31) that Gadjovich is not expected to suit up again this season, as per Jameson Olive of the team's official site.",
+      "date": "Mon, Oct 27, 2025"
+    },
+    "seth jones": {
+      "name": "Seth Jones",
+      "team": "Florida Panthers",
+      "type": "Foot",
+      "note": "The Panthers said that Jones broke his foot during Tuesday's (Apr. 7) game in Montreal and is out for the remainder of the season, per Jameson Olive of the team's official site.",
+      "date": "Thu, Apr 9, 2026"
+    },
+    "dmitry kulikov": {
+      "name": "Dmitry Kulikov",
+      "team": "Florida Panthers",
+      "type": "Finger",
+      "note": "Kulikov sustained a broken finger Tuesday (Apr. 7) versus the Canadiens and is out for the season, Jameson Olive of the Panthers' official site reports.",
+      "date": "Tue, Apr 7, 2026"
+    },
+    "anton lundell": {
+      "name": "Anton Lundell",
+      "team": "Florida Panthers",
+      "type": "Upper-Body",
+      "note": "Head coach Paul Maurice said on Wednesday (Mar. 25) that Lundell is expected to miss approximately 2-6 weeks, per George Richards of Florida Hockey Now.",
+      "date": "Fri, Mar 20, 2026"
+    },
+    "brad marchand": {
+      "name": "Brad Marchand",
+      "team": "Florida Panthers",
+      "type": "Lower Body",
+      "note": "The Florida Panthers placed F Brad Marchand on Injured Reserve on Tuesday (Mar. 17).",
+      "date": "Mon, Mar 9, 2026"
+    },
+    "niko mikkola": {
+      "name": "Niko Mikkola",
+      "team": "Florida Panthers",
+      "type": "Knee",
+      "note": "The Panthers said on Monday (Mar. 23) that Mikkola miss 4-6 weeks, per Jameson Olive of the team's official site.",
+      "date": "Fri, Mar 20, 2026"
+    },
+    "sam reinhart": {
+      "name": "Sam Reinhart",
+      "team": "Florida Panthers",
+      "type": "Foot",
+      "note": "The Panthers said on Tuesday (Mar. 31) that Reinhart is expected to miss the remainder of the 2025-26 season, according to Jameson Olive of the Panthers' official site.",
+      "date": "Sat, Mar 14, 2026"
+    },
+    "evan rodrigues": {
+      "name": "Evan Rodrigues",
+      "team": "Florida Panthers",
+      "type": "Finger",
+      "note": "The Panthers said on Tuesday (Mar. 31) that Rodrigues will undergo surgery on his broken finger and miss the rest of the 2025-26 season.",
+      "date": "Thu, Mar 26, 2026"
+    },
+    "matthew tkachuk": {
+      "name": "Matthew Tkachuk",
+      "team": "Florida Panthers",
+      "type": "Personal",
+      "note": "Tkachuk did not play against the Rangers on Monday (Apr. 13).",
+      "date": "Tue, Apr 7, 2026"
+    },
+    "carter verhaeghe": {
+      "name": "Carter Verhaeghe",
+      "team": "Florida Panthers",
+      "type": "Undisclosed",
+      "note": "Verhaeghe did not play on Monday's (Apr. 13) versus the Maple Leafs.",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "kevin fiala": {
+      "name": "Kevin Fiala",
+      "team": "Los Angeles Kings",
+      "type": "Leg",
+      "note": "The Los Angeles Kings said that Fiala won't be available before training camp for the 2026-27 campaign, per John Hoven of SiriusXM NHL Network Radio.",
+      "date": "Fri, Feb 13, 2026"
+    },
+    "andrei kuzmenko": {
+      "name": "Andrei Kuzmenko",
+      "team": "Los Angeles Kings",
+      "type": "Knee",
+      "note": "The Los Angeles Kings said on Wednesday (Apr. 8) that Kuzmenko is making strides in his recovery and will be reevaluated in 7-8 days, per Alexander Legget of Mayors Manor.",
+      "date": "Thu, Feb 26, 2026"
+    },
+    "jeff malott": {
+      "name": "Jeff Malott",
+      "team": "Los Angeles Kings",
+      "type": "Undisclosed",
+      "note": "Malott didn't accompany the Kings on the team's three-game road trip, Zach Dooley of the Kings' official site reports Monday.",
+      "date": "Fri, Apr 10, 2026"
+    },
+    "zach bogosian": {
+      "name": "Zach Bogosian",
+      "team": "Minnesota Wild",
+      "type": "Undisclosed",
+      "note": "Bogosian will miss Thursday's (Apr. 9) game versus the Stars and isn't traveling with the Wild.",
+      "date": "Sun, Apr 5, 2026"
+    },
+    "matt boldy": {
+      "name": "Matt Boldy",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Boldy did not play on Monday's (Apr. 13) matchup with the Blues.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "jonas brodin": {
+      "name": "Jonas Brodin",
+      "team": "Minnesota Wild",
+      "type": "Undisclosed",
+      "note": "Brodin did not play for Monday's (Apr. 13) game in St. Louis.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "joel eriksson ek": {
+      "name": "Joel Eriksson Ek",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Eriksson Ek did not play in Monday's (Apr. 13) game against the Blues.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "brock faber": {
+      "name": "Brock Faber",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Faber did not play in Monday's (Apr. 13) game against the Blues due to rest purposes.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "marcus foligno": {
+      "name": "Marcus Foligno",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Foligno did not play against St. Louis on Monday (Apr. 13).",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "ryan hartman": {
+      "name": "Ryan Hartman",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Hartman did not play on against St. Louis on Monday (Apr. 13).",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "quinn hughes": {
+      "name": "Quinn Hughes",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Hughes did not play against St. Louis on Monday (Apr. 13).",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "kirill kaprizov": {
+      "name": "Kirill Kaprizov",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Kaprizov did not play Monday (Apr. 13) against St. Louis for rest purposes, as per.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "mats zuccarello": {
+      "name": "Mats Zuccarello",
+      "team": "Minnesota Wild",
+      "type": "Rest",
+      "note": "Zuccarello did not play for Monday's (Apr. 13) game against the Blues.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "alexandre carrier": {
+      "name": "Alexandre Carrier",
+      "team": "Montreal Canadiens",
+      "type": "Upper Body",
+      "note": "The Canadiens said on Tuesday (Mar. 31) that Carrier will miss 2-4 weeks with an upper-body injury.",
+      "date": "Tue, Mar 31, 2026"
+    },
+    "noah dobson": {
+      "name": "Noah Dobson",
+      "team": "Montreal Canadiens",
+      "type": "Thumb",
+      "note": "Dobson will miss the rest of the regular season and will be re-evaluated in two weeks, the team announced Sunday (Apr. 12).",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "patrik laine": {
+      "name": "Patrik Laine",
+      "team": "Montreal Canadiens",
+      "type": "Abdomen",
+      "note": "The Canadiens said that Laine will not participate Tuesday's (Feb. 17) practice and is being evaluated on a daily basis.",
+      "date": "Sat, Oct 18, 2025"
+    },
+    "nicolas hague": {
+      "name": "Nicolas Hague",
+      "team": "Nashville Predators",
+      "type": "Upper-Body",
+      "note": "Hague did not play on Monday's (Apr. 13) matchup versus San Jose.",
+      "date": "Sat, Apr 4, 2026"
+    },
+    "arseny gritsyuk": {
+      "name": "Arseny Gritsyuk",
+      "team": "New Jersey Devils",
+      "type": "Upper-Body",
+      "note": "The Devils said on Thursday (Apr. 2) that Gritsyuk will have surgery to address an upper-body injury and will miss the rest of the season.",
+      "date": "Tue, Mar 24, 2026"
+    },
+    "luke hughes": {
+      "name": "Luke Hughes",
+      "team": "New Jersey Devils",
+      "type": "Undisclosed",
+      "note": "The Devils said on Thursday (Apr. 9) that Hughes will undergo a procedure and will miss the remainder of the season.",
+      "date": "Thu, Apr 9, 2026"
+    },
+    "zack macewen": {
+      "name": "Zack MacEwen",
+      "team": "New Jersey Devils",
+      "type": "ACL",
+      "note": "The New Jersey Devils said on Saturday (Jan. 10) that MacEwen is out for the rest of the season after having ACL surgery.",
+      "date": "Wed, Nov 12, 2025"
+    },
+    "jacob markstrom": {
+      "name": "Jacob Markstrom",
+      "team": "New Jersey Devils",
+      "type": "Undisclosed",
+      "note": "Head coach Sheldon Keefe announced on Friday (Apr. 10) that Markstrom will miss the remainder of the regular season to rest and rehab nagging injuries.",
+      "date": "Fri, Apr 10, 2026"
+    },
+    "stefan noesen": {
+      "name": "Stefan Noesen",
+      "team": "New Jersey Devils",
+      "type": "Knee",
+      "note": "Noesen has been ruled out for the rest of the season, according to Kristy Flannery of The Hockey News reports Sunday (Mar. 22).",
+      "date": "Thu, Jan 8, 2026"
+    },
+    "brett pesce": {
+      "name": "Brett Pesce",
+      "team": "New Jersey Devils",
+      "type": "Lower-Body",
+      "note": "The Devils said on Tuesday (Mar. 22) that Pesce is questionable to return to the lineup before the end of the 2025-26 regular season.",
+      "date": "Wed, Mar 4, 2026"
+    },
+    "pierre engvall": {
+      "name": "Pierre Engvall",
+      "team": "New York Islanders",
+      "type": "Ankle",
+      "note": "The New York Islanders said on Thursday (Mar. 12) that Engvall will miss the remainder of the 2025-26 campaign, per Stefen Rosner of NHL.com.",
+      "date": "Thu, Sep 18, 2025"
+    },
+    "kyle palmieri": {
+      "name": "Kyle Palmieri",
+      "team": "New York Islanders",
+      "type": "Knee",
+      "note": "The New York Islanders placed F Kyle Palmieri on injured reserve on Sunday (Nov. 30) and has undergone season-ending knee surgery.",
+      "date": "Fri, Nov 28, 2025"
+    },
+    "alexander romanov": {
+      "name": "Alexander Romanov",
+      "team": "New York Islanders",
+      "type": "Shoulder",
+      "note": "Romanov will miss the final two games of the regular season, according to Stefen Rosner of NHL.com on Sunday (Apr. 12).",
+      "date": "Wed, Nov 19, 2025"
+    },
+    "max shabanov": {
+      "name": "Max Shabanov",
+      "team": "New York Islanders",
+      "type": "Upper Body",
+      "note": "Shabanov did not play in Sunday's (Apr. 12) game against the Canadiens.",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "semyon varlamov": {
+      "name": "Semyon Varlamov",
+      "team": "New York Islanders",
+      "type": "Knee",
+      "note": "The New York Islanders said on Thursday (Mar. 12) that Varlamov will miss the remainder of the 2025-26 campaign, per Stefen Rosner of NHL.com.",
+      "date": "Wed, Aug 6, 2025"
+    },
+    "matt rempe": {
+      "name": "Matt Rempe",
+      "team": "New York Rangers",
+      "type": "Thumb",
+      "note": "The Rangers said on Monday (Mar. 23) that Rempe probably won't be ready to return before the end of the 2025-26 regular season, according to Vince Z. Mercogliano of The Athletic.",
+      "date": "Fri, Feb 20, 2026"
+    },
+    "urho vaakanainen": {
+      "name": "Urho Vaakanainen",
+      "team": "New York Rangers",
+      "type": "Upper-body",
+      "note": "The Rangers said on Friday (Apr. 3) that Vaakanainen was practicing in a regular jersey, per Mollie Walker of the New York Post.",
+      "date": "Wed, Mar 18, 2026"
+    },
+    "thomas chabot": {
+      "name": "Thomas Chabot",
+      "team": "Ottawa Senators",
+      "type": "Rest",
+      "note": "Chabot did not play in Sunday's (Apr. 12) game against the Devils.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "dennis gilbert": {
+      "name": "Dennis Gilbert",
+      "team": "Ottawa Senators",
+      "type": "Upper-Body",
+      "note": "The Senators announced on Thursday (Mar. 26) that Gilbert will miss approximately three weeks, according to Julian McKenzie of The Athletic.",
+      "date": "Sun, Mar 22, 2026"
+    },
+    "nick jensen": {
+      "name": "Nick Jensen",
+      "team": "Ottawa Senators",
+      "type": "Lower-Body",
+      "note": "The Senators said on Tuesday (Mar. 17) that Jensen will undergo knee surgery to repair a torn meniscus and will be out for approximately six weeks, per TSN 1200 Ottawa.",
+      "date": "Fri, Mar 13, 2026"
+    },
+    "tyler kleven": {
+      "name": "Tyler Kleven",
+      "team": "Ottawa Senators",
+      "type": "Upper Body",
+      "note": "The Senators said on Saturday (Apr. 4) that Kleven is week-to-week, per Bruce Garrioch of Postmedia.",
+      "date": "Thu, Apr 2, 2026"
+    },
+    "jake sanderson": {
+      "name": "Jake Sanderson",
+      "team": "Ottawa Senators",
+      "type": "Rest",
+      "note": "Sanderson did not play in Sunday's (Apr. 12) game against the Devils.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "tim stutzle": {
+      "name": "Tim Stutzle",
+      "team": "Ottawa Senators",
+      "type": "Rest",
+      "note": "Stutzle did not play in Sunday's (Apr. 12) game against the Devils.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "brady tkachuk": {
+      "name": "Brady Tkachuk",
+      "team": "Ottawa Senators",
+      "type": "Undisclosed",
+      "note": "Tkachuk did not play in Sunday's (Apr. 12) game against the Devils.",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "rodrigo abols": {
+      "name": "Rodrigo Abols",
+      "team": "Philadelphia Flyers",
+      "type": "Ankle",
+      "note": "The Flyers said on Wednesday (Jan. 21) that Abols' injury is a fractured right ankle, per Kevin Kurz of The Athletic. He is likely to be out for at least two months.",
+      "date": "Sat, Jan 17, 2026"
+    },
+    "nikita grebenkin": {
+      "name": "Nikita Grebenkin",
+      "team": "Philadelphia Flyers",
+      "type": "Upper Body",
+      "note": "Grebenkin isn't close to returning to the lineup, as per Jonathan Bailey of The Hockey News reported.",
+      "date": "Thu, Mar 26, 2026"
+    },
+    "noel acciari": {
+      "name": "Noel Acciari",
+      "team": "Pittsburgh Penguins",
+      "type": "Upper-Body",
+      "note": "Acciari did not play in Sunday's (Apr. 12) gamea gainst the Capitals.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "connor clifton": {
+      "name": "Connor Clifton",
+      "team": "Pittsburgh Penguins",
+      "type": "Upper-Body",
+      "note": "Clifton did not play in Sunday's (Apr. 12) gamea gainst the Capitals.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "connor dewar": {
+      "name": "Connor Dewar",
+      "team": "Pittsburgh Penguins",
+      "type": "Lower Body",
+      "note": "The Penguins said on Saturday (Apr. 11) that Dewar is week-to-week.",
+      "date": "Thu, Apr 9, 2026"
+    },
+    "filip hallander": {
+      "name": "Filip Hallander",
+      "team": "Pittsburgh Penguins",
+      "type": "Leg",
+      "note": "The Pittsburgh Penguins recalled F Filip Hallander from his conditioning stint with the minors.",
+      "date": "Thu, Nov 6, 2025"
+    },
+    "caleb jones": {
+      "name": "Caleb Jones",
+      "team": "Pittsburgh Penguins",
+      "type": "Shoulder",
+      "note": "The Pittsburgh Penguins placed D Caleb Jones on injured reserve on Sunday (Apr. 5).",
+      "date": "Thu, Apr 2, 2026"
+    },
+    "ben kindel": {
+      "name": "Ben Kindel",
+      "team": "Pittsburgh Penguins",
+      "type": "Upper-Body",
+      "note": "Kindel did not play in Sunday's (Apr. 12) gamea gainst the Capitals.",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "blake lizotte": {
+      "name": "Blake Lizotte",
+      "team": "Pittsburgh Penguins",
+      "type": "Upper-Body",
+      "note": "The Penguins said on Tuesday (Mar. 17) that Lizotte will be reevaluated in four weeks.",
+      "date": "Mon, Mar 16, 2026"
+    },
+    "anthony mantha": {
+      "name": "Anthony Mantha",
+      "team": "Pittsburgh Penguins",
+      "type": "Lower-Body",
+      "note": "Mantha did not play in Sunday's (Apr. 12) gamea gainst the Capitals.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "ryan shea": {
+      "name": "Ryan Shea",
+      "team": "Pittsburgh Penguins",
+      "type": "Upper-Body",
+      "note": "Shea did not play in Sunday's (Apr. 12) gamea gainst the Capitals.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "ryan reaves": {
+      "name": "Ryan Reaves",
+      "team": "San Jose Sharks",
+      "type": "Hamd",
+      "note": "The Sharks said that Reaves didn't participate in Monday's (Mar. 23) practice and is week-to-week, per Sheng Peng of San Jose Hockey Now.",
+      "date": "Sat, Mar 21, 2026"
+    },
+    "joey daccord": {
+      "name": "Joey Daccord",
+      "team": "Seattle Kraken",
+      "type": "Lower-Body",
+      "note": "Daccord did not play on Monday's (Apr. 13) matchup versus the Kings.",
+      "date": "Fri, Apr 10, 2026"
+    },
+    "philipp grubauer": {
+      "name": "Philipp Grubauer",
+      "team": "Seattle Kraken",
+      "type": "Lower-body",
+      "note": "Grubauer did not play in Monday's (Apr. 13) home game against the Kings.",
+      "date": "Mon, Apr 6, 2026"
+    },
+    "jared mccann": {
+      "name": "Jared McCann",
+      "team": "Seattle Kraken",
+      "type": "Lower-Body",
+      "note": "McCann is dealing with a lower-body injury that will sideline him for the final three games of the season, the team announced Monday (Apr. 13).",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "matt murray": {
+      "name": "Matt Murray",
+      "team": "Seattle Kraken",
+      "type": "Personal",
+      "note": "The Kraken said on Thursday (Apr. 9) that Murray is away from the team due to a family matter.",
+      "date": "Thu, Apr 9, 2026"
+    },
+    "shane wright": {
+      "name": "Shane Wright",
+      "team": "Seattle Kraken",
+      "type": "Upper-Body",
+      "note": "Wright did not play on Monday's (Apr. 13) home matchup against the Kings.",
+      "date": "Sat, Mar 28, 2026"
+    },
+    "max crozier": {
+      "name": "Max Crozier",
+      "team": "Tampa Bay Lightning",
+      "type": "Abdomen",
+      "note": "The Tampa Bay Lightning placed D Max Crozier on injured reserve on Saturday (Feb. 21).",
+      "date": "Sun, Feb 1, 2026"
+    },
+    "brandon hagel": {
+      "name": "Brandon Hagel",
+      "team": "Tampa Bay Lightning",
+      "type": "Lower-Body",
+      "note": "Hagel did not play against Detroit on Monday (Apr. 13).",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "victor hedman": {
+      "name": "Victor Hedman",
+      "team": "Tampa Bay Lightning",
+      "type": "Personal",
+      "note": "The Tampa Bay Lightning placed D Victor Hedman on long-term injured reserve.",
+      "date": "Thu, Mar 19, 2026"
+    },
+    "pontus holmberg": {
+      "name": "Pontus Holmberg",
+      "team": "Tampa Bay Lightning",
+      "type": "Upper-Body",
+      "note": "The Lightning said on Monday (Apr. 6) that Holmberg might be set for extended absence, per Eduardo A. Encina of the Tampa Bay Times.",
+      "date": "Mon, Apr 6, 2026"
+    },
+    "dominic james": {
+      "name": "Dominic James",
+      "team": "Tampa Bay Lightning",
+      "type": "Leg",
+      "note": "The Tampa Bay Lightning said on Thursday (Mar. 5) that James will be sidelined for 8-10 weeks after undergoing surgery, per Benjamin Pierce of the team's official site.",
+      "date": "Sat, Feb 28, 2026"
+    },
+    "jonas johansson": {
+      "name": "Jonas Johansson",
+      "team": "Tampa Bay Lightning",
+      "type": "Undisclosed",
+      "note": "Johansson did not play on Monday's (Apr. 13) game against Detroit.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "darren raddysh": {
+      "name": "Darren Raddysh",
+      "team": "Tampa Bay Lightning",
+      "type": "Undisclosed",
+      "note": "Raddysh did not play on against Detroit on Monday (Apr. 13).",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "brandon carlo": {
+      "name": "Brandon Carlo",
+      "team": "Toronto Maple Leafs",
+      "type": "Lower Body",
+      "note": "The Maple Leafs said on Saturday (Apr. 11) that Carlo will not return to the lineup for the rest of the season, according to David Alter of The Hockey News.",
+      "date": "Wed, Apr 8, 2026"
+    },
+    "dakota joshua": {
+      "name": "Dakota Joshua",
+      "team": "Toronto Maple Leafs",
+      "type": "Upper Body",
+      "note": "The Maple Leafs said on Saturday (Apr. 11) that Joshua will not return to the lineup for the rest of the season, according to David Alter of The Hockey News.",
+      "date": "Wed, Apr 8, 2026"
+    },
+    "auston matthews": {
+      "name": "Auston Matthews",
+      "team": "Toronto Maple Leafs",
+      "type": "Knee",
+      "note": "The Maple Leafs said on Thursday (Mar. 19) that Matthews underwent successful knee surgery and will recover in 12 weeks.",
+      "date": "Thu, Mar 12, 2026"
+    },
+    "anthony stolarz": {
+      "name": "Anthony Stolarz",
+      "team": "Toronto Maple Leafs",
+      "type": "Lower Body",
+      "note": "The Maple Leafs said on Saturday (Apr. 11) that Stolarz will not return to the lineup for the rest of the season, according to David Alter of The Hockey News.",
+      "date": "Wed, Apr 8, 2026"
+    },
+    "chris tanev": {
+      "name": "Chris Tanev",
+      "team": "Toronto Maple Leafs",
+      "type": "Abdomen",
+      "note": "The Toronto Maple Leafs said on Wednesday (Mar. 4) that Tanev underwent core muscle surgery Wednesday and will miss the remainder of the 2025-26 campaign.",
+      "date": "Tue, Dec 30, 2025"
+    },
+    "barrett hayton": {
+      "name": "Barrett Hayton",
+      "team": "Utah Mammoth",
+      "type": "Upper-Body",
+      "note": "HC Andre Tourigny said on Thursday (Mar. 26) that Hayton is considered week-to-week, according to Brogan Houston of the Deseret News.",
+      "date": "Tue, Mar 24, 2026"
+    },
+    "john marino": {
+      "name": "John Marino",
+      "team": "Utah Mammoth",
+      "type": "Upper-body",
+      "note": "Marino did not play on Sunday's (Apr. 12) game versus the Flames.",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "jack mcbain": {
+      "name": "Jack McBain",
+      "team": "Utah Mammoth",
+      "type": "Lower-body",
+      "note": "The Mammoth said that McBain won't play in Saturday's (Apr. 4) game against the Canucks and is listed as week to week.",
+      "date": "Thu, Apr 2, 2026"
+    },
+    "karel vejmelka": {
+      "name": "Karel Vejmelka",
+      "team": "Utah Mammoth",
+      "type": "Undisclosed",
+      "note": "Vejmelka did not play on Sunday's (Apr. 12) game versus the Flames.",
+      "date": "Sun, Apr 12, 2026"
+    },
+    "filip chytil": {
+      "name": "Filip Chytil",
+      "team": "Vancouver Canucks",
+      "type": "Face",
+      "note": "The Vancouver Canucks placed F Filip Chytil on injured reserve on Wednesday (Feb. 25).",
+      "date": "Mon, Feb 2, 2026"
+    },
+    "thatcher demko": {
+      "name": "Thatcher Demko",
+      "team": "Vancouver Canucks",
+      "type": "Hip",
+      "note": "The Vancouver Canucks said on Tuesday (Mar. 3) that Demko was placed on long-term injured reserve and has been shut down for the season.",
+      "date": "Sat, Jan 10, 2026"
+    },
+    "derek forbort": {
+      "name": "Derek Forbort",
+      "team": "Vancouver Canucks",
+      "type": "Undisclosed",
+      "note": "The Canucks listed Forbort on long-term injured reserve as of Tuesday (Oct. 28).",
+      "date": "Sat, Oct 11, 2025"
+    },
+    "evander kane": {
+      "name": "Evander Kane",
+      "team": "Vancouver Canucks",
+      "type": "Upper-Body",
+      "note": "Kane did not play on Thursday's (Apr. 9) game versus the Kings.",
+      "date": "Mon, Apr 6, 2026"
+    },
+    "william karlsson": {
+      "name": "William Karlsson",
+      "team": "Vegas Golden Knights",
+      "type": "Lower Body",
+      "note": "The Vegas Golden Knights said on Friday (Mar. 6) that Karlsson won't be ready to start the playoffs.",
+      "date": "Mon, Nov 10, 2025"
+    },
+    "charlie lindgren": {
+      "name": "Charlie Lindgren",
+      "team": "Washington Capitals",
+      "type": "Upper Body",
+      "note": "Lindgren did not play in Sunday's (Apr. 12) game against the Penguins.",
+      "date": "Wed, Apr 8, 2026"
+    },
+    "rasmus sandin": {
+      "name": "Rasmus Sandin",
+      "team": "Washington Capitals",
+      "type": "Leg",
+      "note": "Sandin did not play in Sunday's (Apr. 12) game against the Penguins.",
+      "date": "Sat, Apr 11, 2026"
+    },
+    "morgan barron": {
+      "name": "Morgan Barron",
+      "team": "Winnipeg Jets",
+      "type": "Lower-Body",
+      "note": "The Jets said on Saturday (Apr. 11) that Barron is OUT for Winnipeg's final four games of the regular season, according to Ken Wiebe of The Winnipeg Free Press.",
+      "date": "Mon, Apr 6, 2026"
+    },
+    "alex iafallo": {
+      "name": "Alex Iafallo",
+      "team": "Winnipeg Jets",
+      "type": "Undisclosed",
+      "note": "Iafallo did not play against Vegas on Monday, Mitchell Clinton of the Jets' official site reports.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "vladislav namestnikov": {
+      "name": "Vladislav Namestnikov",
+      "team": "Winnipeg Jets",
+      "type": "Undisclosed",
+      "note": "Namestnikov did not play on Monday's (Apr. 13) matchup against Vegas.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "gustav nyquist": {
+      "name": "Gustav Nyquist",
+      "team": "Winnipeg Jets",
+      "type": "Undisclosed",
+      "note": "Nyquist did not play versus Vegas on Monday (Apr. 13).",
+      "date": "Mon, Apr 6, 2026"
+    },
+    "neal pionk": {
+      "name": "Neal Pionk",
+      "team": "Winnipeg Jets",
+      "type": "Undisclosed",
+      "note": "Pionk did not play versus Vegas on Monday (Apr. 13) due to an undisclosed injury.",
+      "date": "Mon, Apr 13, 2026"
+    },
+    "elias salomonsson": {
+      "name": "Elias Salomonsson",
+      "team": "Winnipeg Jets",
+      "type": "Concussion",
+      "note": "Salomonsson did not return to Thursday's (Apr. 2) game versus the Stars.",
+      "date": "Thu, Apr 2, 2026"
+    }
+  }
+}
