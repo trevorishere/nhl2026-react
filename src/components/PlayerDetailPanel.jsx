@@ -1,14 +1,17 @@
-import { X } from 'lucide-react';
+import { X, AlertCircle } from 'lucide-react';
 import { usePlayerDetail, toiToSeconds, secondsToToi } from '../hooks/usePlayerDetail';
 import { TEAM_STYLES } from '../data/constants';
 
 const CHIPS = [
   'Which line is this player on?',
   'PP1 or PP2?',
-  'Any known injuries?',
   'Deployment changed recently?',
   'Facing a shutdown matchup?',
 ];
+
+function normalizeName(name) {
+  return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
 
 // ── Skeleton block for loading state ─────────────────────────────────────────
 function Skeleton({ className = '' }) {
@@ -46,8 +49,9 @@ function FormDot({ pts, date }) {
 }
 
 // ── Main panel ────────────────────────────────────────────────────────────────
-export default function PlayerDetailPanel({ player, onClose }) {
+export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
   const { data, loading, error } = usePlayerDetail(player);
+  const inj = injuries[normalizeName(player.name)] ?? null;
 
   const teamStyle  = TEAM_STYLES[player.team] ?? { bg: '#333', overlay: 0 };
   const headshot   = data?.landing?.headshot;
@@ -120,6 +124,19 @@ export default function PlayerDetailPanel({ player, onClose }) {
 
       {/* ── Body ── */}
       <div className="flex flex-col gap-4 p-4">
+
+        {/* Injury card — shown when player appears in injuries.json */}
+        {inj && (
+          <div className="flex gap-2.5 rounded-xl p-3" style={{ background: 'rgba(127,29,29,0.25)', border: '1px solid rgba(185,28,28,0.4)' }}>
+            <AlertCircle size={15} color="#ef4444" style={{ flexShrink: 0, marginTop: 1 }} />
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#f87171' }}>
+                {inj.type}{inj.date ? ` · ${inj.date}` : ''}
+              </span>
+              <p style={{ fontSize: 12, color: 'var(--text)', lineHeight: 1.45, margin: 0 }}>{inj.note}</p>
+            </div>
+          </div>
+        )}
 
         {/* Quick stats — always shown (from existing data) */}
         <div className="grid grid-cols-4 gap-2 bg-surface2 rounded-xl p-3">
