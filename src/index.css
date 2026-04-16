@@ -2,9 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Register glow custom properties so Safari can interpolate them in @keyframes */
+@property --glow-bright {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --glow-dim {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
 @layer base {
   :root {
-    --bg: #171614;
+    --bg: #232221;
     --surface: #1c1b19;
     --surface2: #22211f;
     --text: #e7e4df;
@@ -33,29 +45,36 @@
 
 /* ── Team badge animations ───────────────────────────────────────────────── */
 
-/* Click burst: rise = 25ms (peak at 3%), fall = 825ms → 0.85s total.
-   Spread 8px, opacity 85%. Settles to 32px/4px ambient + inset 1px white border.
-   --glow-bright / --glow-dim set inline per team. */
-@keyframes teamGlowBurst {
-  0%   { box-shadow: 0 0 0px 0px transparent; }
-  3%   { box-shadow: 0 0 16px 8px var(--glow-bright); }
-  100% { box-shadow: 0 0 32px 4px var(--glow-dim), inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
-}
-
-/* Post-burst: ambient halo 32px/4px + white pulse (1px→8px) + inset 1px white border */
+/* Selected/hover ambient: ambient halo 32px/4px + white pulse (1px→8px) + inset 1px white border */
 @keyframes teamPulseGlow {
   0%   { box-shadow: 0 0 32px 4px var(--glow-dim), 0 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
   50%  { box-shadow: 0 0 32px 4px var(--glow-dim), 0 0 8px 0 rgba(255, 255, 255, 0.50), inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
   100% { box-shadow: 0 0 32px 4px var(--glow-dim), 0 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
 }
 
+/* ── Bracket section responsive padding ─────────────────────────────────── */
+
+.bracket-section {
+  padding-left: 80px;   /* px-20 = 80px */
+  padding-right: 80px;
+}
+
+@media (max-width: 1040px) {
+  .bracket-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
 @layer utilities {
   .bracket-grid {
     display: grid;
-    /* R1(156) | Semis+Final(192) | Cup(176) | Semis+Final(192) | R1(156) */
-    /* Semis+Final is 192px: semis at left=0, conf-final offset 36px right  */
-    grid-template-columns: 156px 192px 176px 192px 156px;
-    column-gap: 40px;
+    /* R1(156) fixed | 3 fluid middle cols | R1(156) fixed                  */
+    /* At 1232px natural: each middle col = 306.67px (920/3)                */
+    /* At 988px min:      each middle col = 225.33px                        */
+    /* Left offsets within each col use calc(100% - Npx) to stay fluid     */
+    grid-template-columns: 156px 1fr 1fr 1fr 156px;
+    column-gap: 0;
     row-gap: 0;
     align-items: start;
   }

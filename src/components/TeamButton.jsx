@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SEEDS, TEAM_STYLES } from '../data/constants';
 import { LOGOS } from '../data/logos';
+import { FF } from '../styles/tokens';
 
 // Logo positions extracted exactly from Figma frame 123:29
 const LOGO_POS = {
@@ -64,40 +65,34 @@ const TRANSITION = 'opacity 0.25s ease-in-out, filter 0.25s ease-in-out';
 const LOGO_TRANSITION = 'filter 0.25s ease-in-out';
 
 export default function TeamButton({ team, matchId, picks, onPick }) {
-  const [bursting, setBursting] = useState(false);
   const [hovering, setHovering] = useState(false);
 
   // Blank / TBD slot
   if (!team) {
-    return (
-      <div
-        className="h-[58px] w-[156px] shrink-0 relative"
-        style={{ background: 'rgba(255,255,255,0.05)', opacity: 0.5 }}
-      />
-    );
+    return <div className="h-[58px] w-[156px] shrink-0" style={{ border: '1px solid #393836' }} />;
   }
 
   const picked       = picks[matchId] || null;
   const isWinner     = picked === team;
   const isEliminated = !!(picked && picked !== team);
-  const isNonSelected = isEliminated || (!isWinner && !isEliminated); // default + eliminated
 
-  const baseColor     = TEAM_STYLES[team]?.bg ?? '#333';
-  const darkerColor   = `color-mix(in srgb, ${baseColor} 95%, black 5%)`;
-  const brighterColor = `color-mix(in srgb, ${baseColor} 85%, white 15%)`;
+  const baseColor = TEAM_STYLES[team]?.bg ?? '#333';
 
   const glowSrc    = GLOW_COLOR[team] ?? baseColor;
   const glowBright = toRgba(glowSrc, 0.85);
   const glowDim    = toRgba(glowSrc, 0.40);
 
   // ── Button style ─────────────────────────────────────────────────────────
+  const GLOW_SHADOW = `0 0 32px 4px var(--glow-dim), inset 0 0 0 1px rgba(255,255,255,0.25)`;
+
   let buttonStyle;
   if (isWinner) {
+    // Winner: same as default (no glow). Click inherits rollover glow and the
+    // 1s transition fades it out — no burst, just a smooth release.
     buttonStyle = {
-      background: `linear-gradient(8deg, ${darkerColor}, ${brighterColor}, ${darkerColor})`,
-      animation: bursting
-        ? 'teamGlowBurst 0.85s ease-out forwards'
-        : 'teamPulseGlow 2s ease-in-out infinite',
+      background:      teamBackground(team),
+      boxShadow:       'none',
+      transition:      'box-shadow 1s ease-in-out',
       '--glow-bright': glowBright,
       '--glow-dim':    glowDim,
     };
@@ -110,42 +105,40 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
       '--glow-bright': glowBright,
     };
   } else {
-    // Default (no pick made): full opacity, no animation
+    // Default (no pick made): flat team bg; glow appears on hover only
     buttonStyle = {
       background:      teamBackground(team),
+      boxShadow:       hovering ? GLOW_SHADOW : 'none',
+      transition:      'box-shadow 0.25s ease-in-out',
       '--glow-bright': glowBright,
+      '--glow-dim':    glowDim,
     };
   }
 
   // ── Logo style ───────────────────────────────────────────────────────────
+  const LOGO_GLOW   = 'drop-shadow(0 0 4px rgba(255,255,255,0.7))';
+  const LOGO_HIDDEN = 'drop-shadow(0 0 1px rgba(255,255,255,0))';
+
   let logoFilter;
   if (isWinner) {
-    logoFilter = 'drop-shadow(0 0 4px rgba(255,255,255,0.7))';
-  } else if (hovering) {
-    // Hover: full colour + glow (also de-greys eliminated logos)
-    logoFilter = 'drop-shadow(0 0 4px rgba(255,255,255,0.7))';
+    // Winner: same as default (no glow) — fades from rollover via 1s transition
+    logoFilter = LOGO_HIDDEN;
   } else if (isEliminated) {
-    logoFilter = 'grayscale(1)';
+    logoFilter = hovering ? LOGO_GLOW : 'grayscale(1)';
   } else {
-    logoFilter = 'drop-shadow(0 0 1px rgba(255,255,255,0))';
+    // Default: logo glow on hover only; invisible value keeps transition smooth
+    logoFilter = hovering ? LOGO_GLOW : LOGO_HIDDEN;
   }
 
   const logoUri = LOGOS[team] || '';
   const logoPos = LOGO_POS[team] ?? { left: 50, top: -20, width: 140, height: 93 };
 
-  const handleClick = (e) => {
-    e.stopPropagation();
-    onPick(matchId, team);
-    setBursting(true);
-  };
-
   return (
     <button
       type="button"
-      onClick={handleClick}
-      onMouseEnter={() => { if (isNonSelected) setHovering(true); }}
+      onClick={(e) => { e.stopPropagation(); onPick(matchId, team); }}
+      onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
-      onAnimationEnd={(e) => { if (e.animationName === 'teamGlowBurst') setBursting(false); }}
       className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
       style={buttonStyle}
     >
@@ -161,7 +154,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
             height:     logoPos.height,
             objectFit:  'contain',
             filter:     logoFilter,
-            transition: isNonSelected ? LOGO_TRANSITION : undefined,
+            transition: isWinner ? 'filter 1s ease-in-out' : LOGO_TRANSITION,
           }}
         />
       )}
@@ -172,13 +165,13 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
       >
         <span
           className="text-white text-[16px] font-bold leading-normal"
-          style={{ fontFamily: 'Figtree, sans-serif', letterSpacing: '0.48px' }}
+          style={{ fontFamily: FF, letterSpacing: '0.48px' }}
         >
           {team}
         </span>
         <span
           className="text-[11px] font-semibold leading-normal"
-          style={{ fontFamily: 'Figtree, sans-serif', letterSpacing: '0.33px', color: 'rgba(255,255,255,0.7)' }}
+          style={{ fontFamily: FF, letterSpacing: '0.33px', color: 'rgba(255,255,255,0.7)' }}
         >
           {SEEDS[team] || ''}
         </span>

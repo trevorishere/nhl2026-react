@@ -19,11 +19,11 @@ export const TEAM_STYLES = {
 };
 
 export const SEEDS = {
-  TBL: 'A1', BUF: 'A2', MTL: 'A3',
+  BUF: 'A1', TBL: 'A2', MTL: 'A3',
   CAR: 'M1', PIT: 'M2', PHI: 'M3',
   BOS: 'WC1', OTT: 'WC2',
   COL: 'C1', DAL: 'C2', MIN: 'C3',
-  EDM: 'P1', ANA: 'P2', VGK: 'P3',
+  VGK: 'P1', EDM: 'P2', ANA: 'P3',
   LAK: 'WC2', UTA: 'WC1',
 };
 
@@ -36,21 +36,21 @@ export const ROUND_PROGRESSION = {
 };
 
 export const CHALK_PICKS = {
-  E1: 'TBL', E2: 'BUF', E3: 'CAR', E4: 'PIT',
-  W1: 'COL', W2: 'DAL', W3: 'EDM', W4: 'ANA',
+  E1: 'BUF', E2: 'TBL', E3: 'CAR', E4: 'PIT',
+  W1: 'COL', W2: 'DAL', W3: 'VGK', W4: 'EDM',
   S1: 'TBL', S2: 'CAR', S3: 'COL', S4: 'EDM',
   F1: 'CAR', F2: 'COL', C1: 'COL',
 };
 
 export const ROUND1_MATCHUPS = [
-  { id: 'E1', teams: ['TBL', 'BOS'], label: 'Atlantic 1' },
-  { id: 'E2', teams: ['BUF', 'MTL'], label: 'Atlantic 2' },
+  { id: 'E1', teams: ['BUF', 'BOS'], label: 'Atlantic 1' },
+  { id: 'E2', teams: ['TBL', 'MTL'], label: 'Atlantic 2' },
   { id: 'E3', teams: ['CAR', 'OTT'], label: 'Metro 1' },
   { id: 'E4', teams: ['PIT', 'PHI'], label: 'Metro 2' },
   { id: 'W1', teams: ['COL', 'LAK'], label: 'Central 1' },
   { id: 'W2', teams: ['DAL', 'MIN'], label: 'Central 2' },
-  { id: 'W3', teams: ['EDM', 'UTA'], label: 'Pacific 1' },
-  { id: 'W4', teams: ['ANA', 'VGK'], label: 'Pacific 2' },
+  { id: 'W3', teams: ['VGK', 'UTA'], label: 'Pacific 1' },
+  { id: 'W4', teams: ['EDM', 'ANA'], label: 'Pacific 2' },
 ];
 
 // Which downstream picks to clear when a pick changes

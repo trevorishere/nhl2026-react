@@ -1,81 +1,51 @@
-import { useRef, useState, useEffect } from 'react';
 import BracketColumn from './BracketColumn';
 import { ROUND1_MATCHUPS } from '../data/constants';
 
 // ─── Card dimensions ──────────────────────────────────────────────────────────
 const CARD_W = 156;         // each team card width
-const MATCH_H_NORMAL   = 118; // 58 + 2px gap + 58  (no game selector)
-const MATCH_H_ADVANCED = 162; // 118 + 44px game-selector block
+const MATCH_H_NORMAL   = 117; // 58 + 1px gap + 58  (no game selector)
+const MATCH_H_ADVANCED = 161; // 117 + 44px game-selector block
 
-// ─── Vertical layout — from Figma frame 71:44839 ─────────────────────────────
+// ─── Vertical layout — from Figma frame 93:86555 (1440w) ─────────────────────
 //
-// R1 match positions are taken directly from Figma (advanced mode frame):
-//   block 164px + 32px within-div gap → next block
-//   block 164px + 64px cross-div  gap → next block
+// R1 match positions taken directly from Figma: uniform 197px spacing.
+// Semi/Final tops are hardcoded from Figma container y values.
+// Same anchor positions for BOTH modes; advanced just adds game-selector height.
 //
-// We use these same anchor positions for BOTH modes so the bracket is
-// consistently tall; normal mode just has more breathing room below each card.
-//
-const R1_TOPS = [0, 196, 424, 620];
+const R1_TOPS = [0, 197, 394, 591];
 
-// Semi-final: centred between the two R1 matches it connects (midpoint of tops)
-const SEMI_TOP_0 = (R1_TOPS[0] + R1_TOPS[1]) / 2; // 98
-const SEMI_TOP_1 = (R1_TOPS[2] + R1_TOPS[3]) / 2; // 522
+// Semis: from Figma y positions of the R2 label containers
+const SEMI_TOP_0 = 91;   // Figma y=90.5
+const SEMI_TOP_1 = 478;  // Figma y=477.5
 
-// Conference Final: centred between the two semis, then shifted up half a label
-const LABEL_H      = 21; // single-line 11px label: ~13px text + 8px gap
-const CONF_LABEL_H = 34; // two-line conf-final label: ~26px text + 8px gap
-const FINAL_TOP    = Math.round((SEMI_TOP_0 + SEMI_TOP_1) / 2 - CONF_LABEL_H / 2); // 293
+// Conference Finals: from Figma y positions of WCF/ECF label containers
+const LABEL_H      = 19; // single-line label height (R2, Cup Final)
+const CONF_LABEL_H = 38; // two-line conf-final label height
+const FINAL_TOP    = 275; // Figma WCF y=274.5
 
-// Stanley Cup Final: place label so its cards align with the conf-final cards
-const confFinalCardStart = FINAL_TOP + CONF_LABEL_H; // 327
-const CUP_TOP = confFinalCardStart - LABEL_H;         // 306
+// Cup Final: from Figma y position of Cup label container
+const CUP_TOP = 284; // Figma y=283.5
 
 const SEMIS_AND_FINAL_TOPS = [SEMI_TOP_0, FINAL_TOP, SEMI_TOP_1];
 const CUP_TOPS = [CUP_TOP];
 
 // ─── Column widths ────────────────────────────────────────────────────────────
 //
-//  R1 col    : 156px  — exactly one card wide
-//  Semi+Final: 192px  — semi at left=0 (156px), conf-final offset 36px right
-//  Cup Final : 176px  — card centred: left=10 (10+156=166 < 176)
-//  Gap       : 40px
+//  R1 col        : 156px — exactly one card wide
+//  Semis+Final   : 307px — semi at left=40, conf-final at left=151 (156+307=463)
+//  Cup Final     : 306px — card centred at left=75 (75+156=231, centre of 306px)
+//  No column gap — spacing is built into the left offsets within each column
 //
-//  Natural bracket width = 156+192+176+192+156 + 4×40 = 1032px
+//  Natural bracket width = 156+307+306+307+156 = 1232px (Figma frame 93:86555)
 //
-const COL_SEMIS_W       = 192;
-const COL_CUP_W         = 176;
-const COL_GAP           = 40;
-const BRACKET_NATURAL_W = CARD_W + COL_SEMIS_W + COL_CUP_W + COL_SEMIS_W + CARD_W + 4 * COL_GAP; // 1032
-
-// West: semis flush left (near R1), conf-final shifted right (toward Cup)
-const WEST_SEMIS_LEFTS = [0, 36, 0];
-// East: conf-final at left, semis shifted right (near R1 on the far right)
-const EAST_SEMIS_LEFTS = [36, 0, 36];
-
-// ─── Scale-to-fit hook ───────────────────────────────────────────────────────
-function useScaleToFit(naturalWidth) {
-  const ref   = useRef(null);
-  const [scale, setScale] = useState(1);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => {
-      setScale(Math.min(1, entry.contentRect.width / naturalWidth));
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [naturalWidth]);
-
-  return [ref, scale];
-}
+// West: semis fixed 40px from left edge; WCF right-aligned to column
+const WEST_SEMIS_LEFTS = [40, 'calc(100% - 156px)', 40];
+// East: ECF left-aligned at 0; semis have fixed 40px right margin
+const EAST_SEMIS_LEFTS = ['calc(100% - 196px)', 0, 'calc(100% - 196px)'];
 
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Bracket({ picks, onPick, mode, seriesLengths, onSeriesLength }) {
-  const [containerRef, scale] = useScaleToFit(BRACKET_NATURAL_W);
-
   // Column height depends on mode (R1 match height + bottom padding)
   const matchH = mode === 'advanced' ? MATCH_H_ADVANCED : MATCH_H_NORMAL;
   const COL_H  = R1_TOPS[3] + matchH + 20;
@@ -117,74 +87,65 @@ export default function Bracket({ picks, onPick, mode, seriesLengths, onSeriesLe
   const columnProps = { picks, onPick, mode, seriesLengths, onSeriesLength };
 
   return (
-    <>
-      {/* Outer: measures available width, clips scaled content */}
-      <div
-        ref={containerRef}
-        className="w-full overflow-hidden"
-        style={{ height: COL_H * scale }}
-      >
-        {/* Inner: scaled to fit, always centred */}
-        <div
-          style={{
-            width: BRACKET_NATURAL_W,
-            transform: `scale(${scale})`,
-            transformOrigin: 'top center',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <div className="bracket-grid">
-            {/* Col 1: West R1 */}
-            <BracketColumn
-              matches={westR1}
-              tops={R1_TOPS}
-              colHeight={COL_H}
-              {...columnProps}
-            />
-            {/* Col 2: West Semis + Conference Final */}
-            <BracketColumn
-              matches={westSemisAndFinal}
-              tops={SEMIS_AND_FINAL_TOPS}
-              lefts={WEST_SEMIS_LEFTS}
-              colHeight={COL_H}
-              {...columnProps}
-            />
-            {/* Col 3: Stanley Cup Final */}
-            <BracketColumn
-              matches={[cup]}
-              tops={CUP_TOPS}
-              lefts={[10]}
-              colHeight={COL_H}
-              {...columnProps}
-            />
-            {/* Col 4: East Semis + Conference Final */}
-            <BracketColumn
-              matches={eastSemisAndFinal}
-              tops={SEMIS_AND_FINAL_TOPS}
-              lefts={EAST_SEMIS_LEFTS}
-              colHeight={COL_H}
-              {...columnProps}
-            />
-            {/* Col 5: East R1 */}
-            <BracketColumn
-              matches={eastR1}
-              tops={R1_TOPS}
-              colHeight={COL_H}
-              {...columnProps}
-            />
-          </div>
-        </div>
-      </div>
+    <div style={{ position: 'relative' }}>
+      {/* Bracket grid — fluid width, no scaling */}
+      <div className="bracket-grid" style={{ height: COL_H }}>
+        {/* Col 1: West R1 */}
+        <BracketColumn
+          matches={westR1}
+          tops={R1_TOPS}
+          colHeight={COL_H}
+          {...columnProps}
+        />
+        {/* Col 2: West Semis + Conference Final */}
+        <BracketColumn
+          matches={westSemisAndFinal}
+          tops={SEMIS_AND_FINAL_TOPS}
+          lefts={WEST_SEMIS_LEFTS}
+          colHeight={COL_H}
+          {...columnProps}
+        />
+        {/* Col 3: Stanley Cup Final */}
+        <BracketColumn
+          matches={[cup]}
+          tops={CUP_TOPS}
+          lefts={['calc(50% - 78px)']}
+          colHeight={COL_H}
+          {...columnProps}
+        />
+        {/* Col 4: East Semis + Conference Final */}
+        <BracketColumn
+          matches={eastSemisAndFinal}
+          tops={SEMIS_AND_FINAL_TOPS}
+          lefts={EAST_SEMIS_LEFTS}
+          colHeight={COL_H}
+          {...columnProps}
+        />
+        {/* Col 5: East R1 */}
+        <BracketColumn
+          matches={eastR1}
+          tops={R1_TOPS}
+          colHeight={COL_H}
+          {...columnProps}
+        />
 
-      {/* Champion pill */}
-      {champ && (
-        <div className="flex flex-wrap gap-2 mt-3">
-          <span className="inline-flex items-center gap-2 bg-surface2 border border-border px-3 py-2 rounded-full text-[14px] font-bold text-primary">
-            🏆 {champ} wins the Cup!
-          </span>
-        </div>
-      )}
-    </>
+        {/* Champion pill — anchored to CUP_TOP, 24px gap below */}
+        {champ && (
+          <div style={{
+            position: 'absolute',
+            top: CUP_TOP,
+            left: '50%',
+            transform: 'translateX(-50%) translateY(-100%)',
+            paddingBottom: 24,
+            zIndex: 10,
+            whiteSpace: 'nowrap',
+          }}>
+            <span className="inline-flex items-center gap-2 bg-surface2 border border-border px-3 py-2 rounded-full text-[14px] font-bold text-primary">
+              {champ} wins the Cup!
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
