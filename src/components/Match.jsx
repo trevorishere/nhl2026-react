@@ -50,7 +50,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
       {mode === 'advanced' && (
         <div
           className="flex items-center"
-          style={{ paddingLeft: 8, paddingRight: 6, paddingTop: 10, paddingBottom: 12 }}
+          style={{ paddingLeft: 8, paddingRight: 6, paddingTop: 2, paddingBottom: 12 }}
         >
           {/* GAMES label — 10px Figtree Bold, muted */}
           <span

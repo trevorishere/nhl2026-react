@@ -91,7 +91,7 @@ export default function App() {
           marginTop: 12,
           lineHeight: '21px',
         }}>
-          Pick the winner in each series. Get your top picks.
+          Pick your bracket. Get your draft list.
         </p>
       </header>
 
@@ -129,13 +129,7 @@ export default function App() {
 
             {/* Right: Advanced Mode toggle */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
-              <span style={{
-                fontFamily: FF, fontSize: 11, fontWeight: 600,
-                color: C.text, letterSpacing: '0.6px',
-                textTransform: 'uppercase', whiteSpace: 'nowrap',
-              }}>
-                Advanced Mode
-              </span>
+              <span style={T.label}>Advanced Mode</span>
               <Toggle
                 on={isAdvanced}
                 onChange={() => setMode(isAdvanced ? 'normal' : 'advanced')}
@@ -159,8 +153,17 @@ export default function App() {
         </section>
 
         {/* Player rankings */}
-        <section className="px-20 pt-2">
+        <section className="px-20" style={{ paddingTop: 64 }}>
           <div style={{ maxWidth: 1232, minWidth: 988, margin: '0 auto' }}>
+
+          {/* Draft List title — Figma 181:4407 */}
+          <h2 style={{
+            fontFamily: FF, fontSize: 32, fontWeight: 700,
+            color: C.text, letterSpacing: '0.64px',
+            textAlign: 'center', marginBottom: 40, marginTop: 0,
+          }}>
+            Draft List
+          </h2>
           <div className="flex gap-6 items-start">
             {/* Table — shrinks when panel is open */}
             <div className={panelPlayer ? 'flex-1 min-w-0' : 'w-full'}>

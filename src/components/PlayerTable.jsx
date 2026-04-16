@@ -20,8 +20,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 // ─── Shared class strings ──────────────────────────────────────────────────────
-const btnBase = 'border border-border bg-surface px-3.5 py-2 rounded-full cursor-pointer text-app-text text-sm font-medium hover:opacity-80 transition-opacity';
-const TD      = 'px-2 h-[48px] border-b border-border'; // base table cell
+const TD = 'px-2 h-[48px] border-b border-border'; // base table cell
 
 const LS_KEY = 'nhl2026-customOrder'; // localStorage key
 
@@ -126,6 +125,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
   const [teamBtnHover, setTeamBtnHover] = useState(false);
   const [editBtnHover, setEditBtnHover] = useState(false);
   const [xlsBtnHover, setXlsBtnHover] = useState(false);
+  const [resetOrderHover, setResetOrderHover] = useState(false);
   const [posBtnHover, setPosBtnHover] = useState(false);
   const teamDropRef = useRef(null);
   const posDropRef = useRef(null);
@@ -427,18 +427,23 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
 
         {/* Right: edit toggle + export */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+          {/* Reset to auto-rank — only shown in edit mode, left of Edit Rankings */}
+          {editMode && (
+            <button
+              onClick={resetOrder}
+              onMouseEnter={() => setResetOrderHover(true)}
+              onMouseLeave={() => setResetOrderHover(false)}
+              style={ctrlBtnStyle(resetOrderHover, { padding: '0 16px' })}
+            >
+              Reset order
+            </button>
+          )}
+
           {/* Edit Rankings toggle */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 16px', height: 40 }}>
             <span style={T.label}>Edit Rankings</span>
             <Toggle on={editMode} onChange={() => editMode ? exitEditMode() : enterEditMode()} />
           </div>
-
-          {/* Reset to auto-rank — only shown in edit mode */}
-          {editMode && (
-            <button onClick={resetOrder} className={btnBase} style={{ marginLeft: 4, marginRight: 4 }}>
-              Reset order
-            </button>
-          )}
 
           {/* Vertical divider */}
           <div style={{ width: 1, height: 24, background: C.border, margin: '0 4px', flexShrink: 0 }} />
