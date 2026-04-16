@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { ArrowUp, ArrowDown, GripVertical } from 'lucide-react';
+import { ArrowUp, ArrowDown, GripVertical, AlertCircle, ChevronDown, ListFilter, Check } from 'lucide-react';
 import { BASE_DATA } from '../data/players';
 import { CHALK_PICKS, ROUND1_MATCHUPS, ROUND_PROGRESSION } from '../data/constants';
 import { getPosition } from '../data/positions';
@@ -46,20 +46,28 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 
 // ─── Table column definitions ──────────────────────────────────────────────────
 const COLUMNS = [
-  { key: '#',                    label: '#',          sortable: false, align: 'left'  },
-  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left'  },
-  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left'  },
-  { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left'  },
-  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc' },
-  { key: 'SeasonPPG',            label: 'Season PPG', sortable: false, align: 'right' },
-  { key: 'dynamicExpectedGames', label: 'Exp. Games', sortable: false, align: 'right' },
+  { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%'  },
+  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '31%' },
+  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '9%'  },
+  { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '7%'  },
+  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '13%' },
+  { key: 'SeasonPPG',            label: 'Season PPG', sortable: false, align: 'right', width: '18%' },
+  { key: 'dynamicExpectedGames', label: 'Exp. Games', sortable: false, align: 'right', width: '18%' },
 ];
 
 // ─── Unique stable ID per player ───────────────────────────────────────────────
 const rowId = (p) => p.name + '|' + p.team;
 
+// ─── Injury lookup helpers ─────────────────────────────────────────────────────
+function normalizeName(name) {
+  return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
+function getInjury(playerName, injuries) {
+  return injuries[normalizeName(playerName)] ?? null;
+}
+
 // ─── Sortable row sub-component ───────────────────────────────────────────────
-function SortableRow({ player, globalRank, editMode }) {
+function SortableRow({ player, globalRank, editMode, injuries }) {
   const id = rowId(player);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
@@ -84,15 +92,22 @@ function SortableRow({ player, globalRank, editMode }) {
           <GripVertical size={14} />
         </td>
       )}
-      <td className="px-2 py-2.5 border-b border-border text-muted">{globalRank}</td>
-      <td className="px-2 py-2.5 border-b border-border font-medium">{player.name}</td>
-      <td className="px-2 py-2.5 border-b border-border text-muted">{player.team}</td>
-      <td className="px-2 py-2.5 border-b border-border text-muted">{player.pos}</td>
-      <td className="px-2 py-2.5 border-b border-border font-bold text-primary text-right">
+      <td className="px-2 h-[48px] border-b border-border text-muted">{globalRank}</td>
+      <td className="px-2 h-[48px] border-b border-border font-medium">
+        <span className="flex items-center gap-1.5">
+          {player.name}
+          {getInjury(player.name, injuries) && (
+            <AlertCircle size={13} color="#ef4444" style={{ flexShrink: 0 }} />
+          )}
+        </span>
+      </td>
+      <td className="px-2 h-[48px] border-b border-border text-muted">{player.team}</td>
+      <td className="px-2 h-[48px] border-b border-border text-muted">{player.pos}</td>
+      <td className="px-2 h-[48px] border-b border-border font-bold text-primary text-right">
         {player.dynamicPoints.toFixed(1)}
       </td>
-      <td className="px-2 py-2.5 border-b border-border text-right">{player.SeasonPPG.toFixed(2)}</td>
-      <td className="px-2 py-2.5 border-b border-border text-muted text-right">
+      <td className="px-2 h-[48px] border-b border-border font-bold text-right">{player.SeasonPPG.toFixed(2)}</td>
+      <td className="px-2 h-[48px] border-b border-border font-bold text-right">
         {player.dynamicExpectedGames.toFixed(1)}
       </td>
     </tr>
@@ -100,14 +115,20 @@ function SortableRow({ player, globalRank, editMode }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function PlayerTable({ picks, mode, seriesLengths }) {
+export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect, selectedPlayer, injuries = {} }) {
   const [sortConfig, setSortConfig]       = useState({ key: 'dynamicPoints', direction: 'desc' });
   const [hoveredHeader, setHoveredHeader] = useState(null);
 
   // Edit mode state
   const [editMode, setEditMode]   = useState(false);
   const [filterPos, setFilterPos] = useState('all');
-  const [filterTeam, setFilterTeam] = useState('all');
+  const [filterTeams, setFilterTeams] = useState(new Set());
+  const [teamOpen, setTeamOpen] = useState(false);
+  const [posOpen, setPosOpen] = useState(false);
+  const [teamBtnHover, setTeamBtnHover] = useState(false);
+  const [posBtnHover, setPosBtnHover] = useState(false);
+  const teamDropRef = useRef(null);
+  const posDropRef = useRef(null);
 
   // customOrder: null | string[]  — stores player IDs in the user's chosen order.
   // Storing IDs (not full objects) means projected points always reflect the
@@ -206,6 +227,29 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
     });
   }
 
+  // Close dropdowns on outside click
+  useEffect(() => {
+    function handleOutside(e) {
+      if (teamDropRef.current && !teamDropRef.current.contains(e.target)) setTeamOpen(false);
+      if (posDropRef.current && !posDropRef.current.contains(e.target)) setPosOpen(false);
+    }
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, []);
+
+  function toggleTeam(team) {
+    setFilterTeams((prev) => {
+      const next = new Set(prev);
+      if (next.has(team)) next.delete(team); else next.add(team);
+      return next;
+    });
+  }
+
+  function selectPos(pos) {
+    setFilterPos((prev) => (prev === pos ? 'all' : pos));
+    setPosOpen(false);
+  }
+
   // ── Displayed rows ─────────────────────────────────────────────────────────
   // In edit mode: resolve IDs → fresh player objects, then filter.
   // In normal mode: use auto-ranked rows, then filter.
@@ -217,10 +261,10 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
   }, [editMode, customOrder, rows, rowMap]);
 
   const displayRows = useMemo(() => baseRows.filter((p) => {
-    if (filterPos  !== 'all' && p.pos  !== filterPos)  return false;
-    if (filterTeam !== 'all' && p.team !== filterTeam) return false;
+    if (filterTeams.size > 0 && !filterTeams.has(p.team)) return false;
+    if (filterPos !== 'all' && p.pos !== filterPos) return false;
     return true;
-  }), [baseRows, filterPos, filterTeam]);
+  }), [baseRows, filterTeams, filterPos]);
 
   // ── Export helpers ─────────────────────────────────────────────────────────
   // Always export the full ordered list (ignoring active filters).
@@ -245,25 +289,6 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
     writeFile(wb, 'nhl2026-projections.xlsx');
   }
 
-  function exportPDF() {
-    const doc = new jsPDF();
-    doc.setFontSize(13);
-    doc.text('NHL 2026 Playoff Point Projections', 14, 15);
-    doc.autoTable({
-      head: [['#', 'Player', 'Team', 'Pos', 'Proj Pts', 'PPG', 'Exp. Games']],
-      body: getExportRows().map((p, i) => [
-        i + 1, p.name, p.team, p.pos,
-        p.dynamicPoints.toFixed(1),
-        p.SeasonPPG.toFixed(2),
-        p.dynamicExpectedGames.toFixed(1),
-      ]),
-      startY: 22,
-      styles: { fontSize: 9 },
-      headStyles: { fillColor: [1, 105, 111] },
-    });
-    doc.save('nhl2026-projections.pdf');
-  }
-
   // ── Sort arrow (normal mode only) ──────────────────────────────────────────
   function SortArrow({ col }) {
     const isActive  = sortConfig.key === col.key;
@@ -278,82 +303,170 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
   const teamOptions  = [...new Set(ROUND1_MATCHUPS.flatMap((m) => m.teams))].sort();
   const hasSavedList = customOrder !== null;
 
+  // ── Dropdown helpers ───────────────────────────────────────────────────────
+  const dropBtnStyle = (hovering) => ({
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    gap: 8, height: 40, background: hovering ? '#444241' : '#393836',
+    border: 'none', borderRadius: 4, padding: '0 12px', cursor: 'pointer',
+    transition: 'background 0.15s ease',
+  });
+  const dropLabelStyle = {
+    fontFamily: 'Figtree, sans-serif', fontSize: 13, fontWeight: 700,
+    color: '#a09d96', letterSpacing: '0.65px', textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+  };
+  const dropPanelStyle = {
+    position: 'absolute', top: 'calc(100% + 4px)', left: 0,
+    zIndex: 50, background: '#393836', borderRadius: 4,
+    minWidth: 120, overflow: 'hidden', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+  };
+
+  const teamLabel = filterTeams.size === 0
+    ? 'Team'
+    : filterTeams.size === 1
+      ? [...filterTeams][0]
+      : `Team (${filterTeams.size})`;
+  const posLabel = filterPos === 'all' ? 'Pos' : filterPos;
+
   return (
     <>
-      {/* ── Controls row ─────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-2 mb-2 flex-wrap">
-        {!editMode ? (
-          <div className="flex items-center gap-2">
-            <button onClick={enterEditMode} className={btnBase}>Edit Rankings</button>
-            {hasSavedList && (
-              <span className="text-[12px] text-muted flex items-center gap-1">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary" />
-                Custom list saved
+      {/* ── Controls: filters left | edit/export right ───────────────────── */}
+      <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+
+        {/* Left: always-visible filters */}
+        <div className="flex items-center gap-2.5">
+
+          {/* Team multi-select */}
+          <div ref={teamDropRef} style={{ position: 'relative' }}>
+            <button
+              style={{ ...dropBtnStyle(teamBtnHover), width: 144 }}
+              onClick={() => { setTeamOpen((o) => !o); setPosOpen(false); }}
+              onMouseEnter={() => setTeamBtnHover(true)}
+              onMouseLeave={() => setTeamBtnHover(false)}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, flexShrink: 0 }}>
+                  <ListFilter size={12} color="#a09d96" strokeWidth={2.5} />
+                </span>
+                <span style={dropLabelStyle}>{teamLabel}</span>
               </span>
+              <ChevronDown size={12} color="#a09d96" />
+            </button>
+            {teamOpen && (
+              <div style={{ ...dropPanelStyle, width: 144 }}>
+                {/* ALL option */}
+                {(() => {
+                  const allSel = filterTeams.size === 0;
+                  return (
+                    <div
+                      onClick={() => setFilterTeams(new Set())}
+                      className={allSel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 40, padding: '0 12px', cursor: 'pointer' }}
+                    >
+                      <span style={{ ...dropLabelStyle, color: allSel ? '#e7e4df' : '#a09d96' }}>All</span>
+                      {allSel && <Check size={14} color="#e7e4df" />}
+                    </div>
+                  );
+                })()}
+                {teamOptions.map((t) => {
+                  const sel = filterTeams.has(t);
+                  return (
+                    <div
+                      key={t}
+                      onClick={() => toggleTeam(t)}
+                      className={sel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 40, padding: '0 12px', cursor: 'pointer' }}
+                    >
+                      <span style={{ ...dropLabelStyle, color: sel ? '#e7e4df' : '#a09d96' }}>{t}</span>
+                      {sel && <Check size={14} color="#e7e4df" />}
+                    </div>
+                  );
+                })}
+              </div>
             )}
           </div>
-        ) : (
-          <>
-            <button onClick={exitEditMode} className={btnPrimary}>Done Editing</button>
-            <button onClick={resetOrder}   className={btnBase}>Reset to auto-rank</button>
-            <button onClick={exportXLS}    className={btnBase}>Export XLS</button>
-            <button onClick={exportPDF}    className={btnBase}>Export PDF</button>
-          </>
-        )}
+
+          {/* Pos single-select */}
+          <div ref={posDropRef} style={{ position: 'relative' }}>
+            <button
+              style={{ ...dropBtnStyle(posBtnHover), width: 124 }}
+              onClick={() => { setPosOpen((o) => !o); setTeamOpen(false); }}
+              onMouseEnter={() => setPosBtnHover(true)}
+              onMouseLeave={() => setPosBtnHover(false)}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, flexShrink: 0 }}>
+                  <ListFilter size={12} color="#a09d96" strokeWidth={2.5} />
+                </span>
+                <span style={dropLabelStyle}>{posLabel}</span>
+              </span>
+              <ChevronDown size={12} color="#a09d96" />
+            </button>
+            {posOpen && (
+              <div style={{ ...dropPanelStyle, width: 124 }}>
+                {/* ALL option */}
+                {(() => {
+                  const allSel = filterPos === 'all';
+                  return (
+                    <div
+                      onClick={() => { setFilterPos('all'); setPosOpen(false); }}
+                      className={allSel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 40, padding: '0 12px', cursor: 'pointer' }}
+                    >
+                      <span style={{ ...dropLabelStyle, color: allSel ? '#e7e4df' : '#a09d96' }}>All</span>
+                      {allSel && <Check size={14} color="#e7e4df" />}
+                    </div>
+                  );
+                })()}
+                {['F', 'D'].map((p) => {
+                  const sel = filterPos === p;
+                  return (
+                    <div
+                      key={p}
+                      onClick={() => selectPos(p)}
+                      className={sel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 40, padding: '0 12px', cursor: 'pointer' }}
+                    >
+                      <span style={{ ...dropLabelStyle, color: sel ? '#e7e4df' : '#a09d96' }}>{p}</span>
+                      {sel && <Check size={14} color="#e7e4df" />}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+        </div>
+
+        {/* Right: edit toggle + export */}
+        <div className="flex items-center gap-2">
+          {!editMode ? (
+            <>
+              <button onClick={enterEditMode} className={btnBase}>Edit Rankings</button>
+              {hasSavedList && (
+                <span className="text-[12px] text-muted flex items-center gap-1">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary" />
+                  Custom list saved
+                </span>
+              )}
+            </>
+          ) : (
+            <>
+              <button onClick={exitEditMode} className={btnPrimary}>Done Editing</button>
+              <button onClick={resetOrder} className={btnBase}>Reset to auto-rank</button>
+            </>
+          )}
+          <button onClick={exportXLS} className={btnBase}>Export XLS</button>
+        </div>
       </div>
 
-      {/* ── Filter bar (edit mode only) ──────────────────────────────────── */}
-      {editMode && (
-        <div className="flex items-center gap-4 mb-3 flex-wrap">
-          <div className="flex gap-1">
-            {['all', 'F', 'D'].map((pos) => (
-              <button
-                key={pos}
-                onClick={() => setFilterPos(pos)}
-                className={`px-3 py-1 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
-                  filterPos === pos
-                    ? 'bg-primary border-primary text-white'
-                    : 'bg-surface border-border text-app-text hover:opacity-80'
-                }`}
-              >
-                {pos === 'all' ? 'All' : pos}
-              </button>
-            ))}
-          </div>
-          <select
-            value={filterTeam}
-            onChange={(e) => setFilterTeam(e.target.value)}
-            className="bg-surface border border-border rounded-lg text-sm px-2 py-1 text-app-text cursor-pointer"
-          >
-            <option value="all">All teams</option>
-            {teamOptions.map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </select>
-          <span className="text-[12px] text-muted">
-            {displayRows.length} of {baseRows.length} players
-          </span>
-        </div>
-      )}
-
-      {/* ── Formula note ─────────────────────────────────────────────────── */}
-      <p className="text-[13px] text-muted">
-        Formula: Projected Points = Season PPG × Playoff Factor × Expected Games.
-        Playoff factor: superstar (≥0.95 PPG) = 97.5%, top-6 (0.56–0.94) = 90%, depth (≤0.55) = 82.5%.
-        Unpicked series use chalk projections.
-        {mode === 'normal'
-          ? ' Normal mode assumes 6 games per series.'
-          : ' Advanced mode uses your per-series game picks (default 6).'}
-      </p>
-      <div className="h-3" />
-
-      {/* ── Table ─────────────────────────────────────────────────────────── */}
-      <div className="max-h-[50vh] overflow-auto border border-border rounded-xl max-w-4xl mx-auto">
-        <table className="w-full border-collapse text-[14px]">
+      {/* ── Table — scroll container shows 20 rows (20 × 48px = 960px) ───── */}
+      <div style={{ overflowY: 'auto', maxHeight: 960 }}>
+        <table className="w-full border-collapse text-[16px]" style={{ tableLayout: 'fixed' }}>
           <thead>
             <tr>
               {editMode && (
-                <th className="px-2 py-2.5 border-b border-border sticky top-0 bg-surface w-6" />
+                <th className="px-2 h-[40px] border-b-2 border-border sticky top-0 bg-[#232221] w-6" />
               )}
               {COLUMNS.map((col) => {
                 const isActive  = !editMode && sortConfig.key === col.key;
@@ -363,8 +476,9 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
                 return (
                   <th
                     key={col.key}
+                    style={col.width ? { width: col.width } : undefined}
                     className={[
-                      'px-2 py-2.5 border-b border-border text-[12px] uppercase tracking-[0.06em] sticky top-0 bg-surface font-semibold select-none',
+                      'px-2 h-[40px] border-b-2 border-border text-[13px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none',
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
@@ -409,6 +523,7 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
                         player={p}
                         globalRank={globalRank}
                         editMode={editMode}
+                        injuries={injuries}
                       />
                     );
                   })}
@@ -417,19 +532,33 @@ export default function PlayerTable({ picks, mode, seriesLengths }) {
             </DndContext>
           ) : (
             <tbody>
-              {displayRows.map((p, i) => (
-                <tr key={i} className="hover:bg-surface2 transition-colors">
-                  <td className="px-2 py-2.5 border-b border-border text-muted">{i + 1}</td>
-                  <td className="px-2 py-2.5 border-b border-border font-medium">{p.name}</td>
-                  <td className="px-2 py-2.5 border-b border-border text-muted">{p.team}</td>
-                  <td className="px-2 py-2.5 border-b border-border text-muted">{p.pos}</td>
-                  <td className="px-2 py-2.5 border-b border-border font-bold text-primary text-right">
+              {displayRows.map((p, i) => {
+                const isSelected = selectedPlayer && p.name === selectedPlayer.name && p.team === selectedPlayer.team;
+                return (
+                <tr
+                  key={i}
+                  onClick={() => onPlayerSelect?.(isSelected ? null : p)}
+                  className={`transition-colors cursor-pointer ${isSelected ? 'bg-surface2' : 'hover:bg-surface2'}`}
+                >
+                  <td className="px-2 h-[48px] border-b border-border text-muted">{i + 1}</td>
+                  <td className="px-2 h-[48px] border-b border-border font-medium">
+                    <span className="flex items-center gap-1.5">
+                      {p.name}
+                      {getInjury(p.name, injuries) && (
+                        <AlertCircle size={13} color="#ef4444" style={{ flexShrink: 0 }} />
+                      )}
+                    </span>
+                  </td>
+                  <td className="px-2 h-[48px] border-b border-border text-muted">{p.team}</td>
+                  <td className="px-2 h-[48px] border-b border-border text-muted">{p.pos}</td>
+                  <td className="px-2 h-[48px] border-b border-border font-bold text-primary text-right">
                     {p.dynamicPoints.toFixed(1)}
                   </td>
-                  <td className="px-2 py-2.5 border-b border-border text-right">{p.SeasonPPG.toFixed(2)}</td>
-                  <td className="px-2 py-2.5 border-b border-border text-muted text-right">{p.dynamicExpectedGames.toFixed(1)}</td>
+                  <td className="px-2 h-[48px] border-b border-border font-bold text-right">{p.SeasonPPG.toFixed(2)}</td>
+                  <td className="px-2 h-[48px] border-b border-border font-bold text-right">{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           )}
         </table>

@@ -1,21 +1,21 @@
-// Team primary colors + dark overlay amounts (from Figma)
+// Team primary colors matched exactly to Figma frame 123:29
 export const TEAM_STYLES = {
-  UTA: { bg: 'rgb(13,85,148)',   overlay: 0.26 },
-  LAK: { bg: '#111111',          overlay: 0    },
-  BUF: { bg: '#031f53',          overlay: 0    },
-  CAR: { bg: 'rgb(205,0,26)',    overlay: 0.4  },
-  EDM: { bg: 'rgb(207,69,32)',   overlay: 0.35 },
-  VGK: { bg: 'rgb(51,63,72)',    overlay: 0.2  },
-  MTL: { bg: 'rgb(166,25,46)',   overlay: 0.25 },
-  OTT: { bg: '#2d2926',          overlay: 0    },
-  COL: { bg: 'rgb(35,97,146)',   overlay: 0.2  },
-  ANA: { bg: 'rgb(207,69,32)',   overlay: 0.3  },
-  TBL: { bg: '#04356a',          overlay: 0    },
-  PIT: { bg: '#010101',          overlay: 0    },
-  DAL: { bg: 'rgb(0,132,61)',    overlay: 0.32 },
-  MIN: { bg: 'rgb(21,71,52)',    overlay: 0.2  },
-  BOS: { bg: '#010101',          overlay: 0    },
-  PHI: { bg: 'rgb(252,76,2)',    overlay: 0.3  },
+  COL: { bg: '#236192', overlay: 0     },
+  LAK: { bg: '#111111', overlay: 0     },
+  DAL: { bg: '#00843d', overlay: 0     },
+  MIN: { bg: '#154734', overlay: 0     },
+  EDM: { bg: '#cd4629', overlay: 0     },
+  UTA: { bg: '#4484bb', overlay: 0     },
+  ANA: { bg: '#cf4520', overlay: 0     },
+  VGK: { bg: 'rgb(51,63,72)', overlay: 0.2 },
+  TBL: { bg: '#013f84', overlay: 0     },
+  BOS: { bg: '#010101', overlay: 0     },
+  BUF: { bg: '#003087', overlay: 0     },
+  MTL: { bg: '#a6192e', overlay: 0     },
+  CAR: { bg: '#bf0018', overlay: 0     },
+  OTT: { bg: '#80683f', overlay: 0     },
+  PIT: { bg: '#010101', overlay: 0     },
+  PHI: { bg: '#e54502', overlay: 0     },
 };
 
 export const SEEDS = {
