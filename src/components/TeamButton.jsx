@@ -71,7 +71,7 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
   const radius = position === 'top' ? '8px 8px 0 0' : '0 0 8px 8px';
 
   if (!team) {
-    return <div className="h-[58px] w-[168px] shrink-0" style={{ border: '1px solid rgba(255,255,255,0.2)', borderRadius: radius, background: 'rgba(255,255,255,0.03)' }} />;
+    return <div className="h-[58px] w-[168px] shrink-0" style={{ border: '1px solid rgba(255,255,255,0.1)', borderRadius: radius, background: 'rgba(255,255,255,0.03)' }} />;
   }
 
   const picked       = picks[matchId] || null;

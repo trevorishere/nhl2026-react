@@ -76,7 +76,7 @@ export function ctrlBtnStyle(hovering, opts = {}) {
     display: 'flex', alignItems: 'center',
     height: 36,
     background: 'transparent',
-    border: '2px solid rgba(255,255,255,0.2)', borderRadius: 8, cursor: 'pointer',
+    border: '2px solid rgba(255,255,255,0.1)', borderRadius: 8, cursor: 'pointer',
     fontFamily: FF, fontSize: 12, fontWeight: 700,
     color: hovering ? C.text : C.muted,
     letterSpacing: '0.6px', textTransform: 'uppercase',
