@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { ArrowUp, ArrowDown, ArrowUpDown, GripVertical, AlertCircle, ChevronDown, ListFilter, Check, Download } from 'lucide-react';
+import { ArrowUp, ArrowDown, GripVertical, AlertCircle, ChevronDown, ListFilter, Check, Download, RotateCcw } from 'lucide-react';
 import { BASE_DATA } from '../data/players';
 import { CHALK_PICKS, ROUND1_MATCHUPS, ROUND_PROGRESSION } from '../data/constants';
 import { getPosition } from '../data/positions';
@@ -430,15 +430,31 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             )}
           </div>
 
-          {/* Edit rankings — icon button, active = bright */}
+          {/* Reset order — appears only when edit mode is ON */}
+          {editMode && (
+            <button
+              onClick={resetOrder}
+              onMouseEnter={() => setResetOrderHover(true)}
+              onMouseLeave={() => setResetOrderHover(false)}
+              style={ctrlBtnStyle(resetOrderHover, { gap: 6, padding: '0 16px 0 14px', flexShrink: 0 })}
+            >
+              <RotateCcw size={14} color="currentColor" strokeWidth={2} />
+              Reset
+            </button>
+          )}
+
+          {/* Edit rankings — "EDIT RANKINGS | OFF/ON" text toggle */}
           <button
             onClick={() => editMode ? exitEditMode() : enterEditMode()}
             onMouseEnter={() => setEditBtnHover(true)}
             onMouseLeave={() => setEditBtnHover(false)}
-            title={editMode ? 'Exit edit mode' : 'Edit rankings'}
-            style={ctrlBtnStyle(editBtnHover || editMode, { width: 36, padding: 0, justifyContent: 'center', flexShrink: 0 })}
+            style={ctrlBtnStyle(false, { gap: 5, padding: '0 16px', flexShrink: 0 })}
           >
-            <ArrowUpDown size={14} color="currentColor" />
+            <span style={{ color: (editMode || editBtnHover) ? C.text : C.muted, transition: 'color 0.15s ease' }}>Edit Rankings</span>
+            <span style={{ color: C.muted }}> | </span>
+            <span style={{ display: 'inline-block', minWidth: 26, color: (editMode || editBtnHover) ? C.text : C.muted, transition: 'color 0.15s ease' }}>
+              {editMode ? 'ON' : 'OFF'}
+            </span>
           </button>
 
           {/* Download XLS — icon button */}

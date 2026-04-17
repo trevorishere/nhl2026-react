@@ -159,10 +159,9 @@ export default function App() {
           </div>
         </section>
 
-        {/* Player rankings — full-bleed #212123 card, 48px padding (56px bottom) */}
-        <section>
-          <div style={{ background: '#212123', padding: '48px 48px 56px' }}>
-          <div style={{ maxWidth: 1232, margin: '0 auto' }}>
+        {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
+        <section style={{ padding: '0 48px 48px' }}>
+          <div style={{ maxWidth: 1232, margin: '0 auto', background: '#212123', padding: '48px 48px 56px' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
             <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
@@ -199,7 +198,6 @@ export default function App() {
                 </div>
               </div>
             )}
-          </div>
           </div>
           </div>
         </section>
