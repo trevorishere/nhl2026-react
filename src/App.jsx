@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { RotateCcw } from 'lucide-react';
 import Bracket from './components/Bracket';
+import MobileBracket from './components/MobileBracket';
 import PlayerTable from './components/PlayerTable';
 import PlayerDetailPanel from './components/PlayerDetailPanel';
 import Toggle from './components/Toggle';
@@ -115,48 +116,60 @@ export default function App() {
 
       {/* Main grid */}
       <div className="flex flex-col gap-5">
-        {/* Bracket — no card wrapper, sits on bare background */}
+        {/* Bracket section — mobile gets its own experience, desktop gets full bracket */}
         <section className="bracket-section pt-2">
-          <div style={{ maxWidth: 1232, margin: '0 auto' }}>
 
-          {/* Controls bar: all buttons centered */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32 }}>
-            <button
-              style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' })}
-              onClick={resetBracket}
-              onMouseEnter={() => setResetHover(true)}
-              onMouseLeave={() => setResetHover(false)}
-            >
-              <RotateCcw size={14} color="currentColor" strokeWidth={2} />
-              Reset
-            </button>
-            <button
-              style={ctrlBtnStyle(autopickHover, { padding: '0 18px' })}
-              onClick={autoPick}
-              onMouseEnter={() => setAutopickHover(true)}
-              onMouseLeave={() => setAutopickHover(false)}
-            >
-              Autopick Favorites
-            </button>
-            <Toggle
-              on={isAdvanced}
-              onChange={() => setMode(isAdvanced ? 'normal' : 'advanced')}
+          {/* ── Mobile bracket (< sm) ─────────────────────────────────────── */}
+          {isMobile && (
+            <MobileBracket
+              picks={picks}
+              onPick={makePick}
+              onReset={resetBracket}
             />
-          </div>
+          )}
 
-          {/* Scroll container: scrolls horizontally on mobile, full bracket on desktop */}
-          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', marginLeft: -12, marginRight: -12 }}>
-            <div style={{ minWidth: 988, paddingLeft: 12, paddingRight: 12 }}>
-              <Bracket
-                picks={picks}
-                onPick={makePick}
-                mode={mode}
-                seriesLengths={seriesLengths}
-                onSeriesLength={setSeriesLength}
-              />
+          {/* ── Desktop bracket (≥ sm) ────────────────────────────────────── */}
+          {!isMobile && (
+            <div style={{ maxWidth: 1232, margin: '0 auto' }}>
+              {/* Controls bar */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32 }}>
+                <button
+                  style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' })}
+                  onClick={resetBracket}
+                  onMouseEnter={() => setResetHover(true)}
+                  onMouseLeave={() => setResetHover(false)}
+                >
+                  <RotateCcw size={14} color="currentColor" strokeWidth={2} />
+                  Reset
+                </button>
+                <button
+                  style={ctrlBtnStyle(autopickHover, { padding: '0 18px' })}
+                  onClick={autoPick}
+                  onMouseEnter={() => setAutopickHover(true)}
+                  onMouseLeave={() => setAutopickHover(false)}
+                >
+                  Autopick Favorites
+                </button>
+                <Toggle
+                  on={isAdvanced}
+                  onChange={() => setMode(isAdvanced ? 'normal' : 'advanced')}
+                />
+              </div>
+
+              {/* Bracket */}
+              <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', marginLeft: -12, marginRight: -12 }}>
+                <div style={{ minWidth: 988, paddingLeft: 12, paddingRight: 12 }}>
+                  <Bracket
+                    picks={picks}
+                    onPick={makePick}
+                    mode={mode}
+                    seriesLengths={seriesLengths}
+                    onSeriesLength={setSeriesLength}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
+          )}
         </section>
 
         {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
