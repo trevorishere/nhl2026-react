@@ -8,10 +8,10 @@ export const FF = 'Figtree, sans-serif';
 
 // ── Color tokens ─────────────────────────────────────────────────────────────
 export const C = {
-  text:       '#e7e4df',               // primary warm-white text
-  textMuted:  'rgba(231,228,223,0.7)', // 70% warm-white (header metadata)
-  muted:      '#a09d96',               // secondary labels, placeholders
-  border:     '#393836',               // dividers, borders, dropdown bg
+  text:       '#DFE3E7',               // primary warm-white text
+  textMuted:  'rgba(223, 225, 231, 0.7)', // 70% warm-white (header metadata)
+  muted:      '#969AA0',               // secondary labels, placeholders
+  border:     '#373739',               // dividers, borders, dropdown bg
   surface:    'rgba(57,56,54,0.1)',    // panel background
   btnDefault: 'rgba(57,56,54,0.5)',    // buttons / dropdowns at rest
   btnHover:   '#444241',               // buttons / dropdowns on hover
