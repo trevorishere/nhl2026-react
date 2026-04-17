@@ -75,10 +75,10 @@ export function ctrlBtnStyle(hovering, opts = {}) {
   return {
     display: 'flex', alignItems: 'center',
     height: 36,
-    background: hovering ? C.btnHover : C.btnDefault,
-    border: 'none', borderRadius: 8, cursor: 'pointer',
-    fontFamily: FF, fontSize: 13, fontWeight: 700,
-    color: C.muted, letterSpacing: '0.65px', textTransform: 'uppercase',
+    background: hovering ? C.btnDefault : 'transparent',
+    border: '2px solid #393836', borderRadius: 8, cursor: 'pointer',
+    fontFamily: FF, fontSize: 12, fontWeight: 700,
+    color: C.muted, letterSpacing: '0.6px', textTransform: 'uppercase',
     whiteSpace: 'nowrap', transition: 'background 0.15s ease',
     ...opts,
   };

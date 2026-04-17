@@ -5,7 +5,7 @@ import PlayerTable from './components/PlayerTable';
 import PlayerDetailPanel from './components/PlayerDetailPanel';
 import Toggle from './components/Toggle';
 import { CHALK_PICKS, PICK_DEPS } from './data/constants';
-import { FF, C, T, ctrlBtnStyle } from './styles/tokens';
+import { C, ctrlBtnStyle } from './styles/tokens';
 
 export default function App() {
   const [picks, setPicks] = useState({});
@@ -101,40 +101,29 @@ export default function App() {
         <section className="bracket-section pt-2">
           <div style={{ maxWidth: 1232, margin: '0 auto' }}>
 
-          {/* Controls bar: Reset + Autopick (centered) | Advanced Mode toggle (right) */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: 40, marginBottom: 32 }}>
-            {/* Left: empty spacer */}
-            <div />
-
-            {/* Center: action buttons */}
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <button
-                style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px' })}
-                onClick={resetBracket}
-                onMouseEnter={() => setResetHover(true)}
-                onMouseLeave={() => setResetHover(false)}
-              >
-                <RotateCcw size={14} color={C.text} strokeWidth={2} />
-                Reset
-              </button>
-              <button
-                style={ctrlBtnStyle(autopickHover, { padding: '0 16px' })}
-                onClick={autoPick}
-                onMouseEnter={() => setAutopickHover(true)}
-                onMouseLeave={() => setAutopickHover(false)}
-              >
-                Autopick Favorites
-              </button>
-            </div>
-
-            {/* Right: Advanced Mode toggle */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
-              <span style={T.label}>Advanced Mode</span>
-              <Toggle
-                on={isAdvanced}
-                onChange={() => setMode(isAdvanced ? 'normal' : 'advanced')}
-              />
-            </div>
+          {/* Controls bar: all buttons centered */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32 }}>
+            <button
+              style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' })}
+              onClick={resetBracket}
+              onMouseEnter={() => setResetHover(true)}
+              onMouseLeave={() => setResetHover(false)}
+            >
+              <RotateCcw size={14} color={C.muted} strokeWidth={2} />
+              Reset
+            </button>
+            <button
+              style={ctrlBtnStyle(autopickHover, { padding: '0 18px' })}
+              onClick={autoPick}
+              onMouseEnter={() => setAutopickHover(true)}
+              onMouseLeave={() => setAutopickHover(false)}
+            >
+              Autopick Favorites
+            </button>
+            <Toggle
+              on={isAdvanced}
+              onChange={() => setMode(isAdvanced ? 'normal' : 'advanced')}
+            />
           </div>
 
           {/* Scroll container: scrolls horizontally on mobile, full bracket on desktop */}

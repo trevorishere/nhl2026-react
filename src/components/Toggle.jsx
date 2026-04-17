@@ -1,15 +1,27 @@
-import { toggleTrack, toggleKnob, toggleLabelOn, toggleLabelOff } from '../styles/tokens';
+import { useState } from 'react';
+import { ctrlBtnStyle, C } from '../styles/tokens';
 
-/**
- * Reusable ON/OFF toggle pill.
- * Props: on (bool), onChange (fn called on click)
- */
 export default function Toggle({ on, onChange }) {
+  const [hovering, setHovering] = useState(false);
   return (
-    <div onClick={onChange} style={toggleTrack(on)}>
-      <div style={toggleKnob(on)} />
-      <div style={toggleLabelOn(on)}>ON</div>
-      <div style={toggleLabelOff(on)}>OFF</div>
-    </div>
+    <button
+      type="button"
+      onClick={onChange}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      style={ctrlBtnStyle(hovering, { gap: 5, padding: '0 16px' })}
+    >
+      <span>Projected Games</span>
+      <span> | </span>
+      {/* Fixed-width container sized to "OFF" so button width never changes */}
+      <span style={{
+        display: 'inline-block',
+        minWidth: 26,
+        color: on ? C.text : C.muted,
+        transition: 'color 0.15s ease',
+      }}>
+        {on ? 'ON' : 'OFF'}
+      </span>
+    </button>
   );
 }
