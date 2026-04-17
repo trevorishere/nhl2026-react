@@ -94,8 +94,8 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           <GripVertical size={14} />
         </td>
       )}
-      <td className={`${TD} text-muted font-bold truncate`}>{globalRank}</td>
-      <td className={`${TD} font-medium overflow-hidden`}>
+      <td className={`${TD} text-muted truncate`}>{globalRank}</td>
+      <td className={`${TD} overflow-hidden`}>
         <span className="flex items-center gap-3 min-w-0">
           <span className="truncate">{player.name}</span>
           {getInjury(player.name, injuries) && (
@@ -106,8 +106,8 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
       <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.team}</td>
       <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.pos}</td>
       <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
-      <td className={`${TD} font-bold text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
-      <td className={`${TD} font-bold text-right truncate hidden sm:table-cell`}>{player.dynamicExpectedGames.toFixed(1)}</td>
+      <td className={`${TD} text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
+      <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.dynamicExpectedGames.toFixed(1)}</td>
     </tr>
   );
 }
@@ -470,7 +470,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
           <thead>
             <tr>
               {editMode && (
-                <th className="px-2 h-[40px] border-b-2 border-border sticky top-0 bg-[#232221] w-6" />
+                <th className="px-2 h-[40px] sticky top-0 bg-[#232221] w-6" style={{ boxShadow: '0 2px 0 #393836' }} />
               )}
               {COLUMNS.map((col) => {
                 const isActive  = !editMode && sortConfig.key === col.key;
@@ -480,9 +480,9 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                 return (
                   <th
                     key={col.key}
-                    style={col.width ? { width: col.width } : undefined}
+                    style={{ ...(col.width ? { width: col.width } : {}), boxShadow: '0 2px 0 #393836' }}
                     className={[
-                      'px-2 h-[40px] border-b-2 border-border text-[11px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none overflow-hidden',
+                      'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none overflow-hidden',
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
@@ -545,8 +545,8 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   onClick={() => onPlayerSelect?.(isSelected ? null : p)}
                   className={`transition-colors cursor-pointer ${isSelected ? 'bg-surface2' : 'hover:bg-surface2'}`}
                 >
-                  <td className={`${TD} text-muted font-bold truncate`}>{i + 1}</td>
-                  <td className={`${TD} font-medium overflow-hidden`}>
+                  <td className={`${TD} text-muted truncate`}>{i + 1}</td>
+                  <td className={`${TD} overflow-hidden`}>
                     <span className="flex items-center gap-3 min-w-0">
                       <span className="truncate">{p.name}</span>
                       {getInjury(p.name, injuries) && (
@@ -557,8 +557,8 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.team}</td>
                   <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.pos}</td>
                   <td className={`${TD} text-right truncate hidden sm:table-cell`}>{p.SeasonPPG.toFixed(2)}</td>
-                  <td className={`${TD} font-bold text-primary text-right truncate`}>{p.dynamicPoints.toFixed(1)}</td>
-                  <td className={`${TD} font-bold text-right truncate hidden sm:table-cell`}>{p.dynamicExpectedGames.toFixed(1)}</td>
+                  <td className={`${TD} text-primary text-right truncate`}>{p.dynamicPoints.toFixed(1)}</td>
+                  <td className={`${TD} text-right truncate hidden sm:table-cell`}>{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
                 );
               })}
