@@ -46,14 +46,15 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 }
 
 // ─── Table column definitions ──────────────────────────────────────────────────
+// mobileHide: true → hidden below sm breakpoint (640px)
 const COLUMNS = [
   { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%'  },
   { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '31%' },
-  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '9%'  },
-  { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '7%'  },
-  { key: 'SeasonPPG',            label: 'Season PPG', sortable: false, align: 'right', width: '18%' },
+  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '9%',  mobileHide: true },
+  { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '7%',  mobileHide: true },
+  { key: 'SeasonPPG',            label: 'Season PPG', sortable: false, align: 'right', width: '18%', mobileHide: true },
   { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '13%' },
-  { key: 'dynamicExpectedGames', label: 'Proj Games', sortable: false, align: 'right', width: '18%' },
+  { key: 'dynamicExpectedGames', label: 'Proj Games', sortable: false, align: 'right', width: '18%', mobileHide: true },
 ];
 
 // ─── Unique stable ID per player ───────────────────────────────────────────────
@@ -102,11 +103,11 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           )}
         </span>
       </td>
-      <td className={`${TD} text-muted`}>{player.team}</td>
-      <td className={`${TD} text-muted`}>{player.pos}</td>
-      <td className={`${TD} text-right`}>{player.SeasonPPG.toFixed(2)}</td>
+      <td className={`${TD} text-muted hidden sm:table-cell`}>{player.team}</td>
+      <td className={`${TD} text-muted hidden sm:table-cell`}>{player.pos}</td>
+      <td className={`${TD} text-right hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
       <td className={`${TD} font-bold text-primary text-right`}>{player.dynamicPoints.toFixed(1)}</td>
-      <td className={`${TD} font-bold text-right`}>{player.dynamicExpectedGames.toFixed(1)}</td>
+      <td className={`${TD} font-bold text-right hidden sm:table-cell`}>{player.dynamicExpectedGames.toFixed(1)}</td>
     </tr>
   );
 }
@@ -485,6 +486,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
+                      col.mobileHide ? 'hidden sm:table-cell' : '',
                     ].join(' ')}
                     onClick={clickable ? () => handleSort(col) : undefined}
                     onMouseEnter={() => clickable && setHoveredHeader(col.key)}
@@ -552,11 +554,11 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                       )}
                     </span>
                   </td>
-                  <td className={`${TD} text-muted`}>{p.team}</td>
-                  <td className={`${TD} text-muted`}>{p.pos}</td>
-                  <td className={`${TD} text-right`}>{p.SeasonPPG.toFixed(2)}</td>
+                  <td className={`${TD} text-muted hidden sm:table-cell`}>{p.team}</td>
+                  <td className={`${TD} text-muted hidden sm:table-cell`}>{p.pos}</td>
+                  <td className={`${TD} text-right hidden sm:table-cell`}>{p.SeasonPPG.toFixed(2)}</td>
                   <td className={`${TD} font-bold text-primary text-right`}>{p.dynamicPoints.toFixed(1)}</td>
-                  <td className={`${TD} font-bold text-right`}>{p.dynamicExpectedGames.toFixed(1)}</td>
+                  <td className={`${TD} font-bold text-right hidden sm:table-cell`}>{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
                 );
               })}
