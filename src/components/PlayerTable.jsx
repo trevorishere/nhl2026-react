@@ -318,7 +318,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
   return (
     <>
       {/* ── Controls: title left | filters + icons right ─────────────────── */}
-      <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+      <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
 
         {/* Left: Draft List title */}
         <h2 style={{
