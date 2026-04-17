@@ -160,7 +160,7 @@ export default function App() {
         </section>
 
         {/* Player rankings — full-bleed #212123 card, 48px padding (56px bottom) */}
-        <section className="-mx-4 sm:-mx-6">
+        <section>
           <div style={{ background: '#212123', padding: '48px 48px 56px' }}>
           <div style={{ maxWidth: 1232, margin: '0 auto' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
