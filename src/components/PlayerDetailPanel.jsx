@@ -16,6 +16,13 @@ function Skeleton({ width, height }) {
   );
 }
 
+// Section label: 13px Bold uppercase #5c5a56
+const sectionLabel = {
+  fontFamily: FF, fontSize: 13, fontWeight: 700,
+  textTransform: 'uppercase', letterSpacing: '0.65px',
+  color: '#5c5a56', lineHeight: '19px', whiteSpace: 'nowrap',
+};
+
 // ── Main panel ────────────────────────────────────────────────────────────────
 export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
   const { data, loading, error } = usePlayerDetail(player);
@@ -51,13 +58,19 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
     <div style={{
       background: C.surface,
       border: `1px solid ${C.border}`,
+      borderRadius: 16,
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
     }}>
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <div style={{ background: headerBg, padding: 16, position: 'relative', flexShrink: 0 }}>
+      <div style={{
+        background: headerBg,
+        paddingLeft: 8, paddingRight: 16, paddingTop: 16, paddingBottom: 0,
+        position: 'relative',
+        flexShrink: 0,
+      }}>
         <button
           onClick={onClose}
           style={{
@@ -70,15 +83,20 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           <X size={16} />
         </button>
 
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-          {/* Headshot — 63×63 circle */}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+          {/* Headshot — 88×64 rectangle */}
           <div style={{
-            width: 63, height: 63, borderRadius: '50%',
-            overflow: 'hidden', background: 'rgba(255,255,255,0.15)',
-            flexShrink: 0,
+            width: 88, height: 64, flexShrink: 0,
+            overflow: 'hidden',
+            boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
+            background: 'rgba(255,255,255,0.15)',
           }}>
             {headshot ? (
-              <img src={headshot} alt={player.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img
+                src={headshot}
+                alt={player.name}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
+              />
             ) : loading ? (
               <div style={{ width: '100%', height: '100%', background: 'rgba(255,255,255,0.1)' }} />
             ) : (
@@ -94,16 +112,27 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           </div>
 
           {/* Name + TEAM | POS */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            <div style={{ fontFamily: FF, fontSize: 16, fontWeight: 800, color: C.text, letterSpacing: '0.16px', lineHeight: '25px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', paddingTop: 10 }}>
+            <div style={{
+              fontFamily: FF, fontSize: 16, fontWeight: 800,
+              color: C.text, letterSpacing: '0.16px', lineHeight: '25px',
+            }}>
               {player.name}
             </div>
-            <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <span style={{ fontFamily: FF, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.65px', color: C.textMuted, lineHeight: '19px' }}>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{
+                fontFamily: FF, fontSize: 13, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.65px',
+                color: C.textMuted, lineHeight: '19px',
+              }}>
                 {player.team}
               </span>
-              <span style={{ fontFamily: FF, fontSize: 16, letterSpacing: '0.8px', color: C.textMuted }}>|</span>
-              <span style={{ fontFamily: FF, fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.65px', color: C.textMuted, lineHeight: '19px' }}>
+              <span style={{ fontFamily: FF, fontSize: 12, letterSpacing: '0.6px', color: C.textMuted }}>|</span>
+              <span style={{
+                fontFamily: FF, fontSize: 13, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.65px',
+                color: C.textMuted, lineHeight: '19px',
+              }}>
                 {player.pos}
               </span>
             </div>
@@ -112,13 +141,13 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
       </div>
 
       {/* ── Body ─────────────────────────────────────────────────────────────── */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 24, padding: 24 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16, padding: 24 }}>
 
         {/* Injury card */}
         {inj && (
           <div style={{
             background: C.injBg, border: `1px solid ${C.injBorder}`,
-            borderRadius: 4, padding: '12px 16px 14px',
+            borderRadius: 4, padding: '12px 16px 16px',
             display: 'flex', flexDirection: 'column', gap: 8,
           }}>
             <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
@@ -127,60 +156,96 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
               </span>
               <AlertCircle size={18} color={C.injLabel} style={{ flexShrink: 0 }} />
             </div>
-            <p style={{ fontFamily: FF, fontSize: 14, fontWeight: 400, color: C.text, letterSpacing: '0.28px', lineHeight: '20px', margin: 0 }}>
+            <p style={{
+              fontFamily: FF, fontSize: 13, fontWeight: 400,
+              color: C.text, letterSpacing: '0.26px', lineHeight: '19px', margin: 0,
+            }}>
               {inj.note}
             </p>
           </div>
         )}
 
-        {/* ── 2025-26 PLAYOFFS ─────────────────────────────────────────────── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <span style={T.label}>2025-26 Playoffs</span>
-          <div style={{ borderTop: `2px solid ${C.border}`, paddingTop: 12, paddingBottom: 12 }}>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '8px 0' }}>
-              <span style={{ ...T.statLg, color: C.accent }}>
-                {player.dynamicPoints != null ? Math.round(player.dynamicPoints) : '—'}
-              </span>
-              <span style={{ ...T.subLabel, color: C.accent }}>
-                Projected<br />points
-              </span>
+        {/* Playoffs + Season wrapper */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+          {/* ── 2025-26 PLAYOFFS ─────────────────────────────────────────── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingTop: 12, paddingBottom: 12 }}>
+            <span style={sectionLabel}>2025-26 Playoffs</span>
+            <div style={{ paddingTop: 4, paddingBottom: 4 }}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center', color: C.accent }}>
+                <span style={{
+                  fontFamily: FF, fontSize: 32, fontWeight: 700,
+                  letterSpacing: '1.6px', lineHeight: '21px',
+                }}>
+                  {player.dynamicPoints != null ? Math.round(player.dynamicPoints) : '—'}
+                </span>
+                <span style={{
+                  fontFamily: FF, fontSize: 10, fontWeight: 600,
+                  textTransform: 'uppercase', letterSpacing: '0.5px', lineHeight: '14px',
+                }}>
+                  Projected<br />points
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* ── 2025-26 SEASON ───────────────────────────────────────────────── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <span style={T.label}>2025-26 Season</span>
-          <div style={{ borderTop: `2px solid ${C.border}`, paddingTop: 12, paddingBottom: 12, display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {/* ── 2025-26 SEASON ────────────────────────────────────────────── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 12, paddingBottom: 16 }}>
+            <span style={sectionLabel}>2025-26 Season</span>
 
-            {/* Goals / Assists / Points / Avg TOI */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', textAlign: 'center' }}>
-              {[
-                { label: 'Goals',   value: player.goals },
-                { label: 'Assists', value: player.assists },
-                { label: 'Points',  value: player.points },
-                { label: 'Avg TOI', value: loading ? null : (avgToi ?? '—'), loading },
-              ].map(({ label, value, loading: isLoading }) => (
-                <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'center' }}>
-                  {isLoading ? <Skeleton width={36} height={21} /> : <span style={T.statSm}>{value ?? '—'}</span>}
-                  <span style={T.subLabel}>{label}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+              {/* Powerplay Pts + Points over last 10 */}
+              <div style={{ display: 'flex', gap: 40, alignItems: 'center', paddingTop: 4, paddingBottom: 4 }}>
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  {loading
+                    ? <Skeleton width={28} height={21} />
+                    : <span style={{ fontFamily: FF, fontSize: 24, fontWeight: 700, color: C.text, letterSpacing: '1.2px', lineHeight: '21px' }}>
+                        {ppPoints !== null ? ppPoints : '—'}
+                      </span>
+                  }
+                  <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', color: C.muted, lineHeight: '14px' }}>
+                    Powerplay<br />points
+                  </span>
                 </div>
-              ))}
-            </div>
-
-            {/* Powerplay Pts + Points over last 10 */}
-            <div style={{ display: 'flex', gap: 24, alignItems: 'center', justifyContent: 'center', padding: '8px 0' }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                {loading ? <Skeleton width={28} height={21} /> : <span style={T.statMd}>{ppPoints !== null ? ppPoints : '—'}</span>}
-                <span style={T.subLabel}>Powerplay<br />points</span>
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  {loading
+                    ? <Skeleton width={22} height={21} />
+                    : <span style={{ fontFamily: FF, fontSize: 24, fontWeight: 700, color: C.text, letterSpacing: '1.2px', lineHeight: '21px' }}>
+                        {last10pts !== null ? last10pts : '—'}
+                      </span>
+                  }
+                  <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', color: C.muted, lineHeight: '14px' }}>
+                    Points over<br />last 10 games
+                  </span>
+                </div>
               </div>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                {loading ? <Skeleton width={22} height={21} /> : <span style={T.statMd}>{last10pts !== null ? last10pts : '—'}</span>}
-                <span style={T.subLabel}>Points over<br />last 10 games</span>
-              </div>
-            </div>
 
+              {/* Goals / Assists / Points / Avg TOI */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop: 4, paddingBottom: 4, textAlign: 'center' }}>
+                {[
+                  { label: 'Goals',   value: player.goals },
+                  { label: 'Assists', value: player.assists },
+                  { label: 'Points',  value: player.points },
+                  { label: 'Avg TOI', value: loading ? null : (avgToi ?? '—'), isLoading: loading },
+                ].map(({ label, value, isLoading }) => (
+                  <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center' }}>
+                    {isLoading
+                      ? <Skeleton width={36} height={21} />
+                      : <span style={{ fontFamily: FF, fontSize: 16, fontWeight: 700, color: C.text, letterSpacing: '0.8px', lineHeight: '21px' }}>
+                          {value ?? '—'}
+                        </span>
+                    }
+                    <span style={{ fontFamily: FF, fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', color: C.muted, lineHeight: '15px' }}>
+                      {label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+            </div>
           </div>
+
         </div>
 
         {/* Error states */}
