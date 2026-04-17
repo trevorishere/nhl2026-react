@@ -236,6 +236,7 @@ export default function App() {
                 transform:  panelIn ? 'translateY(0)' : 'translateY(100%)',
                 transition: 'transform 300ms ease-in-out',
                 borderRadius: '12px 12px 0 0',
+                background: '#232221',  // solid page bg — matches desktop panel appearance
               }}
             >
               <PlayerDetailPanel
