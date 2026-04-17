@@ -77,30 +77,22 @@ export default function App() {
 
   return (
     <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
-      {/* Header — centered title + subtitle */}
-      <header className="text-center mb-8">
-        <h1 style={{
-          fontFamily: FF,
-          fontSize: 32,
-          fontWeight: 600,
-          color: C.text,
-          letterSpacing: '0.32px',
-          margin: 0,
-          lineHeight: '27px',
-        }}>
-          NHL Playoffs Draft Guide 2026
-        </h1>
-        <p style={{
-          fontFamily: FF,
-          fontSize: 16,
-          fontWeight: 500,
-          color: C.muted,
-          letterSpacing: '0.32px',
-          marginTop: 12,
-          lineHeight: '21px',
-        }}>
-          Pick your bracket. Get your draft list.
-        </p>
+      {/* Header */}
+      <header className="mb-8" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+        {/* Left decorative line */}
+        <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.12)' }} />
+
+        {/* Centered title block */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+          <img
+            src={`${import.meta.env.BASE_URL}header.svg`}
+            alt="NHL Playoffs '26 Draft Guide"
+            style={{ width: 274, height: 74, display: 'block' }}
+          />
+        </div>
+
+        {/* Right decorative line */}
+        <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.12)' }} />
       </header>
 
       {/* Main grid */}
