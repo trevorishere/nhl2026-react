@@ -67,9 +67,12 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{
         background: headerBg,
-        paddingLeft: 8, paddingRight: 16, paddingTop: 16, paddingBottom: 0,
+        padding: '0 8px',
         position: 'relative',
         flexShrink: 0,
+        height: 88,
+        display: 'flex',
+        alignItems: 'center',
       }}>
         <button
           onClick={onClose}
@@ -83,25 +86,22 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           <X size={16} />
         </button>
 
-        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-          {/* Headshot — 88×64 rectangle */}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', width: '100%' }}>
+          {/* Headshot — 88×88, transparent PNG sits on team color */}
           <div style={{
-            width: 88, height: 64, flexShrink: 0,
-            overflow: 'hidden',
+            width: 88, height: 88, flexShrink: 0,
+            position: 'relative',
             boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
-            background: 'rgba(255,255,255,0.15)',
           }}>
             {headshot ? (
               <img
                 src={headshot}
                 alt={player.name}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
               />
-            ) : loading ? (
-              <div style={{ width: '100%', height: '100%', background: 'rgba(255,255,255,0.1)' }} />
             ) : (
               <div style={{
-                width: '100%', height: '100%',
+                position: 'absolute', inset: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: FF, fontSize: 22, fontWeight: 800,
                 color: 'rgba(255,255,255,0.4)',
@@ -112,7 +112,7 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           </div>
 
           {/* Name + TEAM | POS */}
-          <div style={{ display: 'flex', flexDirection: 'column', paddingTop: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{
               fontFamily: FF, fontSize: 16, fontWeight: 800,
               color: C.text, letterSpacing: '0.16px', lineHeight: '25px',
