@@ -1,5 +1,6 @@
 import BracketColumn from './BracketColumn';
 import { ROUND1_MATCHUPS } from '../data/constants';
+import { FF } from '../styles/tokens';
 
 // ─── Card dimensions ──────────────────────────────────────────────────────────
 const CARD_W = 168;           // each team card width (Figma 206:17206)
@@ -114,17 +115,31 @@ export default function Bracket({ picks, onPick, mode, seriesLengths, onSeriesLe
           />
           <BracketColumn matches={[cup]} tops={CUP_TOPS} lefts={['calc(50% - 84px)']} colHeight={COL_H} {...columnProps} />
 
-          {/* Champion pill — appears below cup buttons once a winner is picked */}
+          {/* Champion pill — straddles cup icon and Cup Final series */}
           {champ && (
             <div style={{
               position: 'absolute',
-              top: CUP_TOP + matchH + 16,
+              top: CUP_SVG_TOP + 45,
               left: '50%',
               transform: 'translateX(-50%)',
               zIndex: 10,
-              whiteSpace: 'nowrap',
+              width: 155,
+              height: 38,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(24,24,24,0.95)',
+              border: '2px solid #747f92',
+              borderRadius: 4,
             }}>
-              <span className="inline-flex items-center gap-2 bg-surface2 border border-border px-3 py-2 rounded-full text-[14px] font-bold text-primary">
+              <span style={{
+                fontFamily: FF,
+                fontSize: 14,
+                fontWeight: 500,
+                color: '#ffffff',
+                letterSpacing: '0.28px',
+                whiteSpace: 'nowrap',
+              }}>
                 {champ} wins the Cup!
               </span>
             </div>
