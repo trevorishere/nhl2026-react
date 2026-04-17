@@ -476,7 +476,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
           <thead>
             <tr>
               {editMode && (
-                <th className="px-2 h-[40px] sticky top-0 bg-[#232221] w-6" style={{ boxShadow: '0 2px 0 #393836' }} />
+                <th className="px-2 h-[40px] sticky top-0 w-6" style={{ boxShadow: '0 2px 0 #393836' }} />
               )}
               {COLUMNS.map((col) => {
                 const isActive  = !editMode && sortConfig.key === col.key;
@@ -488,7 +488,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     key={col.key}
                     style={{ ...(col.width ? { width: col.width } : {}), boxShadow: '0 2px 0 #393836' }}
                     className={[
-                      'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none overflow-hidden',
+                      'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 font-bold select-none overflow-hidden',
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
