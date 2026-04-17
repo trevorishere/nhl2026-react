@@ -66,6 +66,13 @@
   }
 }
 
+/* Hide scrollbar on mobile bracket strip */
+.mobile-bracket-strip::-webkit-scrollbar { display: none; }
+.mobile-bracket-strip {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 @layer utilities {
   .bracket-grid {
     display: grid;
