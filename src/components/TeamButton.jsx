@@ -5,22 +5,22 @@ import { FF } from '../styles/tokens';
 
 // Logo positions extracted exactly from Figma frame 123:29
 const LOGO_POS = {
-  COL: { left: 37,  top: -20,   width: 147, height: 98  },
-  LAK: { left: 41,  top: -18,   width: 140, height: 93  },
-  DAL: { left: 37,  top: -27,   width: 159, height: 106 },
-  MIN: { left: 39,  top: -18,   width: 142, height: 95  },
-  EDM: { left: 32,  top: -23,   width: 157, height: 105 },
-  UTA: { left: 42,  top: -18,   width: 135, height: 90  },
-  ANA: { left: 43,  top: -12,   width: 134, height: 89  },
-  VGK: { left: 36,  top: -21,   width: 149, height: 99  },
-  TBL: { left: 41,  top: -15,   width: 133, height: 89  },
-  BOS: { left: 42,  top: -16,   width: 135, height: 90  },
-  BUF: { left: 40,  top: -19,   width: 141, height: 94  },
-  MTL: { left: 44,  top: -15,   width: 132, height: 88  },
-  CAR: { left: 44,  top: -17,   width: 136, height: 91  },
-  OTT: { left: 41,  top: -16,   width: 135, height: 90  },
-  PIT: { left: 49,  top: -11,   width: 129, height: 86  },
-  PHI: { left: 34,  top: -23,   width: 155, height: 103 },
+  COL: { left: 49,  top: -20, width: 148, height: 98  },
+  LAK: { left: 53,  top: -18, width: 140, height: 93  },
+  DAL: { left: 49,  top: -27, width: 161, height: 106 },
+  MIN: { left: 51,  top: -18, width: 142, height: 95  },
+  EDM: { left: 44,  top: -23, width: 157, height: 106 },
+  UTA: { left: 54,  top: -18, width: 137, height: 90  },
+  ANA: { left: 55,  top: -12, width: 138, height: 89  },
+  VGK: { left: 48,  top: -21, width: 150, height: 99  },
+  TBL: { left: 53,  top: -15, width: 135, height: 89  },
+  BOS: { left: 54,  top: -16, width: 135, height: 90  },
+  BUF: { left: 52,  top: -19, width: 144, height: 94  },
+  MTL: { left: 56,  top: -15, width: 135, height: 88  },
+  CAR: { left: 56,  top: -17, width: 136, height: 91  },
+  OTT: { left: 53,  top: -16, width: 137, height: 90  },
+  PIT: { left: 61,  top: -11, width: 130, height: 86  },
+  PHI: { left: 46,  top: -23, width: 155, height: 103 },
 };
 
 // Per-team glow colour overrides; falls back to badge bg for unlisted teams
@@ -69,7 +69,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
 
   // Blank / TBD slot
   if (!team) {
-    return <div className="h-[58px] w-[156px] shrink-0" style={{ border: '1px solid #393836' }} />;
+    return <div className="h-[58px] w-[168px] shrink-0" style={{ border: '1px solid #393836', borderRadius: 8 }} />;
   }
 
   const picked       = picks[matchId] || null;
@@ -139,8 +139,8 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
       onClick={(e) => { e.stopPropagation(); onPick(matchId, team); }}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
-      className="h-[58px] w-[156px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
-      style={buttonStyle}
+      className="h-[58px] w-[168px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
+      style={{ ...buttonStyle, borderRadius: 8 }}
     >
       {logoUri && (
         <img

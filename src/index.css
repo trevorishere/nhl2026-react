@@ -73,7 +73,7 @@
     /* At 1232px natural: each middle col = 306.67px (920/3)                */
     /* At 988px min:      each middle col = 225.33px                        */
     /* Left offsets within each col use calc(100% - Npx) to stay fluid     */
-    grid-template-columns: 156px 1fr 1fr 1fr 156px;
+    grid-template-columns: 168px 286px 292px 286px 168px;
     column-gap: 0;
     row-gap: 0;
     align-items: start;

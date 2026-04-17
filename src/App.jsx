@@ -147,7 +147,7 @@ export default function App() {
 
           {/* Scroll container: scrolls horizontally on mobile, full bracket on desktop */}
           <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', marginLeft: -12, marginRight: -12 }}>
-            <div style={{ minWidth: 988, paddingLeft: 12, paddingRight: 12 }}>
+            <div style={{ minWidth: 1200, paddingLeft: 12, paddingRight: 12 }}>
               <Bracket
                 picks={picks}
                 onPick={makePick}
