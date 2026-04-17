@@ -161,7 +161,7 @@ export default function App() {
         </section>
 
         {/* Player rankings */}
-        <section className="px-4 sm:px-20" style={{ paddingTop: 64 }}>
+        <section className="sm:px-20" style={{ paddingTop: 64 }}>
           <div style={{ maxWidth: 1232, margin: '0 auto' }}>
 
           {/* Draft List title — Figma 181:4407 */}
