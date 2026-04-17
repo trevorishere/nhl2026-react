@@ -321,8 +321,8 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
       {/* ── Controls: filters left | edit/export right ───────────────────── */}
       <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
 
-        {/* Left: always-visible filters */}
-        <div className="flex items-center gap-2.5">
+        {/* Left: filters — hidden on mobile */}
+        <div className="hidden sm:flex items-center gap-2.5">
 
           {/* Team multi-select */}
           <div ref={teamDropRef} style={{ position: 'relative' }}>
@@ -466,7 +466,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
 
       {/* ── Table — scroll container shows 20 rows (20 × 48px = 960px) ───── */}
       <div style={{ overflowY: 'auto', maxHeight: 960 }}>
-        <table className="w-full border-collapse text-[16px]" style={{ tableLayout: 'fixed' }}>
+        <table className="w-full border-collapse text-[15px] sm:text-[16px]" style={{ tableLayout: 'fixed' }}>
           <thead>
             <tr>
               {editMode && (
@@ -482,7 +482,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     key={col.key}
                     style={col.width ? { width: col.width } : undefined}
                     className={[
-                      'px-2 h-[40px] border-b-2 border-border text-[13px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none',
+                      'px-2 h-[40px] border-b-2 border-border text-[11px] sm:text-[13px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none',
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
