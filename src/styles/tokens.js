@@ -97,6 +97,7 @@ export const dropItemBase = {
 export const dropPanel = {
   position: 'absolute', top: 'calc(100% + 4px)', left: 0,
   zIndex: 50, background: '#1D1D1F', borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.1)',
   minWidth: 120, overflow: 'hidden', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
 };
 

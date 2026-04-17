@@ -355,7 +355,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   return (
                     <div
                       onClick={() => setFilterTeams(new Set())}
-                      className={allSel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      className={allSel ? 'bg-[rgba(255,255,255,0.05)]' : 'hover:bg-[rgba(255,255,255,0.05)]'}
                       style={dropItemBase}
                     >
                       <span style={{ ...T.label, color: allSel ? C.text : C.muted }}>All</span>
@@ -369,7 +369,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     <div
                       key={t}
                       onClick={() => toggleTeam(t)}
-                      className={sel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      className={sel ? 'bg-[rgba(255,255,255,0.05)]' : 'hover:bg-[rgba(255,255,255,0.05)]'}
                       style={dropItemBase}
                     >
                       <span style={{ ...T.label, color: sel ? C.text : C.muted }}>{t}</span>
@@ -404,7 +404,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   return (
                     <div
                       onClick={() => { setFilterPos('all'); setPosOpen(false); }}
-                      className={allSel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      className={allSel ? 'bg-[rgba(255,255,255,0.05)]' : 'hover:bg-[rgba(255,255,255,0.05)]'}
                       style={dropItemBase}
                     >
                       <span style={{ ...T.label, color: allSel ? C.text : C.muted }}>All</span>
@@ -418,7 +418,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     <div
                       key={p}
                       onClick={() => selectPos(p)}
-                      className={sel ? 'bg-[#444241]' : 'hover:bg-[#444241]'}
+                      className={sel ? 'bg-[rgba(255,255,255,0.05)]' : 'hover:bg-[rgba(255,255,255,0.05)]'}
                       style={dropItemBase}
                     >
                       <span style={{ ...T.label, color: sel ? C.text : C.muted }}>{p}</span>
