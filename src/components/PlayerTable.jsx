@@ -93,7 +93,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           <GripVertical size={14} />
         </td>
       )}
-      <td className={`${TD} text-muted truncate`}>{globalRank}</td>
+      <td className={`${TD} text-muted truncate sm:pl-3`}>{globalRank}</td>
       <td className={`${TD} overflow-hidden`}>
         <span className="flex items-center gap-3 min-w-0">
           <span className="truncate">{player.name}</span>
@@ -106,7 +106,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
       <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.pos}</td>
       <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
       <td className={`${TD} text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
-      <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.dynamicExpectedGames.toFixed(1)}</td>
+      <td className={`${TD} text-right truncate hidden sm:table-cell sm:pr-3`}>{player.dynamicExpectedGames.toFixed(1)}</td>
     </tr>
   );
 }
@@ -477,6 +477,8 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
                       col.mobileHide ? 'hidden sm:table-cell' : '',
+                      col.key === '#' ? 'sm:pl-3' : '',
+                      col.key === 'dynamicExpectedGames' ? 'sm:pr-3' : '',
                     ].join(' ')}
                     onClick={clickable ? () => handleSort(col) : undefined}
                     onMouseEnter={() => clickable && setHoveredHeader(col.key)}
@@ -535,7 +537,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   onClick={() => onPlayerSelect?.(isSelected ? null : p)}
                   className={`transition-colors cursor-pointer ${isSelected ? 'bg-[rgba(255,255,255,0.05)]' : 'hover:bg-[rgba(255,255,255,0.05)]'}`}
                 >
-                  <td className={`${TD} text-muted truncate`}>{i + 1}</td>
+                  <td className={`${TD} text-muted truncate sm:pl-3`}>{i + 1}</td>
                   <td className={`${TD} overflow-hidden`}>
                     <span className="flex items-center gap-3 min-w-0">
                       <span className="truncate">{p.name}</span>
@@ -548,7 +550,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.pos}</td>
                   <td className={`${TD} text-right truncate hidden sm:table-cell`}>{p.SeasonPPG.toFixed(2)}</td>
                   <td className={`${TD} text-primary text-right truncate`}>{p.dynamicPoints.toFixed(1)}</td>
-                  <td className={`${TD} text-right truncate hidden sm:table-cell`}>{p.dynamicExpectedGames.toFixed(1)}</td>
+                  <td className={`${TD} text-right truncate hidden sm:table-cell sm:pr-3`}>{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
                 );
               })}
