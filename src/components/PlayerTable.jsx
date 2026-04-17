@@ -335,7 +335,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
           {/* Team multi-select — hidden on mobile */}
           <div ref={teamDropRef} className="hidden sm:block" style={{ position: 'relative' }}>
             <button
-              style={{ ...dropBtnStyle(teamBtnHover), width: 119 }}
+              style={{ ...dropBtnStyle(teamBtnHover), width: 144 }}
               onClick={() => { setTeamOpen((o) => !o); setPosOpen(false); }}
               onMouseEnter={() => setTeamBtnHover(true)}
               onMouseLeave={() => setTeamBtnHover(false)}
@@ -384,7 +384,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
           {/* Pos single-select — hidden on mobile */}
           <div ref={posDropRef} className="hidden sm:block" style={{ position: 'relative' }}>
             <button
-              style={{ ...dropBtnStyle(posBtnHover), width: 110 }}
+              style={{ ...dropBtnStyle(posBtnHover), width: 144 }}
               onClick={() => { setPosOpen((o) => !o); setTeamOpen(false); }}
               onMouseEnter={() => setPosBtnHover(true)}
               onMouseLeave={() => setPosBtnHover(false)}
@@ -398,7 +398,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
               <ChevronDown size={12} color="currentColor" />
             </button>
             {posOpen && (
-              <div style={{ ...dropPanel, width: 124, right: 0, left: 'auto' }}>
+              <div style={{ ...dropPanel, width: 144, right: 0, left: 'auto' }}>
                 {(() => {
                   const allSel = filterPos === 'all';
                   return (
