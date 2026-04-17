@@ -39,8 +39,10 @@ const CUP_TOPS = [CUP_TOP];
 //  West: top+bottom semis at left=32; WCF flush-right (left=calc(100%-168px)=118px)
 //  East: ECF flush-left (left=0);    top+bottom semis at left=86
 //
+// West: semis 32px from left edge; WCF flush-right
 const WEST_SEMIS_LEFTS = [32, 'calc(100% - 168px)', 32];
-const EAST_SEMIS_LEFTS = [86, 0, 86];
+// East: ECF flush-left; semis 32px from right edge (calc(100% - 168px - 32px))
+const EAST_SEMIS_LEFTS = ['calc(100% - 200px)', 0, 'calc(100% - 200px)'];
 
 // ─────────────────────────────────────────────────────────────────────────────
 
