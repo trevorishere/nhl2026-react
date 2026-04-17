@@ -84,7 +84,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
   };
 
   return (
-    <tr ref={setNodeRef} style={style} className="hover:bg-surface2 transition-colors">
+    <tr ref={setNodeRef} style={style} className="hover:bg-[rgba(255,255,255,0.05)] transition-colors">
       {editMode && (
         <td
           className="px-2 py-2.5 border-b border-border text-muted cursor-grab active:cursor-grabbing"
@@ -543,7 +543,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                 <tr
                   key={i}
                   onClick={() => onPlayerSelect?.(isSelected ? null : p)}
-                  className={`transition-colors cursor-pointer ${isSelected ? 'bg-surface2' : 'hover:bg-surface2'}`}
+                  className={`transition-colors cursor-pointer ${isSelected ? 'bg-[rgba(255,255,255,0.05)]' : 'hover:bg-[rgba(255,255,255,0.05)]'}`}
                 >
                   <td className={`${TD} text-muted truncate`}>{i + 1}</td>
                   <td className={`${TD} overflow-hidden`}>
