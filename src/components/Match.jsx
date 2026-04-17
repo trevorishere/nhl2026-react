@@ -40,6 +40,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
             matchId={match.id}
             picks={picks}
             onPick={onPick}
+            position={i === 0 ? 'top' : 'bottom'}
           />
         ))}
       </div>

@@ -64,12 +64,14 @@ function teamBackground(team) {
 const TRANSITION = 'opacity 0.25s ease-in-out, filter 0.25s ease-in-out';
 const LOGO_TRANSITION = 'filter 0.25s ease-in-out';
 
-export default function TeamButton({ team, matchId, picks, onPick }) {
+export default function TeamButton({ team, matchId, picks, onPick, position = 'top' }) {
   const [hovering, setHovering] = useState(false);
 
   // Blank / TBD slot
+  const radius = position === 'top' ? '8px 8px 0 0' : '0 0 8px 8px';
+
   if (!team) {
-    return <div className="h-[58px] w-[168px] shrink-0" style={{ border: '1px solid #393836', borderRadius: 8 }} />;
+    return <div className="h-[58px] w-[168px] shrink-0" style={{ border: '1px solid #393836', borderRadius: radius }} />;
   }
 
   const picked       = picks[matchId] || null;
@@ -140,7 +142,7 @@ export default function TeamButton({ team, matchId, picks, onPick }) {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       className="h-[58px] w-[168px] shrink-0 relative overflow-hidden cursor-pointer p-0 border-0 block text-left"
-      style={{ ...buttonStyle, borderRadius: 8 }}
+      style={{ ...buttonStyle, borderRadius: radius }}
     >
       {logoUri && (
         <img
