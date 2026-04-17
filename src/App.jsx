@@ -172,7 +172,7 @@ export default function App() {
           }}>
             Draft List
           </h2>
-          <div className="flex gap-6 items-start">
+          <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
             <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
               <PlayerTable
