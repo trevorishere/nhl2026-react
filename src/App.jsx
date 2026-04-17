@@ -76,7 +76,25 @@ export default function App() {
   }, []);
 
   return (
-    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
+    <div style={{ position: 'relative' }}>
+      {/* Background texture — natural size, centered at top */}
+      <img
+        src={`${import.meta.env.BASE_URL}bg-top.jpg`}
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 1440,
+          height: 'auto',
+          pointerEvents: 'none',
+          userSelect: 'none',
+          zIndex: 0,
+          display: 'block',
+        }}
+      />
+    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6" style={{ position: 'relative', zIndex: 1 }}>
       {/* Header */}
       <header className="mb-8" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
         {/* Left decorative line */}
@@ -222,6 +240,7 @@ export default function App() {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 }
