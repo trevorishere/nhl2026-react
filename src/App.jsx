@@ -141,18 +141,10 @@ export default function App() {
           </div>
         </section>
 
-        {/* Player rankings */}
-        <section className="sm:px-20" style={{ paddingTop: 64 }}>
+        {/* Player rankings — full-bleed #212123 card, 48px padding (56px bottom) */}
+        <section className="-mx-4 sm:-mx-6">
+          <div style={{ background: '#212123', padding: '48px 48px 56px' }}>
           <div style={{ maxWidth: 1232, margin: '0 auto' }}>
-
-          {/* Draft List title — Figma 181:4407 */}
-          <h2 style={{
-            fontFamily: FF, fontSize: 32, fontWeight: 700,
-            color: C.text, letterSpacing: '0.64px',
-            textAlign: 'center', marginBottom: 40, marginTop: 0,
-          }}>
-            Draft List
-          </h2>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
             <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
@@ -189,6 +181,7 @@ export default function App() {
                 </div>
               </div>
             )}
+          </div>
           </div>
           </div>
         </section>

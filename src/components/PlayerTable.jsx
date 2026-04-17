@@ -1,10 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { ArrowUp, ArrowDown, GripVertical, AlertCircle, ChevronDown, ListFilter, Check } from 'lucide-react';
+import { ArrowUp, ArrowDown, ArrowUpDown, GripVertical, AlertCircle, ChevronDown, ListFilter, Check, Download } from 'lucide-react';
 import { BASE_DATA } from '../data/players';
 import { CHALK_PICKS, ROUND1_MATCHUPS, ROUND_PROGRESSION } from '../data/constants';
 import { getPosition } from '../data/positions';
-import Toggle from './Toggle';
-import { C, T, ctrlBtnStyle, dropItemBase, dropPanel } from '../styles/tokens';
+import { FF, C, T, ctrlBtnStyle, dropItemBase, dropPanel } from '../styles/tokens';
 import {
   DndContext, closestCenter,
   PointerSensor, KeyboardSensor,
@@ -318,16 +317,25 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
 
   return (
     <>
-      {/* ── Controls: filters left | edit/export right ───────────────────── */}
+      {/* ── Controls: title left | filters + icons right ─────────────────── */}
       <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
 
-        {/* Left: filters — hidden on mobile */}
-        <div className="hidden sm:flex items-center gap-2.5">
+        {/* Left: Draft List title */}
+        <h2 style={{
+          fontFamily: FF, fontSize: 20, fontWeight: 800,
+          color: C.text, letterSpacing: '1px',
+          textTransform: 'uppercase', margin: 0, lineHeight: 1,
+        }}>
+          Draft List
+        </h2>
 
-          {/* Team multi-select */}
-          <div ref={teamDropRef} style={{ position: 'relative' }}>
+        {/* Right: filters + icon buttons */}
+        <div className="flex items-center gap-2.5">
+
+          {/* Team multi-select — hidden on mobile */}
+          <div ref={teamDropRef} className="hidden sm:block" style={{ position: 'relative' }}>
             <button
-              style={{ ...dropBtnStyle(teamBtnHover), width: 144 }}
+              style={{ ...dropBtnStyle(teamBtnHover), width: 119 }}
               onClick={() => { setTeamOpen((o) => !o); setPosOpen(false); }}
               onMouseEnter={() => setTeamBtnHover(true)}
               onMouseLeave={() => setTeamBtnHover(false)}
@@ -341,8 +349,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
               <ChevronDown size={12} color="currentColor" />
             </button>
             {teamOpen && (
-              <div style={{ ...dropPanel, width: 144 }}>
-                {/* ALL option */}
+              <div style={{ ...dropPanel, width: 144, right: 0, left: 'auto' }}>
                 {(() => {
                   const allSel = filterTeams.size === 0;
                   return (
@@ -374,10 +381,10 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             )}
           </div>
 
-          {/* Pos single-select */}
-          <div ref={posDropRef} style={{ position: 'relative' }}>
+          {/* Pos single-select — hidden on mobile */}
+          <div ref={posDropRef} className="hidden sm:block" style={{ position: 'relative' }}>
             <button
-              style={{ ...dropBtnStyle(posBtnHover), width: 124 }}
+              style={{ ...dropBtnStyle(posBtnHover), width: 110 }}
               onClick={() => { setPosOpen((o) => !o); setTeamOpen(false); }}
               onMouseEnter={() => setPosBtnHover(true)}
               onMouseLeave={() => setPosBtnHover(false)}
@@ -391,8 +398,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
               <ChevronDown size={12} color="currentColor" />
             </button>
             {posOpen && (
-              <div style={{ ...dropPanel, width: 124 }}>
-                {/* ALL option */}
+              <div style={{ ...dropPanel, width: 124, right: 0, left: 'auto' }}>
                 {(() => {
                   const allSel = filterPos === 'all';
                   return (
@@ -424,39 +430,26 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             )}
           </div>
 
-        </div>
+          {/* Edit rankings — icon button, active = bright */}
+          <button
+            onClick={() => editMode ? exitEditMode() : enterEditMode()}
+            onMouseEnter={() => setEditBtnHover(true)}
+            onMouseLeave={() => setEditBtnHover(false)}
+            title={editMode ? 'Exit edit mode' : 'Edit rankings'}
+            style={ctrlBtnStyle(editBtnHover || editMode, { width: 36, padding: 0, justifyContent: 'center', flexShrink: 0 })}
+          >
+            <ArrowUpDown size={14} color="currentColor" />
+          </button>
 
-        {/* Right: edit toggle + export */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-          {/* Reset to auto-rank — only shown in edit mode, left of Edit Rankings */}
-          {editMode && (
-            <button
-              onClick={resetOrder}
-              onMouseEnter={() => setResetOrderHover(true)}
-              onMouseLeave={() => setResetOrderHover(false)}
-              style={ctrlBtnStyle(resetOrderHover, { padding: '0 16px' })}
-            >
-              Reset order
-            </button>
-          )}
-
-          {/* Edit Rankings toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 16px', height: 40 }}>
-            <span style={T.label}>Edit Rankings</span>
-            <Toggle on={editMode} onChange={() => editMode ? exitEditMode() : enterEditMode()} />
-          </div>
-
-          {/* Vertical divider */}
-          <div style={{ width: 1, height: 24, background: C.border, margin: '0 4px', flexShrink: 0 }} />
-
-          {/* Save as XLS — ghost button (transparent default) */}
+          {/* Download XLS — icon button */}
           <button
             onClick={exportXLS}
             onMouseEnter={() => setXlsBtnHover(true)}
             onMouseLeave={() => setXlsBtnHover(false)}
-            style={ctrlBtnStyle(xlsBtnHover, { padding: '0 16px' })}
+            title="Save as XLS"
+            style={ctrlBtnStyle(xlsBtnHover, { width: 36, padding: 0, justifyContent: 'center', flexShrink: 0 })}
           >
-            Save as XLS
+            <Download size={14} color="currentColor" />
           </button>
         </div>
       </div>
