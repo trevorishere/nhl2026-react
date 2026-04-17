@@ -46,14 +46,15 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 }
 
 // ─── Table column definitions ──────────────────────────────────────────────────
+// mobileHide: true → hidden below sm breakpoint (640px)
 const COLUMNS = [
   { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%'  },
-  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '31%' },
-  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '9%'  },
-  { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '7%'  },
-  { key: 'SeasonPPG',            label: 'Season PPG', sortable: false, align: 'right', width: '18%' },
-  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '13%' },
-  { key: 'dynamicExpectedGames', label: 'Proj Games', sortable: false, align: 'right', width: '18%' },
+  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '32%' },
+  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '8%',  mobileHide: true },
+  { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '8%',  mobileHide: true },
+  { key: 'SeasonPPG',            label: 'Season PPG', sortable: true,  align: 'right', defaultDir: 'desc', width: '16%', mobileHide: true },
+  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '16%' },
+  { key: 'dynamicExpectedGames', label: 'Proj Games', sortable: true,  align: 'right', defaultDir: 'desc', width: '16%', mobileHide: true },
 ];
 
 // ─── Unique stable ID per player ───────────────────────────────────────────────
@@ -93,20 +94,20 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           <GripVertical size={14} />
         </td>
       )}
-      <td className={`${TD} text-muted font-bold`}>{globalRank}</td>
-      <td className={`${TD} font-medium`}>
-        <span className="flex items-center gap-3">
-          {player.name}
+      <td className={`${TD} text-muted font-bold truncate`}>{globalRank}</td>
+      <td className={`${TD} font-medium overflow-hidden`}>
+        <span className="flex items-center gap-3 min-w-0">
+          <span className="truncate">{player.name}</span>
           {getInjury(player.name, injuries) && (
             <AlertCircle size={16} strokeWidth={1.5} color="#ef4444" style={{ flexShrink: 0 }} />
           )}
         </span>
       </td>
-      <td className={`${TD} text-muted`}>{player.team}</td>
-      <td className={`${TD} text-muted`}>{player.pos}</td>
-      <td className={`${TD} text-right`}>{player.SeasonPPG.toFixed(2)}</td>
-      <td className={`${TD} font-bold text-primary text-right`}>{player.dynamicPoints.toFixed(1)}</td>
-      <td className={`${TD} font-bold text-right`}>{player.dynamicExpectedGames.toFixed(1)}</td>
+      <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.team}</td>
+      <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.pos}</td>
+      <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
+      <td className={`${TD} font-bold text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
+      <td className={`${TD} font-bold text-right truncate hidden sm:table-cell`}>{player.dynamicExpectedGames.toFixed(1)}</td>
     </tr>
   );
 }
@@ -320,8 +321,8 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
       {/* ── Controls: filters left | edit/export right ───────────────────── */}
       <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
 
-        {/* Left: always-visible filters */}
-        <div className="flex items-center gap-2.5">
+        {/* Left: filters — hidden on mobile */}
+        <div className="hidden sm:flex items-center gap-2.5">
 
           {/* Team multi-select */}
           <div ref={teamDropRef} style={{ position: 'relative' }}>
@@ -465,7 +466,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
 
       {/* ── Table — scroll container shows 20 rows (20 × 48px = 960px) ───── */}
       <div style={{ overflowY: 'auto', maxHeight: 960 }}>
-        <table className="w-full border-collapse text-[16px]" style={{ tableLayout: 'fixed' }}>
+        <table className="w-full border-collapse text-[15px] sm:text-[16px]" style={{ tableLayout: 'fixed' }}>
           <thead>
             <tr>
               {editMode && (
@@ -481,23 +482,24 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     key={col.key}
                     style={col.width ? { width: col.width } : undefined}
                     className={[
-                      'px-2 h-[40px] border-b-2 border-border text-[13px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none',
+                      'px-2 h-[40px] border-b-2 border-border text-[11px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none overflow-hidden',
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
+                      col.mobileHide ? 'hidden sm:table-cell' : '',
                     ].join(' ')}
                     onClick={clickable ? () => handleSort(col) : undefined}
                     onMouseEnter={() => clickable && setHoveredHeader(col.key)}
                     onMouseLeave={() => setHoveredHeader(null)}
                   >
                     {isRight ? (
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-2 min-w-0 overflow-hidden">
                         {col.sortable && !editMode && <SortArrow col={col} />}
-                        <span>{col.label}</span>
+                        <span className="truncate">{col.label}</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2">
-                        <span>{col.label}</span>
+                      <div className="flex items-center gap-2 min-w-0 overflow-hidden">
+                        <span className="truncate">{col.label}</span>
                         {col.sortable && !editMode && <SortArrow col={col} />}
                       </div>
                     )}
@@ -543,20 +545,20 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   onClick={() => onPlayerSelect?.(isSelected ? null : p)}
                   className={`transition-colors cursor-pointer ${isSelected ? 'bg-surface2' : 'hover:bg-surface2'}`}
                 >
-                  <td className={`${TD} text-muted font-bold`}>{i + 1}</td>
-                  <td className={`${TD} font-medium`}>
-                    <span className="flex items-center gap-3">
-                      {p.name}
+                  <td className={`${TD} text-muted font-bold truncate`}>{i + 1}</td>
+                  <td className={`${TD} font-medium overflow-hidden`}>
+                    <span className="flex items-center gap-3 min-w-0">
+                      <span className="truncate">{p.name}</span>
                       {getInjury(p.name, injuries) && (
                         <AlertCircle size={16} strokeWidth={1.5} color="#ef4444" style={{ flexShrink: 0 }} />
                       )}
                     </span>
                   </td>
-                  <td className={`${TD} text-muted`}>{p.team}</td>
-                  <td className={`${TD} text-muted`}>{p.pos}</td>
-                  <td className={`${TD} text-right`}>{p.SeasonPPG.toFixed(2)}</td>
-                  <td className={`${TD} font-bold text-primary text-right`}>{p.dynamicPoints.toFixed(1)}</td>
-                  <td className={`${TD} font-bold text-right`}>{p.dynamicExpectedGames.toFixed(1)}</td>
+                  <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.team}</td>
+                  <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.pos}</td>
+                  <td className={`${TD} text-right truncate hidden sm:table-cell`}>{p.SeasonPPG.toFixed(2)}</td>
+                  <td className={`${TD} font-bold text-primary text-right truncate`}>{p.dynamicPoints.toFixed(1)}</td>
+                  <td className={`${TD} font-bold text-right truncate hidden sm:table-cell`}>{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
                 );
               })}

@@ -67,8 +67,16 @@ export default function App() {
   const [resetHover, setResetHover] = useState(false);
   const [autopickHover, setAutopickHover] = useState(false);
 
+  // Responsive: detect mobile (< 640px = Tailwind sm breakpoint)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
   return (
-    <div className="max-w-[1600px] mx-auto px-6 py-6">
+    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
       {/* Header — centered title + subtitle */}
       <header className="text-center mb-8">
         <h1 style={{
@@ -153,8 +161,8 @@ export default function App() {
         </section>
 
         {/* Player rankings */}
-        <section className="px-20" style={{ paddingTop: 64 }}>
-          <div style={{ maxWidth: 1232, minWidth: 988, margin: '0 auto' }}>
+        <section className="sm:px-20" style={{ paddingTop: 64 }}>
+          <div style={{ maxWidth: 1232, margin: '0 auto' }}>
 
           {/* Draft List title — Figma 181:4407 */}
           <h2 style={{
@@ -164,9 +172,9 @@ export default function App() {
           }}>
             Draft List
           </h2>
-          <div className="flex gap-6 items-start">
-            {/* Table — shrinks when panel is open */}
-            <div className={panelPlayer ? 'flex-1 min-w-0' : 'w-full'}>
+          <div className="flex items-start" style={{ gap: 48 }}>
+            {/* Table — shrinks when desktop panel is open */}
+            <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
               <PlayerTable
                 picks={picks}
                 mode={mode}
@@ -176,18 +184,18 @@ export default function App() {
                 injuries={injuries}
               />
             </div>
-            {/* Detail panel — width animates 0→320 to push the table */}
-            {panelPlayer && (
+
+            {/* Desktop detail panel — width animates 0→336 to push the table */}
+            {panelPlayer && !isMobile && (
               <div
                 className="flex-shrink-0 sticky top-4 overflow-hidden"
                 style={{
-                  width:      panelIn ? 320 : 0,
+                  width:      panelIn ? 336 : 0,
                   transition: 'width 300ms ease-in-out',
                 }}
               >
-                {/* Inner panel slides in within the expanding container */}
                 <div style={{
-                  width:      320,
+                  width:      336,
                   opacity:    panelIn ? 1 : 0,
                   transform:  panelIn ? 'translateX(0)' : 'translateX(20px)',
                   transition: 'opacity 300ms ease-in-out, transform 300ms ease-in-out',
@@ -203,6 +211,42 @@ export default function App() {
           </div>
           </div>
         </section>
+
+        {/* Mobile detail panel — slides up from bottom */}
+        {panelPlayer && isMobile && (
+          <>
+            {/* Backdrop */}
+            <div
+              onClick={() => handlePlayerSelect(null)}
+              style={{
+                position: 'fixed', inset: 0, zIndex: 40,
+                background: 'rgba(0,0,0,0.5)',
+                opacity:    panelIn ? 1 : 0,
+                transition: 'opacity 300ms ease-in-out',
+              }}
+            />
+            {/* Sheet */}
+            <div
+              style={{
+                position:   'fixed',
+                bottom: 0, left: 0, right: 0,
+                zIndex:     50,
+                maxHeight:  '85vh',
+                overflowY:  'auto',
+                transform:  panelIn ? 'translateY(0)' : 'translateY(100%)',
+                transition: 'transform 300ms ease-in-out',
+                borderRadius: '12px 12px 0 0',
+                background: '#232221',  // solid page bg — matches desktop panel appearance
+              }}
+            >
+              <PlayerDetailPanel
+                player={panelPlayer}
+                injuries={injuries}
+                onClose={() => handlePlayerSelect(null)}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
