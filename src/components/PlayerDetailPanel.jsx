@@ -94,7 +94,7 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           </div>
 
           {/* Name + TEAM | POS */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             <div style={{ fontFamily: FF, fontSize: 16, fontWeight: 800, color: C.text, letterSpacing: '0.16px', lineHeight: '25px' }}>
               {player.name}
             </div>

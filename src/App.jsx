@@ -185,17 +185,17 @@ export default function App() {
               />
             </div>
 
-            {/* Desktop detail panel — width animates 0→320 to push the table */}
+            {/* Desktop detail panel — width animates 0→336 to push the table */}
             {panelPlayer && !isMobile && (
               <div
                 className="flex-shrink-0 sticky top-4 overflow-hidden"
                 style={{
-                  width:      panelIn ? 320 : 0,
+                  width:      panelIn ? 336 : 0,
                   transition: 'width 300ms ease-in-out',
                 }}
               >
                 <div style={{
-                  width:      320,
+                  width:      336,
                   opacity:    panelIn ? 1 : 0,
                   transform:  panelIn ? 'translateX(0)' : 'translateX(20px)',
                   transition: 'opacity 300ms ease-in-out, transform 300ms ease-in-out',
