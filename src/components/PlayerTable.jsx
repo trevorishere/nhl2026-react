@@ -306,7 +306,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
 
   // ── Dropdown button style (extends ctrlBtnStyle with space-between layout) ──
   const dropBtnStyle = (hovering) => ctrlBtnStyle(hovering, {
-    gap: 8, padding: '0 12px', justifyContent: 'space-between', color: C.muted,
+    gap: 8, padding: '0 12px', justifyContent: 'space-between',
   });
 
   const teamLabel = filterTeams.size === 0
@@ -334,11 +334,11 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                 <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, flexShrink: 0 }}>
-                  <ListFilter size={12} color={C.muted} strokeWidth={2.5} />
+                  <ListFilter size={12} color="currentColor" strokeWidth={2.5} />
                 </span>
-                <span style={T.label}>{teamLabel}</span>
+                <span style={{ ...T.label, color: 'inherit' }}>{teamLabel}</span>
               </span>
-              <ChevronDown size={12} color={C.muted} />
+              <ChevronDown size={12} color="currentColor" />
             </button>
             {teamOpen && (
               <div style={{ ...dropPanel, width: 144 }}>
@@ -384,11 +384,11 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                 <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, flexShrink: 0 }}>
-                  <ListFilter size={12} color={C.muted} strokeWidth={2.5} />
+                  <ListFilter size={12} color="currentColor" strokeWidth={2.5} />
                 </span>
-                <span style={T.label}>{posLabel}</span>
+                <span style={{ ...T.label, color: 'inherit' }}>{posLabel}</span>
               </span>
-              <ChevronDown size={12} color={C.muted} />
+              <ChevronDown size={12} color="currentColor" />
             </button>
             {posOpen && (
               <div style={{ ...dropPanel, width: 124 }}>
@@ -454,10 +454,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             onClick={exportXLS}
             onMouseEnter={() => setXlsBtnHover(true)}
             onMouseLeave={() => setXlsBtnHover(false)}
-            style={{
-              ...ctrlBtnStyle(xlsBtnHover, { padding: '0 16px', color: C.muted }),
-              background: xlsBtnHover ? C.btnHover : 'transparent',
-            }}
+            style={ctrlBtnStyle(xlsBtnHover, { padding: '0 16px' })}
           >
             Save as XLS
           </button>

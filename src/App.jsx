@@ -109,7 +109,7 @@ export default function App() {
               onMouseEnter={() => setResetHover(true)}
               onMouseLeave={() => setResetHover(false)}
             >
-              <RotateCcw size={14} color={C.muted} strokeWidth={2} />
+              <RotateCcw size={14} color="currentColor" strokeWidth={2} />
               Reset
             </button>
             <button
