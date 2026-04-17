@@ -5,7 +5,7 @@ import PlayerTable from './components/PlayerTable';
 import PlayerDetailPanel from './components/PlayerDetailPanel';
 import Toggle from './components/Toggle';
 import { CHALK_PICKS, PICK_DEPS } from './data/constants';
-import { C, ctrlBtnStyle } from './styles/tokens';
+import { FF, C, ctrlBtnStyle } from './styles/tokens';
 
 export default function App() {
   const [picks, setPicks] = useState({});
