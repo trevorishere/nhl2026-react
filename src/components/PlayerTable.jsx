@@ -94,20 +94,20 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           <GripVertical size={14} />
         </td>
       )}
-      <td className={`${TD} text-muted font-bold`}>{globalRank}</td>
-      <td className={`${TD} font-medium`}>
-        <span className="flex items-center gap-3">
-          {player.name}
+      <td className={`${TD} text-muted font-bold truncate`}>{globalRank}</td>
+      <td className={`${TD} font-medium overflow-hidden`}>
+        <span className="flex items-center gap-3 min-w-0">
+          <span className="truncate">{player.name}</span>
           {getInjury(player.name, injuries) && (
             <AlertCircle size={16} strokeWidth={1.5} color="#ef4444" style={{ flexShrink: 0 }} />
           )}
         </span>
       </td>
-      <td className={`${TD} text-muted hidden sm:table-cell`}>{player.team}</td>
-      <td className={`${TD} text-muted hidden sm:table-cell`}>{player.pos}</td>
-      <td className={`${TD} text-right hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
-      <td className={`${TD} font-bold text-primary text-right`}>{player.dynamicPoints.toFixed(1)}</td>
-      <td className={`${TD} font-bold text-right hidden sm:table-cell`}>{player.dynamicExpectedGames.toFixed(1)}</td>
+      <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.team}</td>
+      <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.pos}</td>
+      <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
+      <td className={`${TD} font-bold text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
+      <td className={`${TD} font-bold text-right truncate hidden sm:table-cell`}>{player.dynamicExpectedGames.toFixed(1)}</td>
     </tr>
   );
 }
@@ -482,7 +482,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     key={col.key}
                     style={col.width ? { width: col.width } : undefined}
                     className={[
-                      'px-2 h-[40px] border-b-2 border-border text-[11px] sm:text-[13px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none',
+                      'px-2 h-[40px] border-b-2 border-border text-[11px] uppercase tracking-[0.065em] sticky top-0 bg-[#232221] font-bold select-none overflow-hidden',
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
@@ -493,13 +493,13 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     onMouseLeave={() => setHoveredHeader(null)}
                   >
                     {isRight ? (
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-2 min-w-0 overflow-hidden">
                         {col.sortable && !editMode && <SortArrow col={col} />}
-                        <span>{col.label}</span>
+                        <span className="truncate">{col.label}</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2">
-                        <span>{col.label}</span>
+                      <div className="flex items-center gap-2 min-w-0 overflow-hidden">
+                        <span className="truncate">{col.label}</span>
                         {col.sortable && !editMode && <SortArrow col={col} />}
                       </div>
                     )}
@@ -545,20 +545,20 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   onClick={() => onPlayerSelect?.(isSelected ? null : p)}
                   className={`transition-colors cursor-pointer ${isSelected ? 'bg-surface2' : 'hover:bg-surface2'}`}
                 >
-                  <td className={`${TD} text-muted font-bold`}>{i + 1}</td>
-                  <td className={`${TD} font-medium`}>
-                    <span className="flex items-center gap-3">
-                      {p.name}
+                  <td className={`${TD} text-muted font-bold truncate`}>{i + 1}</td>
+                  <td className={`${TD} font-medium overflow-hidden`}>
+                    <span className="flex items-center gap-3 min-w-0">
+                      <span className="truncate">{p.name}</span>
                       {getInjury(p.name, injuries) && (
                         <AlertCircle size={16} strokeWidth={1.5} color="#ef4444" style={{ flexShrink: 0 }} />
                       )}
                     </span>
                   </td>
-                  <td className={`${TD} text-muted hidden sm:table-cell`}>{p.team}</td>
-                  <td className={`${TD} text-muted hidden sm:table-cell`}>{p.pos}</td>
-                  <td className={`${TD} text-right hidden sm:table-cell`}>{p.SeasonPPG.toFixed(2)}</td>
-                  <td className={`${TD} font-bold text-primary text-right`}>{p.dynamicPoints.toFixed(1)}</td>
-                  <td className={`${TD} font-bold text-right hidden sm:table-cell`}>{p.dynamicExpectedGames.toFixed(1)}</td>
+                  <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.team}</td>
+                  <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.pos}</td>
+                  <td className={`${TD} text-right truncate hidden sm:table-cell`}>{p.SeasonPPG.toFixed(2)}</td>
+                  <td className={`${TD} font-bold text-primary text-right truncate`}>{p.dynamicPoints.toFixed(1)}</td>
+                  <td className={`${TD} font-bold text-right truncate hidden sm:table-cell`}>{p.dynamicExpectedGames.toFixed(1)}</td>
                 </tr>
                 );
               })}
