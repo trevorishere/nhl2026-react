@@ -18,7 +18,7 @@ export default function App() {
   const [injuries, setInjuries] = useState({});
 
   useEffect(() => {
-    fetch('/injuries.json')
+    fetch(`${import.meta.env.BASE_URL}injuries.json`)
       .then((r) => r.json())
       .then((d) => setInjuries(d.players || {}))
       .catch(() => {}); // silently fail if file not yet generated
