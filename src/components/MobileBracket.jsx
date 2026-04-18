@@ -86,7 +86,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
   }
 
   return (
-    <div style={{ paddingTop: 8 }}>
+    <div style={{ paddingTop: 8, overflowX: 'hidden' }}>
       {/* ── Nav bar ──────────────────────────────────────────────────────────── */}
       <div style={{ paddingLeft: 16, paddingRight: 16 }}>
 

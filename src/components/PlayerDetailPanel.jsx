@@ -57,7 +57,6 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
   return (
     <div style={{
       background: C.surface,
-      border: `1px solid ${C.border}`,
       borderRadius: 16,
       overflow: 'hidden',
       display: 'flex',

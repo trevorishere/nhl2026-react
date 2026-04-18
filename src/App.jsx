@@ -95,7 +95,7 @@ export default function App() {
           display: 'block',
         }}
       />
-    <div className="max-w-[1600px] mx-auto sm:px-6 py-6" style={{ position: 'relative', zIndex: 1 }}>
+    <div className="max-w-[1600px] mx-auto sm:px-6 py-6" style={{ position: 'relative', zIndex: 1, overflowX: 'hidden' }}>
       {/* Header */}
       <header className="mb-8 px-4 sm:px-0" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
         {/* Left decorative line */}
@@ -174,7 +174,7 @@ export default function App() {
 
         {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
         <section style={{ padding: isMobile ? 0 : '0 48px 48px' }}>
-          <div style={{ maxWidth: 1232, margin: '0 auto', background: '#212224', padding: isMobile ? '24px 16px 32px' : '48px 48px 56px' }}>
+          <div style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '24px 16px 32px' : '48px 48px 56px' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
             <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
