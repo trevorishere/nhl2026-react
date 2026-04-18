@@ -12,7 +12,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
   const reveal = (idx) => `digitReveal 180ms ease-out ${idx * 30}ms both`;
 
   return (
-    <div className="flex flex-col" style={{ gap: hasLabel ? '8px' : '0' }}>
+    <div className="flex flex-col" style={{ gap: '8px' }}>
       {hasLabel && (
         <p
           className="text-[11px] font-bold uppercase text-center"
@@ -56,7 +56,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
       {mode === 'advanced' && (
         <div
           className="flex items-center"
-          style={{ paddingLeft: 8, paddingRight: 6, paddingTop: 2, paddingBottom: 12 }}
+          style={{ paddingLeft: 8, paddingRight: 6, paddingTop: 0, paddingBottom: 12 }}
         >
           {/* GAMES label — 10px Figtree Bold, muted */}
           <span
@@ -67,7 +67,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
               letterSpacing: '0.05em',
               textTransform: 'uppercase',
               color: 'rgba(255,255,255,0.35)',
-              marginRight: 24,
+              marginRight: 18,
               flexShrink: 0,
               lineHeight: 1,
               animation: reveal(0),

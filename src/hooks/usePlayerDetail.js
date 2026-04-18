@@ -5,9 +5,17 @@ const cache  = new Map(); // nhlId → { data, ts }
 const TTL    = 5 * 60 * 1000; // 5 minutes
 const SEASON = '20252026';
 
-// api-web.nhle.com supports CORS from browsers directly — no proxy needed.
-// In Vite dev the local proxy still works but we can call the live URL too.
+// api-web.nhle.com does not send CORS headers, so browser fetches are blocked
+// in production. Use the Vite dev proxy in development and allorigins.win as a
+// CORS proxy in production.
 const NHL_BASE = 'https://api-web.nhle.com';
+
+function nhlUrl(path) {
+  if (import.meta.env.DEV) {
+    return `/nhl-api${path}`;
+  }
+  return `https://api.allorigins.win/raw?url=${encodeURIComponent(NHL_BASE + path)}`;
+}
 
 export function usePlayerDetail(player) {
   const [state, setState] = useState({ data: null, loading: false, error: null });
@@ -33,11 +41,11 @@ export function usePlayerDetail(player) {
     setState((s) => ({ ...s, loading: true, error: null }));
 
     Promise.all([
-      fetch(`${NHL_BASE}/v1/player/${nhlId}/landing`).then((r) => {
+      fetch(nhlUrl(`/v1/player/${nhlId}/landing`)).then((r) => {
         if (!r.ok) throw new Error(`landing ${r.status}`);
         return r.json();
       }),
-      fetch(`${NHL_BASE}/v1/player/${nhlId}/game-log/${SEASON}/2`).then((r) => {
+      fetch(nhlUrl(`/v1/player/${nhlId}/game-log/${SEASON}/2`)).then((r) => {
         if (!r.ok) throw new Error(`game-log ${r.status}`);
         return r.json();
       }),

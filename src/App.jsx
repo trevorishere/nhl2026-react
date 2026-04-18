@@ -229,13 +229,7 @@ export default function App() {
                   willChange: 'width',
                 }}
               >
-                <div style={{
-                  width:      360,
-                  opacity:    panelIn ? 1 : 0,
-                  transform:  panelIn ? 'translateX(0)' : 'translateX(120px)',
-                  transition: 'opacity 360ms cubic-bezier(0.4, 0, 0.2, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1)',
-                  willChange: 'transform, opacity',
-                }}>
+                <div style={{ width: 360 }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
                     injuries={injuries}
