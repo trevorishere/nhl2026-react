@@ -201,13 +201,10 @@ export default function App() {
 
         {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
         <section style={{ padding: isMobile ? 0 : '0 48px 48px', marginTop: 24 }}>
-          <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '32px 16px 32px' : '48px 48px 56px' }}>
+          <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '32px 16px 32px' : '48px 48px 56px', overflow: 'clip' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
-            <div
-              className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}
-              style={{ transition: 'flex 420ms cubic-bezier(0.4, 0, 0.2, 1), width 420ms cubic-bezier(0.4, 0, 0.2, 1)' }}
-            >
+            <div style={{ flex: '1 1 0', minWidth: 0 }}>
               <PlayerTable
                 picks={picks}
                 mode={mode}
@@ -222,17 +219,19 @@ export default function App() {
             {/* Desktop detail panel — slides in from the right */}
             {panelPlayer && !isMobile && (
               <div
-                className="flex-shrink-0 sticky top-4 overflow-hidden"
+                className="flex-shrink-0 sticky top-4"
                 style={{
                   width:      panelIn ? 360 : 0,
-                  transition: 'width 300ms ease-in-out',
+                  overflow:   'visible',
+                  transition: 'width 380ms ease-in-out',
+                  willChange: 'width',
                 }}
               >
                 <div style={{
                   width:      360,
-                  opacity:    panelIn ? 1 : 0,
-                  transform:  panelIn ? 'translateX(0)' : 'translateX(20px)',
-                  transition: 'opacity 300ms ease-in-out, transform 300ms ease-in-out',
+                  transform:  panelIn ? 'translateX(0)' : 'translateX(360px)',
+                  transition: 'transform 380ms ease-in-out',
+                  willChange: 'transform',
                 }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
