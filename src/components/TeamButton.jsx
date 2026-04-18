@@ -102,9 +102,9 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
       '--glow-dim':    glowDim,
     };
   } else if (isEliminated) {
-    // Eliminated: 50% opacity, restores colour + opacity on hover
+    // Eliminated: team colour stays visible, dimmed to 35% opacity
     buttonStyle = {
-      background:      hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)',
+      background:      teamBackground(team),
       opacity:         hovering ? 1 : 0.35,
       transition:      TRANSITION,
       animation:       POP,

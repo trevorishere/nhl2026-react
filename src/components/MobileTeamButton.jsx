@@ -97,7 +97,7 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
     };
   } else if (isEliminated) {
     buttonStyle = {
-      background:  hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)',
+      background:  teamBackground(team),
       opacity:     hovering ? 1 : 0.35,
       transition:  TRANSITION,
       animation:   POP,
