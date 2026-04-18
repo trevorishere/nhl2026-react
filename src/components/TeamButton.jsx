@@ -102,9 +102,10 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
       '--glow-dim':    glowDim,
     };
   } else if (isEliminated) {
-    // Eliminated: near-bg dark fill so winner stands out; full colour on hover
+    // Eliminated: dark fill + grayscale; full colour on hover
     buttonStyle = {
       background:      hovering ? teamBackground(team) : 'rgba(255,255,255,0.04)',
+      filter:          hovering ? 'none' : 'grayscale(1)',
       transition:      TRANSITION,
       animation:       POP,
       '--glow-bright': glowBright,
