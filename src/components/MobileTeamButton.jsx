@@ -147,7 +147,8 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
             width: logoPos.width, height: logoPos.height,
             objectFit: 'contain', pointerEvents: 'none',
             filter: logoFilter,
-            transition: isWinner ? 'filter 1s ease-in-out' : LOGO_TRANSITION,
+            opacity: isEliminated && !hovering ? 0.35 : 1,
+            transition: isWinner ? 'filter 1s ease-in-out' : `${LOGO_TRANSITION}, opacity 0.25s ease-in-out`,
           }}
         />
       )}
@@ -156,6 +157,8 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
         position: 'absolute', inset: '0 0 0 0',
         display: 'flex', flexDirection: 'column',
         justifyContent: 'center', gap: 2, left: 16,
+        opacity: isEliminated && !hovering ? 0.35 : 1,
+        transition: 'opacity 0.25s ease-in-out',
       }}>
         <span style={{
           fontFamily: FF, fontSize: 15, fontWeight: 800,

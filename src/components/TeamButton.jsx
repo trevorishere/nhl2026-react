@@ -161,14 +161,15 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
             height:     logoPos.height,
             objectFit:  'contain',
             filter:     logoFilter,
-            transition: isWinner ? 'filter 1s ease-in-out' : LOGO_TRANSITION,
+            opacity:    isEliminated && !hovering ? 0.35 : 1,
+            transition: isWinner ? 'filter 1s ease-in-out' : `${LOGO_TRANSITION}, opacity 0.25s ease-in-out`,
           }}
         />
       )}
 
       <div
         className="absolute inset-y-0 flex flex-col justify-center gap-[2px] whitespace-nowrap"
-        style={{ left: 16 }}
+        style={{ left: 16, opacity: isEliminated && !hovering ? 0.35 : 1, transition: 'opacity 0.25s ease-in-out' }}
       >
         <span
           className="text-white text-[16px] font-bold leading-normal"
