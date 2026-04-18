@@ -317,88 +317,131 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         transition: 'opacity 0.4s ease',
       }}>
 
-        {/* Nav bar */}
-        <div style={{ marginBottom: 12 }}>
-          {/* Conference labels */}
-          <div style={{
-            display: 'flex', justifyContent: 'space-between',
-            paddingLeft: 8, paddingRight: 8, marginBottom: 4,
-          }}>
-            <span style={{
-              fontFamily: FF, fontSize: 9, fontWeight: 700,
-              color: C.muted, letterSpacing: '0.6px', textTransform: 'uppercase',
-            }}>
-              Western Conference
-            </span>
-            <span style={{
-              fontFamily: FF, fontSize: 9, fontWeight: 700,
-              color: C.muted, letterSpacing: '0.6px', textTransform: 'uppercase',
-            }}>
-              Eastern Conference
-            </span>
-          </div>
+        {/* ── Nav bar ────────────────────────────────────────────────────────── */}
+        <div style={{ paddingLeft: 16, paddingRight: 16, marginBottom: 0 }}>
 
-          {/* Round labels row */}
-          <div style={{ position: 'relative', display: 'flex' }}>
-            {NAV.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => scrollToRound(idx)}
-                style={{
-                  flex: 1, background: 'none', border: 'none',
-                  padding: '6px 0 10px', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  position: 'relative',
-                }}
-              >
-                {item.cup ? (
-                  <span style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    position: 'relative',
-                  }}>
-                    {activeRound === idx && (
+          {/* Two-tier nav: west | cup | east, aligned to bottom */}
+          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+
+            {/* West side — 151px: label row + R1/R2/WCF buttons */}
+            <div style={{ width: 151, flexShrink: 0 }}>
+              <div style={{ height: 18, display: 'flex', alignItems: 'center' }}>
+                <span style={{
+                  fontFamily: FF, fontSize: 9, fontWeight: 700,
+                  color: C.muted, letterSpacing: '0.55px', textTransform: 'uppercase',
+                }}>Western Conference</span>
+              </div>
+              <div style={{ display: 'flex', height: 40 }}>
+                {[
+                  { idx: 0, label: 'R1',  w: 43 },
+                  { idx: 1, label: 'R2',  w: 45 },
+                  { idx: 2, label: 'WCF', w: 59 },
+                ].map(({ idx, label, w }) => {
+                  const active = activeRound === idx;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => scrollToRound(idx)}
+                      style={{
+                        width: w, flexShrink: 0,
+                        background: 'none', cursor: 'pointer',
+                        border: 'none',
+                        borderBottom: active ? `2px solid ${C.text}` : '2px solid transparent',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        paddingTop: 6, paddingBottom: 12,
+                        transition: 'border-color 0.15s ease',
+                      }}
+                    >
                       <span style={{
-                        position: 'absolute',
-                        width: 36, height: 36,
-                        borderRadius: '50%',
-                        background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)',
-                        pointerEvents: 'none',
-                      }} />
-                    )}
-                    <img
-                      src={`${import.meta.env.BASE_URL}stcup.svg`}
-                      alt="Stanley Cup"
-                      style={{ width: 16, height: 22, objectFit: 'contain', position: 'relative', zIndex: 1 }}
-                    />
-                  </span>
-                ) : (
-                  <span style={{
-                    fontFamily: FF, fontSize: 11, fontWeight: 700,
-                    color: activeRound === idx ? C.text : C.muted,
-                    letterSpacing: '0.55px', textTransform: 'uppercase',
-                    transition: 'color 0.15s ease',
-                  }}>
-                    {item.label}
-                  </span>
-                )}
+                        fontFamily: FF, fontSize: 13, fontWeight: 700,
+                        color: active ? C.text : C.muted,
+                        letterSpacing: '0.65px', textTransform: 'uppercase',
+                        transition: 'color 0.15s ease',
+                      }}>{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
-                {/* Underline (non-cup items only) */}
-                {!item.cup && activeRound === idx && (
-                  <span style={{
-                    position: 'absolute', bottom: 0, left: '15%', right: '15%',
-                    height: 2, borderRadius: 1,
-                    background: C.text,
-                  }} />
-                )}
-              </button>
-            ))}
+            {/* Cup section — 58px (11px gap + 36px icon + 11px gap), 70px tall */}
+            <div
+              onClick={() => scrollToRound(3)}
+              style={{
+                width: 58, height: 70, flexShrink: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', position: 'relative',
+              }}
+            >
+              {/* Radial glow when active */}
+              <div style={{
+                position: 'absolute',
+                width: 79, height: 79,
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%)',
+                opacity: activeRound === 3 ? 1 : 0,
+                transition: 'opacity 0.2s ease',
+                pointerEvents: 'none',
+              }} />
+              <img
+                src={`${import.meta.env.BASE_URL}stcup.svg`}
+                alt="Stanley Cup"
+                style={{
+                  width: 38, height: 57, objectFit: 'contain',
+                  position: 'relative', zIndex: 1,
+                  opacity: activeRound === 3 ? 1 : 0.6,
+                  transition: 'opacity 0.2s ease',
+                }}
+              />
+            </div>
+
+            {/* East side — 149px: label row + ECF/R2/R1 buttons */}
+            <div style={{ width: 149, flexShrink: 0 }}>
+              <div style={{ height: 18, display: 'flex', alignItems: 'center', paddingLeft: 8 }}>
+                <span style={{
+                  fontFamily: FF, fontSize: 9, fontWeight: 700,
+                  color: C.muted, letterSpacing: '0.55px', textTransform: 'uppercase',
+                }}>Eastern Conference</span>
+              </div>
+              <div style={{ display: 'flex', height: 40, paddingLeft: 3 }}>
+                {[
+                  { idx: 4, label: 'ECF', w: 54 },
+                  { idx: 5, label: 'R2',  w: 45 },
+                  { idx: 6, label: 'R1',  w: 43 },
+                ].map(({ idx, label, w }) => {
+                  const active = activeRound === idx;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => scrollToRound(idx)}
+                      style={{
+                        width: w, flexShrink: 0,
+                        background: 'none', cursor: 'pointer',
+                        border: 'none',
+                        borderBottom: active ? `2px solid ${C.text}` : '2px solid transparent',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        paddingTop: 6, paddingBottom: 12,
+                        transition: 'border-color 0.15s ease',
+                      }}
+                    >
+                      <span style={{
+                        fontFamily: FF, fontSize: 13, fontWeight: 700,
+                        color: active ? C.text : C.muted,
+                        letterSpacing: '0.65px', textTransform: 'uppercase',
+                        transition: 'color 0.15s ease',
+                      }}>{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Divider */}
-          <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 12 }} />
+          <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 16 }} />
 
           {/* Reset button */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
             <button
               style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' })}
               onClick={onReset}

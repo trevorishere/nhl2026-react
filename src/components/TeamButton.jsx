@@ -102,7 +102,7 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
     // Eliminated: 50% opacity, restores colour + opacity on hover
     buttonStyle = {
       background:  hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)',
-      opacity:     hovering ? 1 : 0.5,
+      opacity:     hovering ? 1 : 0.35,
       transition:  TRANSITION,
       '--glow-bright': glowBright,
     };

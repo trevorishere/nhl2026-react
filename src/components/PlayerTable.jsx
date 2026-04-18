@@ -49,7 +49,7 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 const COLUMNS = [
   { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%'  },
   { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%' },
-  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileHide: true },
+  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%' },
   { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '10%', mobileHide: true },
   { key: 'SeasonPPG',            label: 'Season PPG', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
   { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '12%' },
@@ -102,7 +102,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           )}
         </span>
       </td>
-      <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.team}</td>
+      <td className={`${TD} text-muted truncate`}>{player.team}</td>
       <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.pos}</td>
       <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
       <td className={`${TD} text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
@@ -430,12 +430,13 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             )}
           </div>
 
-          {/* Reset order — appears only when edit mode is ON */}
+          {/* Reset order — appears only when edit mode is ON, hidden on mobile */}
           {editMode && (
             <button
               onClick={resetOrder}
               onMouseEnter={() => setResetOrderHover(true)}
               onMouseLeave={() => setResetOrderHover(false)}
+              className="hidden sm:flex"
               style={ctrlBtnStyle(resetOrderHover, { gap: 6, padding: '0 16px 0 14px', flexShrink: 0 })}
             >
               <RotateCcw size={14} color="currentColor" strokeWidth={2} />
@@ -443,11 +444,12 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
             </button>
           )}
 
-          {/* Edit rankings — "EDIT RANKINGS | OFF/ON" text toggle */}
+          {/* Edit rankings — "EDIT RANKINGS | OFF/ON" text toggle, hidden on mobile */}
           <button
             onClick={() => editMode ? exitEditMode() : enterEditMode()}
             onMouseEnter={() => setEditBtnHover(true)}
             onMouseLeave={() => setEditBtnHover(false)}
+            className="hidden sm:flex"
             style={ctrlBtnStyle(false, { gap: 5, padding: '0 16px', flexShrink: 0 })}
           >
             <span style={{ color: (editMode || editBtnHover) ? C.text : C.muted, transition: 'color 0.15s ease' }}>Edit Rankings</span>
@@ -476,7 +478,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
           <thead>
             <tr>
               {editMode && (
-                <th className="px-2 h-[40px] sticky top-0 w-6" style={{ boxShadow: '0 2px 0 #393836' }} />
+                <th className="px-2 h-[40px] sticky top-0 w-6" style={{ background: '#212224', boxShadow: '0 2px 0 #393836' }} />
               )}
               {COLUMNS.map((col) => {
                 const isActive  = !editMode && sortConfig.key === col.key;
@@ -486,7 +488,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                 return (
                   <th
                     key={col.key}
-                    style={{ ...(col.width ? { width: col.width } : {}), boxShadow: '0 2px 0 #393836' }}
+                    style={{ ...(col.width ? { width: col.width } : {}), background: '#212224', boxShadow: '0 2px 0 #393836' }}
                     className={[
                       'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 font-bold select-none overflow-hidden',
                       isRight ? 'text-right' : 'text-left',

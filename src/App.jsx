@@ -106,7 +106,7 @@ export default function App() {
           <img
             src={`${import.meta.env.BASE_URL}header.svg`}
             alt="NHL Playoffs '26 Draft Guide"
-            style={{ width: 274, height: 74, display: 'block' }}
+            style={{ width: isMobile ? 180 : 274, height: isMobile ? 49 : 74, display: 'block' }}
           />
         </div>
 
@@ -173,8 +173,8 @@ export default function App() {
         </section>
 
         {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
-        <section style={{ padding: '0 48px 48px' }}>
-          <div style={{ maxWidth: 1232, margin: '0 auto', background: '#212123', padding: '48px 48px 56px' }}>
+        <section style={{ padding: isMobile ? '0 0 24px' : '0 48px 48px' }}>
+          <div style={{ maxWidth: 1232, margin: '0 auto', background: '#212224', padding: isMobile ? '24px 16px 32px' : '48px 48px 56px' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
             <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
