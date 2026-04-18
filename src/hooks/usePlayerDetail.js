@@ -5,11 +5,9 @@ const cache  = new Map(); // nhlId → { data, ts }
 const TTL    = 5 * 60 * 1000; // 5 minutes
 const SEASON = '20252026';
 
-// In Vite dev (npm run dev) the local proxy handles CORS.
-// In built/deployed files, route through corsproxy.io.
-const NHL_BASE = import.meta.env.DEV
-  ? '/nhl-api'
-  : 'https://corsproxy.io/?https://api-web.nhle.com';
+// api-web.nhle.com supports CORS from browsers directly — no proxy needed.
+// In Vite dev the local proxy still works but we can call the live URL too.
+const NHL_BASE = 'https://api-web.nhle.com';
 
 export function usePlayerDetail(player) {
   const [state, setState] = useState({ data: null, loading: false, error: null });
