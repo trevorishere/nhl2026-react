@@ -5,21 +5,22 @@ import { ROUND1_MATCHUPS } from '../data/constants';
 import { FF, C, ctrlBtnStyle } from '../styles/tokens';
 
 // ─── Snap positions (scrollLeft values for each round) ────────────────────────
-const SNAPS = [0, 230, 516, 795, 1070, 1350, 1591];
+const SNAPS = [0, 227, 513, 799, 1085, 1371, 1657];
 
 // ─── Column x-positions within scroll content (240px wide each) ───────────────
+// All columns use left = COL_X + 16 → equal 46px gap between every column
 const COL_X = {
-  WR1:  0,
-  WR2:  302,
-  WCF:  588,
-  CUP:  870,
-  ECF:  1148,
-  ER2:  1410,
-  ER1:  1668,
+  WR1:     0,
+  WR2:   286,
+  WCF:   572,
+  CUP:   858,
+  ECF:  1144,
+  ER2:  1430,
+  ER1:  1716,
 };
 
-// Total scroll content width = ER1 + 240 + right padding (76px) = 1984
-const CONTENT_W = 1984;
+// Total scroll content width = ER1(1716) + 16 offset + 240 col + 16 right pad = 1988
+const CONTENT_W = 1988;
 
 // ─── Label height: 11px text × 1.4 line-height ≈ 16px + 8px gap below ────────
 const LABEL_H = 24;
@@ -257,7 +258,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         }}>
 
           {/* ── West R1 ──────────────────────────────────────────────────────── */}
-          <div style={{ position: 'absolute', left: COL_X.WR1 + 32, top: 0, width: 240, height: COL_H }}>
+          <div style={{ position: 'absolute', left: COL_X.WR1 + 16, top: 0, width: 240, height: COL_H }}>
             <p style={labelStyle}>First Round</p>
             {westR1.map((m, i) => (
               <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
