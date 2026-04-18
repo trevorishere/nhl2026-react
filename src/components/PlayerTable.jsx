@@ -93,7 +93,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           <GripVertical size={14} />
         </td>
       )}
-      <td className={`${TD} text-muted truncate sm:pl-3`}>{globalRank}</td>
+      <td className={`${TD} text-muted truncate pl-4 sm:pl-3`}>{globalRank}</td>
       <td className={`${TD} overflow-hidden`}>
         <span className="flex items-center gap-3 min-w-0">
           <span className="truncate">{player.name}</span>
@@ -105,7 +105,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
       <td className={`${TD} text-muted truncate`}>{player.team}</td>
       <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.pos}</td>
       <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
-      <td className={`${TD} text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
+      <td className={`${TD} text-primary text-right truncate pr-4 sm:pr-2`}>{player.dynamicPoints.toFixed(1)}</td>
       <td className={`${TD} text-right truncate hidden sm:table-cell sm:pr-3`}>{player.dynamicExpectedGames.toFixed(1)}</td>
     </tr>
   );
@@ -318,7 +318,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
   return (
     <>
       {/* ── Controls: title left | filters + icons right ─────────────────── */}
-      <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
+      <div className="flex items-center justify-between mb-8 flex-wrap gap-3 px-4 sm:px-0">
 
         {/* Left: Draft List title */}
         <h2 style={{
@@ -432,32 +432,34 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
 
           {/* Reset order — appears only when edit mode is ON, hidden on mobile */}
           {editMode && (
-            <button
-              onClick={resetOrder}
-              onMouseEnter={() => setResetOrderHover(true)}
-              onMouseLeave={() => setResetOrderHover(false)}
-              className="hidden sm:flex"
-              style={ctrlBtnStyle(resetOrderHover, { gap: 6, padding: '0 16px 0 14px', flexShrink: 0 })}
-            >
-              <RotateCcw size={14} color="currentColor" strokeWidth={2} />
-              Reset
-            </button>
+            <div className="hidden sm:block">
+              <button
+                onClick={resetOrder}
+                onMouseEnter={() => setResetOrderHover(true)}
+                onMouseLeave={() => setResetOrderHover(false)}
+                style={ctrlBtnStyle(resetOrderHover, { gap: 6, padding: '0 16px 0 14px', flexShrink: 0 })}
+              >
+                <RotateCcw size={14} color="currentColor" strokeWidth={2} />
+                Reset
+              </button>
+            </div>
           )}
 
-          {/* Edit rankings — "EDIT RANKINGS | OFF/ON" text toggle, hidden on mobile */}
-          <button
-            onClick={() => editMode ? exitEditMode() : enterEditMode()}
-            onMouseEnter={() => setEditBtnHover(true)}
-            onMouseLeave={() => setEditBtnHover(false)}
-            className="hidden sm:flex"
-            style={ctrlBtnStyle(false, { gap: 5, padding: '0 16px', flexShrink: 0 })}
-          >
-            <span style={{ color: (editMode || editBtnHover) ? C.text : C.muted, transition: 'color 0.15s ease' }}>Edit Rankings</span>
-            <span style={{ color: C.muted }}> | </span>
-            <span style={{ display: 'inline-block', minWidth: 26, color: (editMode || editBtnHover) ? C.text : C.muted, transition: 'color 0.15s ease' }}>
-              {editMode ? 'ON' : 'OFF'}
-            </span>
-          </button>
+          {/* Edit rankings — hidden on mobile */}
+          <div className="hidden sm:block">
+            <button
+              onClick={() => editMode ? exitEditMode() : enterEditMode()}
+              onMouseEnter={() => setEditBtnHover(true)}
+              onMouseLeave={() => setEditBtnHover(false)}
+              style={ctrlBtnStyle(false, { gap: 5, padding: '0 16px', flexShrink: 0 })}
+            >
+              <span style={{ color: (editMode || editBtnHover) ? C.text : C.muted, transition: 'color 0.15s ease' }}>Edit Rankings</span>
+              <span style={{ color: C.muted }}> | </span>
+              <span style={{ display: 'inline-block', minWidth: 26, color: (editMode || editBtnHover) ? C.text : C.muted, transition: 'color 0.15s ease' }}>
+                {editMode ? 'ON' : 'OFF'}
+              </span>
+            </button>
+          </div>
 
           {/* Download XLS — icon button */}
           <button
@@ -495,7 +497,8 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
                       col.mobileHide ? 'hidden sm:table-cell' : '',
-                      col.key === '#' ? 'sm:pl-3' : '',
+                      col.key === '#' ? 'pl-4 sm:pl-3' : '',
+                      col.key === 'dynamicPoints' ? 'pr-4 sm:pr-2' : '',
                       col.key === 'dynamicExpectedGames' ? 'sm:pr-3' : '',
                     ].join(' ')}
                     onClick={clickable ? () => handleSort(col) : undefined}

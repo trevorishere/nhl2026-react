@@ -86,7 +86,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
   }
 
   return (
-    <div>
+    <div style={{ paddingTop: 24 }}>
       {/* ── Nav bar ──────────────────────────────────────────────────────────── */}
       <div style={{ paddingLeft: 16, paddingRight: 16 }}>
 
@@ -206,10 +206,10 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         </div>
 
         {/* Divider */}
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 16 }} />
+        <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 20 }} />
 
         {/* Reset button */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
           <button
             style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' })}
             onClick={onReset}
