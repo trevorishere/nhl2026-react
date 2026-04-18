@@ -574,7 +574,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                       )}
                     </span>
                   </td>
-                  <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.team}</td>
+                  <td className={`${TD} text-muted truncate`}>{p.team}</td>
                   <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{p.pos}</td>
                   <td className={`${TD} text-right truncate hidden sm:table-cell`}>{p.SeasonPPG.toFixed(2)}</td>
                   <td className={`${TD} text-primary text-right truncate`}>{p.dynamicPoints.toFixed(1)}</td>
