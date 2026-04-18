@@ -102,11 +102,9 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
       '--glow-dim':    glowDim,
     };
   } else if (isEliminated) {
-    // Eliminated: grayscale + 35% opacity; full colour restores on hover
+    // Eliminated: near-bg dark fill so winner stands out; full colour on hover
     buttonStyle = {
-      background:      teamBackground(team),
-      filter:          hovering ? 'none' : 'grayscale(1)',
-      opacity:         hovering ? 1 : 0.35,
+      background:      hovering ? teamBackground(team) : 'rgba(255,255,255,0.04)',
       transition:      TRANSITION,
       animation:       POP,
       '--glow-bright': glowBright,
@@ -132,7 +130,7 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
     // Winner: same as default (no glow) — fades from rollover via 1s transition
     logoFilter = LOGO_HIDDEN;
   } else if (isEliminated) {
-    logoFilter = hovering ? LOGO_GLOW : 'grayscale(1)';
+    logoFilter = hovering ? LOGO_GLOW : LOGO_HIDDEN;
   } else {
     // Default: logo glow on hover only; invisible value keeps transition smooth
     logoFilter = hovering ? LOGO_GLOW : LOGO_HIDDEN;

@@ -97,9 +97,7 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
     };
   } else if (isEliminated) {
     buttonStyle = {
-      background:  teamBackground(team),
-      filter:      hovering ? 'none' : 'grayscale(1)',
-      opacity:     hovering ? 1 : 0.35,
+      background:  hovering ? teamBackground(team) : 'rgba(255,255,255,0.04)',
       transition:  TRANSITION,
       animation:   POP,
       '--glow-bright': glowBright,
@@ -118,7 +116,7 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
   const LOGO_HIDDEN = 'drop-shadow(0 0 1px rgba(255,255,255,0))';
   let logoFilter;
   if (isWinner)     logoFilter = LOGO_HIDDEN;
-  else if (isEliminated) logoFilter = hovering ? LOGO_GLOW : 'grayscale(1)';
+  else if (isEliminated) logoFilter = hovering ? LOGO_GLOW : LOGO_HIDDEN;
   else              logoFilter = hovering ? LOGO_GLOW : LOGO_HIDDEN;
 
   const logoUri = LOGOS[team] || '';
