@@ -67,74 +67,86 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{
         background: headerBg,
-        padding: '0 8px',
-        position: 'relative',
+        padding: '12px 16px',
         flexShrink: 0,
-        height: 88,
         display: 'flex',
         alignItems: 'center',
+        gap: 16,
       }}>
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute', top: 12, right: 12,
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: C.textMuted, padding: 2, lineHeight: 1,
-          }}
-          aria-label="Close"
-        >
-          <X size={16} />
-        </button>
-
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center', width: '100%' }}>
-          {/* Headshot — 88×88, transparent PNG sits on team color */}
-          <div style={{
-            width: 88, height: 88, flexShrink: 0,
-            position: 'relative',
-            boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
-          }}>
-            {headshot ? (
-              <img
-                src={headshot}
-                alt={player.name}
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            ) : (
-              <div style={{
-                position: 'absolute', inset: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: FF, fontSize: 22, fontWeight: 800,
-                color: 'rgba(255,255,255,0.4)',
-              }}>
-                {player.name[0]}
-              </div>
-            )}
-          </div>
-
-          {/* Name + TEAM | POS */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {/* Circular headshot with dark overlay */}
+        <div style={{
+          width: 88, height: 88, flexShrink: 0,
+          borderRadius: 60, overflow: 'hidden',
+          position: 'relative',
+          boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
+        }}>
+          {headshot ? (
+            <img
+              src={headshot}
+              alt={player.name}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          ) : (
             <div style={{
-              fontFamily: FF, fontSize: 16, fontWeight: 800,
-              color: C.text, letterSpacing: '0.16px', lineHeight: '25px',
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: FF, fontSize: 22, fontWeight: 800,
+              color: 'rgba(255,255,255,0.4)',
+            }}>
+              {player.name[0]}
+            </div>
+          )}
+          {/* Overlay */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'rgba(0,0,0,0.2)',
+            borderRadius: 60,
+          }} />
+        </div>
+
+        {/* Right column: X top, name + team/pos bottom */}
+        <div style={{
+          flex: 1, minWidth: 0, alignSelf: 'stretch',
+          display: 'flex', flexDirection: 'column', alignItems: 'flex-end',
+          justifyContent: 'space-between',
+        }}>
+          {/* Close button — pill */}
+          <button
+            onClick={onClose}
+            style={{
+              width: 28, height: 28, flexShrink: 0,
+              borderRadius: 14,
+              background: 'rgba(255,255,255,0.1)',
+              border: 'none', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: 'rgba(231,228,223,0.7)',
+            }}
+            aria-label="Close"
+          >
+            <X size={14} />
+          </button>
+
+          {/* Name + TEAM | POS — bottom of column, right-aligned */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+            <div style={{
+              fontFamily: FF, fontSize: 20, fontWeight: 700,
+              color: '#e7e4df', letterSpacing: '0.2px', lineHeight: '22px',
+              textAlign: 'right',
             }}>
               {player.name}
             </div>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
               <span style={{
-                fontFamily: FF, fontSize: 13, fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.65px',
-                color: C.textMuted, lineHeight: '19px',
-              }}>
-                {player.team}
-              </span>
-              <span style={{ fontFamily: FF, fontSize: 12, letterSpacing: '0.6px', color: C.textMuted }}>|</span>
+                fontFamily: FF, fontSize: 12, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.6px',
+                color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
+              }}>{player.team}</span>
+              <span style={{ fontFamily: FF, fontSize: 12, color: 'rgba(231,228,223,0.7)', letterSpacing: '0.6px' }}>|</span>
               <span style={{
-                fontFamily: FF, fontSize: 13, fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.65px',
-                color: C.textMuted, lineHeight: '19px',
-              }}>
-                {player.pos}
-              </span>
+                fontFamily: FF, fontSize: 12, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.6px',
+                color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
+              }}>{player.pos}</span>
             </div>
           </div>
         </div>
