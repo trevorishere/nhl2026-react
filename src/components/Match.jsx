@@ -67,7 +67,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
               letterSpacing: '0.05em',
               textTransform: 'uppercase',
               color: 'rgba(255,255,255,0.35)',
-              marginRight: 8,
+              marginRight: 24,
               flexShrink: 0,
               lineHeight: 1,
               animation: reveal(0),
@@ -89,12 +89,12 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
                   onMouseLeave={() => setHoveredGame(null)}
                   className="cursor-pointer flex items-center justify-center"
                   style={{
-                    width: 22,
-                    height: 22,
+                    width: 24,
+                    height: 24,
                     borderRadius: '50%',
                     border: 'none',
                     padding: 0,
-                    background: selected ? 'var(--primary)' : 'transparent',
+                    background: selected ? 'rgba(255,255,255,0.2)' : 'transparent',
                     color: selected ? '#fff' : hovered ? C.text : 'rgba(255,255,255,0.45)',
                     fontFamily: FF,
                     fontSize: 11,
