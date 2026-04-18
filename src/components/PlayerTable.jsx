@@ -47,8 +47,8 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 // ─── Table column definitions ──────────────────────────────────────────────────
 // mobileHide: true → hidden below sm breakpoint (640px)
 const COLUMNS = [
-  { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '40px', mobileWidth: '14%' },
-  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '50%' },
+  { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '40px', mobileWidth: '13%' },
+  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '51%' },
   { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileWidth: '16%' },
   { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '10%', mobileHide: true },
   { key: 'SeasonPPG',            label: 'Season PPG', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
@@ -94,7 +94,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
         </td>
       )}
       <td className={`${TD} text-muted truncate sm:pl-3`}>{globalRank}</td>
-      <td className={`${TD} overflow-hidden`}>
+      <td className={`${TD} overflow-hidden pl-0 sm:pl-2`}>
         <span className="flex items-center gap-3 min-w-0">
           <span className="truncate">{player.name}</span>
           {getInjury(player.name, injuries) && (
@@ -498,6 +498,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
                       col.mobileHide ? 'hidden sm:table-cell' : '',
                       col.key === '#' ? 'sm:pl-3' : '',
+                      col.key === 'name' ? 'pl-0 sm:pl-2' : '',
                       col.key === 'dynamicExpectedGames' ? 'sm:pr-3' : '',
                     ].join(' ')}
                     onClick={clickable ? () => handleSort(col) : undefined}
@@ -566,7 +567,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                   className={`transition-colors cursor-pointer ${isSelected ? 'bg-[rgba(255,255,255,0.05)]' : 'hover:bg-[rgba(255,255,255,0.05)]'}`}
                 >
                   <td className={`${TD} text-muted truncate sm:pl-3`}>{i + 1}</td>
-                  <td className={`${TD} overflow-hidden`}>
+                  <td className={`${TD} overflow-hidden pl-0 sm:pl-2`}>
                     <span className="flex items-center gap-3 min-w-0">
                       <span className="truncate">{p.name}</span>
                       {getInjury(p.name, injuries) && (
