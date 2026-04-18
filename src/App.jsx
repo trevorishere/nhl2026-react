@@ -185,6 +185,7 @@ export default function App() {
                 onPlayerSelect={handlePlayerSelect}
                 selectedPlayer={selectedPlayer}
                 injuries={injuries}
+                isMobile={isMobile}
               />
             </div>
 

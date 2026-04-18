@@ -47,12 +47,12 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 // ─── Table column definitions ──────────────────────────────────────────────────
 // mobileHide: true → hidden below sm breakpoint (640px)
 const COLUMNS = [
-  { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%'  },
-  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%' },
-  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%' },
+  { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%',  mobileWidth: '8%'  },
+  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '52%' },
+  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileWidth: '16%' },
   { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '10%', mobileHide: true },
   { key: 'SeasonPPG',            label: 'Season PPG', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
-  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '12%' },
+  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileWidth: '24%' },
   { key: 'dynamicExpectedGames', label: 'Proj Games', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
 ];
 
@@ -112,7 +112,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect, selectedPlayer, injuries = {} }) {
+export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect, selectedPlayer, injuries = {}, isMobile = false }) {
   const [sortConfig, setSortConfig]       = useState({ key: 'dynamicPoints', direction: 'desc' });
   const [hoveredHeader, setHoveredHeader] = useState(null);
 
@@ -490,7 +490,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                 return (
                   <th
                     key={col.key}
-                    style={{ ...(col.width ? { width: col.width } : {}), background: '#212224', boxShadow: '0 2px 0 #393836' }}
+                    style={{ width: (isMobile && col.mobileWidth) ? col.mobileWidth : (col.width ?? 'auto'), background: '#212224', boxShadow: '0 2px 0 #393836' }}
                     className={[
                       'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 font-bold select-none overflow-hidden',
                       isRight ? 'text-right' : 'text-left',
