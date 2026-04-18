@@ -15,8 +15,20 @@ export default function App() {
   const [selectedPlayer, setSelectedPlayer] = useState(null); // for row highlight
   const [panelPlayer,   setPanelPlayer]   = useState(null);   // player in DOM (lingers during close)
   const [panelIn,       setPanelIn]       = useState(false);   // CSS open state
-  const panelTimerRef = useRef(null);
+  const panelTimerRef  = useRef(null);
+  const tableCardRef   = useRef(null);
+  const modeInitRef    = useRef(false);
   const [injuries, setInjuries] = useState({});
+
+  // Animate table card on advanced mode toggle (skip initial render)
+  useEffect(() => {
+    if (!modeInitRef.current) { modeInitRef.current = true; return; }
+    const el = tableCardRef.current;
+    if (!el) return;
+    el.classList.remove('table-mode-on', 'table-mode-off');
+    void el.offsetWidth; // force reflow so animation restarts
+    el.classList.add(mode === 'advanced' ? 'table-mode-on' : 'table-mode-off');
+  }, [mode]);
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}injuries.json`)
@@ -174,7 +186,7 @@ export default function App() {
 
         {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
         <section style={{ padding: isMobile ? 0 : '0 48px 48px' }}>
-          <div style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '24px 16px 32px' : '48px 48px 56px' }}>
+          <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '24px 16px 32px' : '48px 48px 56px' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
             <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>

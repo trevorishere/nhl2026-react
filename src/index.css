@@ -45,6 +45,20 @@
 
 /* ── Team badge animations ───────────────────────────────────────────────── */
 
+/* Player table slide when advanced mode toggles */
+@keyframes tableModeOn {
+  0%   { transform: translateY(0);    }
+  40%  { transform: translateY(14px); }
+  100% { transform: translateY(0);    }
+}
+@keyframes tableModeOff {
+  0%   { transform: translateY(0);     }
+  40%  { transform: translateY(-10px); }
+  100% { transform: translateY(0);     }
+}
+.table-mode-on  { animation: tableModeOn  300ms ease-in-out; }
+.table-mode-off { animation: tableModeOff 300ms ease-in-out; }
+
 /* Advanced mode series selector — left-to-right digit reveal with glow */
 @keyframes digitReveal {
   0%   { opacity: 0; text-shadow: 0 0 10px rgba(255,255,255,0.9); }
