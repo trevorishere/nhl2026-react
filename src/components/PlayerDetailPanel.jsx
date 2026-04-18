@@ -66,50 +66,81 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{
         background: headerBg,
-        padding: '12px 16px',
+        height: 120,
+        padding: 16,
         flexShrink: 0,
         display: 'flex',
-        alignItems: 'center',
-        gap: 16,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
       }}>
-        {/* Circular headshot with dark overlay */}
+        {/* Inner row: left group + close button */}
         <div style={{
-          width: 88, height: 88, flexShrink: 0,
-          borderRadius: 60, overflow: 'hidden',
-          position: 'relative',
-          boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
-        }}>
-          {headshot ? (
-            <img
-              src={headshot}
-              alt={player.name}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          ) : (
-            <div style={{
-              position: 'absolute', inset: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: FF, fontSize: 22, fontWeight: 800,
-              color: 'rgba(255,255,255,0.4)',
-            }}>
-              {player.name[0]}
-            </div>
-          )}
-          {/* Overlay */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'rgba(0,0,0,0.2)',
-            borderRadius: 60,
-          }} />
-        </div>
-
-        {/* Right column: X top, name + team/pos bottom */}
-        <div style={{
-          flex: 1, minWidth: 0, alignSelf: 'stretch',
-          display: 'flex', flexDirection: 'column', alignItems: 'flex-end',
+          display: 'flex',
+          flex: '1 0 0',
+          alignItems: 'flex-start',
           justifyContent: 'space-between',
+          width: '100%',
         }}>
-          {/* Close button — pill */}
+
+          {/* Left: headshot + name/pos, vertically centered in full row height */}
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center', height: '100%' }}>
+
+            {/* Circular headshot */}
+            <div style={{
+              width: 83, height: 83, flexShrink: 0,
+              borderRadius: 60, overflow: 'hidden',
+              position: 'relative',
+              boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
+            }}>
+              {headshot ? (
+                <img
+                  src={headshot}
+                  alt={player.name}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              ) : (
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: FF, fontSize: 22, fontWeight: 800,
+                  color: 'rgba(255,255,255,0.4)',
+                }}>
+                  {player.name[0]}
+                </div>
+              )}
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'rgba(0,0,0,0.2)',
+                borderRadius: 60,
+              }} />
+            </div>
+
+            {/* Name + TEAM | POS */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 2, minWidth: 0 }}>
+              <div style={{
+                fontFamily: FF, fontSize: 20, fontWeight: 700,
+                color: '#e7e4df', letterSpacing: '0.2px', lineHeight: '22px',
+              }}>
+                {player.name}
+              </div>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <span style={{
+                  fontFamily: FF, fontSize: 12, fontWeight: 700,
+                  textTransform: 'uppercase', letterSpacing: '0.6px',
+                  color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
+                }}>{player.team}</span>
+                <span style={{ fontFamily: FF, fontSize: 12, color: 'rgba(231,228,223,0.7)', letterSpacing: '0.6px' }}>|</span>
+                <span style={{
+                  fontFamily: FF, fontSize: 12, fontWeight: 700,
+                  textTransform: 'uppercase', letterSpacing: '0.6px',
+                  color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
+                }}>{player.pos}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Close button — top-right */}
           <button
             onClick={onClose}
             style={{
@@ -124,30 +155,6 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           >
             <X size={14} />
           </button>
-
-          {/* Name + TEAM | POS — bottom of column, right-aligned */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-            <div style={{
-              fontFamily: FF, fontSize: 20, fontWeight: 700,
-              color: '#e7e4df', letterSpacing: '0.2px', lineHeight: '22px',
-              textAlign: 'right',
-            }}>
-              {player.name}
-            </div>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{
-                fontFamily: FF, fontSize: 12, fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.6px',
-                color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
-              }}>{player.team}</span>
-              <span style={{ fontFamily: FF, fontSize: 12, color: 'rgba(231,228,223,0.7)', letterSpacing: '0.6px' }}>|</span>
-              <span style={{
-                fontFamily: FF, fontSize: 12, fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.6px',
-                color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
-              }}>{player.pos}</span>
-            </div>
-          </div>
         </div>
       </div>
 
