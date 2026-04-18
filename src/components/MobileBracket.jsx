@@ -86,7 +86,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
   }
 
   return (
-    <div style={{ paddingTop: 24 }}>
+    <div style={{ paddingTop: 8 }}>
       {/* ── Nav bar ──────────────────────────────────────────────────────────── */}
       <div style={{ paddingLeft: 16, paddingRight: 16 }}>
 
@@ -244,7 +244,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         }}>
 
           {/* ── West R1 ──────────────────────────────────────────────────────── */}
-          <div style={{ position: 'absolute', left: COL_X.WR1 + 16, top: 0, width: 240, height: COL_H }}>
+          <div style={{ position: 'absolute', left: COL_X.WR1 + 32, top: 0, width: 240, height: COL_H }}>
             {westR1.map((m, i) => (
               <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
             ))}

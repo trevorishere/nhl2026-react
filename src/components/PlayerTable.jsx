@@ -504,14 +504,18 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     onMouseEnter={() => clickable && setHoveredHeader(col.key)}
                     onMouseLeave={() => setHoveredHeader(null)}
                   >
-                    {isRight ? (
+                    {(isMobile && col.key === 'dynamicPoints') ? (
+                      // Stacked label flush-right — no sort arrow offset
+                      <span style={{ display: 'block', textAlign: 'right', lineHeight: 1.2 }}>
+                        Proj<br />Pts
+                      </span>
+                    ) : (isMobile && !col.mobileHide) ? (
+                      // Plain label on mobile — no sort arrow ghost offsetting alignment
+                      <span className="truncate">{col.label}</span>
+                    ) : isRight ? (
                       <div className="flex items-center justify-end gap-2 min-w-0 overflow-hidden">
                         {col.sortable && !editMode && <SortArrow col={col} />}
-                        {(isMobile && col.key === 'dynamicPoints') ? (
-                          <span className="leading-tight text-center">Proj<br />Pts</span>
-                        ) : (
-                          <span className="truncate">{col.label}</span>
-                        )}
+                        <span className="truncate">{col.label}</span>
                       </div>
                     ) : (
                       <div className="flex items-center gap-2 min-w-0 overflow-hidden">
