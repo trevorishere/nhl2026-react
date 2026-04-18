@@ -185,7 +185,7 @@ export default function App() {
         </section>
 
         {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
-        <section style={{ padding: isMobile ? 0 : '0 48px 48px' }}>
+        <section style={{ padding: isMobile ? 0 : '0 48px 48px', marginTop: 24 }}>
           <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '24px 16px 32px' : '48px 48px 56px' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
