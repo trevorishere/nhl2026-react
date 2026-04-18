@@ -19,7 +19,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 // ─── Shared class strings ──────────────────────────────────────────────────────
-const TD = 'px-2 h-[48px] border-b border-border'; // base table cell
+const TD = 'px-2 h-[48px] sm:border-b sm:border-border'; // base table cell
 
 const LS_KEY = 'nhl2026-customOrder'; // localStorage key
 
@@ -93,7 +93,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
           <GripVertical size={14} />
         </td>
       )}
-      <td className={`${TD} text-muted truncate pl-4 sm:pl-3`}>{globalRank}</td>
+      <td className={`${TD} text-muted truncate sm:pl-3`}>{globalRank}</td>
       <td className={`${TD} overflow-hidden`}>
         <span className="flex items-center gap-3 min-w-0">
           <span className="truncate">{player.name}</span>
@@ -105,7 +105,7 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
       <td className={`${TD} text-muted truncate`}>{player.team}</td>
       <td className={`${TD} text-muted truncate hidden sm:table-cell`}>{player.pos}</td>
       <td className={`${TD} text-right truncate hidden sm:table-cell`}>{player.SeasonPPG.toFixed(2)}</td>
-      <td className={`${TD} text-primary text-right truncate pr-4 sm:pr-2`}>{player.dynamicPoints.toFixed(1)}</td>
+      <td className={`${TD} text-primary text-right truncate`}>{player.dynamicPoints.toFixed(1)}</td>
       <td className={`${TD} text-right truncate hidden sm:table-cell sm:pr-3`}>{player.dynamicExpectedGames.toFixed(1)}</td>
     </tr>
   );
@@ -318,7 +318,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
   return (
     <>
       {/* ── Controls: title left | filters + icons right ─────────────────── */}
-      <div className="flex items-center justify-between mb-8 flex-wrap gap-3 px-4 sm:px-0">
+      <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
 
         {/* Left: Draft List title */}
         <h2 style={{
@@ -497,8 +497,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
                       col.mobileHide ? 'hidden sm:table-cell' : '',
-                      col.key === '#' ? 'pl-4 sm:pl-3' : '',
-                      col.key === 'dynamicPoints' ? 'pr-4 sm:pr-2' : '',
+                      col.key === '#' ? 'sm:pl-3' : '',
                       col.key === 'dynamicExpectedGames' ? 'sm:pr-3' : '',
                     ].join(' ')}
                     onClick={clickable ? () => handleSort(col) : undefined}

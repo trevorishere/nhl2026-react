@@ -66,6 +66,13 @@
   }
 }
 
+@media (max-width: 639px) {
+  .bracket-section {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 /* Hide scrollbar on mobile bracket strip */
 .mobile-bracket-strip::-webkit-scrollbar { display: none; }
 .mobile-bracket-strip {
