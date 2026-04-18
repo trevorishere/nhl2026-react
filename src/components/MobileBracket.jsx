@@ -31,6 +31,21 @@ const R2_TOPS   = [79, 393];
 const CONF_TOP  = 236;
 const COL_H     = 588 + LABEL_H;
 
+// ─── Label top positions: 8px gap above first match in each column ────────────
+//   R1/ER1: first match @ 0+LABEL_H=24   → top:0 (1-line ~15px → gap≈9px) ✓
+//   R2/ER2: first match @ 79+LABEL_H=103 → top:79
+//   WCF/ECF: first match @ 236+LABEL_H=260, 2-line (~31px) → 260-8-31=221
+//   CUP: 8px above trophy top rather than match
+const R2_LABEL_TOP   = R2_TOPS[0];                    // 79
+const CONF_LABEL_TOP = CONF_TOP + LABEL_H - 8 - 31;   // 221
+
+// ─── Stanley Cup trophy sizing / positioning ──────────────────────────────────
+const TROPHY_W   = 60;   // 46 × 1.3
+const TROPHY_H   = 88;   // 68 × 1.3
+const TROPHY_TOP = CONF_TOP - 80 + LABEL_H - 24;      // 180 → 156 (moved up 24px)
+const CUP_LABEL_TOP  = TROPHY_TOP - 8 - 16;           // 8px above trophy: 132
+const PILL_TOP   = TROPHY_TOP + Math.round(TROPHY_H / 2) - 15; // centered on trophy: 185
+
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function MobileBracket({ picks, onPick, onReset }) {
   const [activeRound, setActiveRound] = useState(0);
@@ -73,7 +88,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
   // ── Column title label ────────────────────────────────────────────────────
   const labelStyle = {
-    position: 'absolute', top: 0, left: 0, right: 0,
+    position: 'absolute', left: 0, right: 0,
     textAlign: 'center',
     fontFamily: FF, fontSize: 11, fontWeight: 700,
     letterSpacing: '0.33px', textTransform: 'uppercase',
@@ -259,7 +274,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── West R1 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.WR1 + 16, top: 0, width: 240, height: COL_H }}>
-            <p style={labelStyle}>First Round</p>
+            <p style={{ ...labelStyle, top: 0 }}>First Round</p>
             {westR1.map((m, i) => (
               <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
             ))}
@@ -267,7 +282,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── West R2 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.WR2 + 16, top: 0, width: 240, height: COL_H }}>
-            <p style={labelStyle}>Second Round</p>
+            <p style={{ ...labelStyle, top: R2_LABEL_TOP }}>Second Round</p>
             {[semis[0], semis[1]].map((m, i) => (
               <MatchCol key={m.id} match={m} top={R2_TOPS[i]} />
             ))}
@@ -275,21 +290,21 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── WCF ──────────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.WCF + 16, top: 0, width: 240, height: COL_H }}>
-            <p style={labelStyle}>Western Conference<br />Final</p>
+            <p style={{ ...labelStyle, top: CONF_LABEL_TOP }}>Western<br />Conference Final</p>
             <MatchCol match={wcf} top={CONF_TOP} />
           </div>
 
           {/* ── Cup Final + trophy + champ pill ──────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.CUP + 16, top: 0, width: 240, height: COL_H }}>
-            <p style={labelStyle}>Cup Final</p>
+            <p style={{ ...labelStyle, top: CUP_LABEL_TOP }}>Cup Final</p>
             <img
               src={`${import.meta.env.BASE_URL}stcup.svg`}
               alt="Stanley Cup"
               style={{
                 position: 'absolute',
-                top: CONF_TOP - 80 + LABEL_H,
+                top: TROPHY_TOP,
                 left: '50%', transform: 'translateX(-50%)',
-                width: 46, height: 68,
+                width: TROPHY_W, height: TROPHY_H,
                 objectFit: 'contain',
                 pointerEvents: 'none', userSelect: 'none',
               }}
@@ -297,12 +312,12 @@ export default function MobileBracket({ picks, onPick, onReset }) {
             {champ && (
               <div style={{
                 position: 'absolute',
-                top: CONF_TOP - 42 + LABEL_H,
+                top: PILL_TOP,
                 left: '50%', transform: 'translateX(-50%)',
                 zIndex: 5,
                 width: 155, height: 30,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: 'rgba(24,24,24,0.95)',
+                background: 'rgba(24,24,24,0.85)',
                 border: '2px solid #747f92', borderRadius: 4,
                 whiteSpace: 'nowrap',
               }}>
@@ -319,13 +334,13 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── ECF ──────────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ECF + 16, top: 0, width: 240, height: COL_H }}>
-            <p style={labelStyle}>Eastern Conference<br />Final</p>
+            <p style={{ ...labelStyle, top: CONF_LABEL_TOP }}>Eastern<br />Conference Final</p>
             <MatchCol match={ecf} top={CONF_TOP} />
           </div>
 
           {/* ── East R2 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ER2 + 16, top: 0, width: 240, height: COL_H }}>
-            <p style={labelStyle}>Second Round</p>
+            <p style={{ ...labelStyle, top: R2_LABEL_TOP }}>Second Round</p>
             {[semis[2], semis[3]].map((m, i) => (
               <MatchCol key={m.id} match={m} top={R2_TOPS[i]} />
             ))}
@@ -333,7 +348,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── East R1 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ER1 + 16, top: 0, width: 240, height: COL_H }}>
-            <p style={labelStyle}>First Round</p>
+            <p style={{ ...labelStyle, top: 0 }}>First Round</p>
             {eastR1.map((m, i) => (
               <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
             ))}
