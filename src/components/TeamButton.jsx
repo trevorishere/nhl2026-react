@@ -87,6 +87,8 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
   // ── Button style ─────────────────────────────────────────────────────────
   const GLOW_SHADOW = `0 0 32px 4px var(--glow-dim), inset 0 0 0 1px rgba(255,255,255,0.25)`;
 
+  const POP = 'teamPop 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both';
+
   let buttonStyle;
   if (isWinner) {
     // Winner: same as default (no glow). Click inherits rollover glow and the
@@ -95,15 +97,17 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
       background:      teamBackground(team),
       boxShadow:       'none',
       transition:      'box-shadow 1s ease-in-out',
+      animation:       POP,
       '--glow-bright': glowBright,
       '--glow-dim':    glowDim,
     };
   } else if (isEliminated) {
     // Eliminated: 50% opacity, restores colour + opacity on hover
     buttonStyle = {
-      background:  hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)',
-      opacity:     hovering ? 1 : 0.35,
-      transition:  TRANSITION,
+      background:      hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)',
+      opacity:         hovering ? 1 : 0.35,
+      transition:      TRANSITION,
+      animation:       POP,
       '--glow-bright': glowBright,
     };
   } else {
@@ -112,6 +116,7 @@ export default function TeamButton({ team, matchId, picks, onPick, position = 't
       background:      teamBackground(team),
       boxShadow:       hovering ? GLOW_SHADOW : 'none',
       transition:      'box-shadow 0.25s ease-in-out',
+      animation:       POP,
       '--glow-bright': glowBright,
       '--glow-dim':    glowDim,
     };

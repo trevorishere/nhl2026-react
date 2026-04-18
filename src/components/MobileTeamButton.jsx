@@ -85,11 +85,14 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
   const glowDim     = toRgba(glowSrc, 0.40);
   const GLOW_SHADOW = '0 0 32px 4px var(--glow-dim), inset 0 0 0 1px rgba(255,255,255,0.25)';
 
+  const POP = 'teamPop 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both';
+
   let buttonStyle;
   if (isWinner) {
     buttonStyle = {
       background: teamBackground(team), boxShadow: 'none',
       transition: 'box-shadow 1s ease-in-out',
+      animation:  POP,
       '--glow-bright': glowBright, '--glow-dim': glowDim,
     };
   } else if (isEliminated) {
@@ -97,6 +100,7 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
       background:  hovering ? teamBackground(team) : 'rgba(255,255,255,0.05)',
       opacity:     hovering ? 1 : 0.35,
       transition:  TRANSITION,
+      animation:   POP,
       '--glow-bright': glowBright,
     };
   } else {
@@ -104,6 +108,7 @@ export default function MobileTeamButton({ team, matchId, picks, onPick, positio
       background:   teamBackground(team),
       boxShadow:    hovering ? GLOW_SHADOW : 'none',
       transition:   'box-shadow 0.25s ease-in-out',
+      animation:    POP,
       '--glow-bright': glowBright, '--glow-dim': glowDim,
     };
   }
