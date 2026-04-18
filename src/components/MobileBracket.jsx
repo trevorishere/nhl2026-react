@@ -93,8 +93,8 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         {/* Two-tier nav: west | cup | east, aligned to bottom */}
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
 
-          {/* West side — 151px */}
-          <div style={{ width: 151, flexShrink: 0 }}>
+          {/* West side — fluid */}
+          <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ height: 18, display: 'flex', alignItems: 'center' }}>
               <span style={{
                 fontFamily: FF, fontSize: 9, fontWeight: 700,
@@ -103,17 +103,17 @@ export default function MobileBracket({ picks, onPick, onReset }) {
             </div>
             <div style={{ display: 'flex', height: 40 }}>
               {[
-                { idx: 0, label: 'R1',  w: 43 },
-                { idx: 1, label: 'R2',  w: 45 },
-                { idx: 2, label: 'WCF', w: 59 },
-              ].map(({ idx, label, w }) => {
+                { idx: 0, label: 'R1'  },
+                { idx: 1, label: 'R2'  },
+                { idx: 2, label: 'WCF' },
+              ].map(({ idx, label }) => {
                 const active = activeRound === idx;
                 return (
                   <button
                     key={idx}
                     onClick={() => scrollToRound(idx)}
                     style={{
-                      width: w, flexShrink: 0,
+                      flex: 1,
                       background: 'none', cursor: 'pointer',
                       border: 'none',
                       borderBottom: active ? `2px solid ${C.text}` : '2px solid transparent',
@@ -134,11 +134,11 @@ export default function MobileBracket({ picks, onPick, onReset }) {
             </div>
           </div>
 
-          {/* Cup section — 58px wide, 70px tall */}
+          {/* Cup section — 42px wide, 70px tall */}
           <div
             onClick={() => scrollToRound(3)}
             style={{
-              width: 58, height: 70, flexShrink: 0,
+              width: 42, height: 70, flexShrink: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', position: 'relative',
             }}
@@ -163,27 +163,27 @@ export default function MobileBracket({ picks, onPick, onReset }) {
             />
           </div>
 
-          {/* East side — 149px */}
-          <div style={{ width: 149, flexShrink: 0 }}>
-            <div style={{ height: 18, display: 'flex', alignItems: 'center', paddingLeft: 8 }}>
+          {/* East side — fluid */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ height: 18, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
               <span style={{
                 fontFamily: FF, fontSize: 9, fontWeight: 700,
                 color: C.muted, letterSpacing: '0.55px', textTransform: 'uppercase',
               }}>Eastern Conference</span>
             </div>
-            <div style={{ display: 'flex', height: 40, paddingLeft: 3 }}>
+            <div style={{ display: 'flex', height: 40 }}>
               {[
-                { idx: 4, label: 'ECF', w: 54 },
-                { idx: 5, label: 'R2',  w: 45 },
-                { idx: 6, label: 'R1',  w: 43 },
-              ].map(({ idx, label, w }) => {
+                { idx: 4, label: 'ECF' },
+                { idx: 5, label: 'R2'  },
+                { idx: 6, label: 'R1'  },
+              ].map(({ idx, label }) => {
                 const active = activeRound === idx;
                 return (
                   <button
                     key={idx}
                     onClick={() => scrollToRound(idx)}
                     style={{
-                      width: w, flexShrink: 0,
+                      flex: 1,
                       background: 'none', cursor: 'pointer',
                       border: 'none',
                       borderBottom: active ? `2px solid ${C.text}` : '2px solid transparent',
