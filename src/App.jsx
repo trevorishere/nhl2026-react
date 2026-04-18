@@ -72,7 +72,7 @@ export default function App() {
       // Close: start CSS exit, then unmount after transition completes
       setSelectedPlayer(null);
       setPanelIn(false);
-      panelTimerRef.current = setTimeout(() => setPanelPlayer(null), 310);
+      panelTimerRef.current = setTimeout(() => setPanelPlayer(null), 430);
     }
   }
 
@@ -189,7 +189,10 @@ export default function App() {
           <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '32px 16px 32px' : '48px 48px 56px' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
-            <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
+            <div
+              className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}
+              style={{ transition: 'flex 420ms cubic-bezier(0.4, 0, 0.2, 1), width 420ms cubic-bezier(0.4, 0, 0.2, 1)' }}
+            >
               <PlayerTable
                 picks={picks}
                 mode={mode}
@@ -201,20 +204,21 @@ export default function App() {
               />
             </div>
 
-            {/* Desktop detail panel — width animates 0→336 to push the table */}
+            {/* Desktop detail panel — width animates 0→360 to push the table */}
             {panelPlayer && !isMobile && (
               <div
                 className="flex-shrink-0 sticky top-4 overflow-hidden"
                 style={{
                   width:      panelIn ? 360 : 0,
-                  transition: 'width 300ms ease-in-out',
+                  transition: 'width 420ms cubic-bezier(0.4, 0, 0.2, 1)',
+                  willChange: 'width',
                 }}
               >
                 <div style={{
                   width:      360,
                   opacity:    panelIn ? 1 : 0,
-                  transform:  panelIn ? 'translateX(0)' : 'translateX(20px)',
-                  transition: 'opacity 300ms ease-in-out, transform 300ms ease-in-out',
+                  transform:  panelIn ? 'translateX(0)' : 'translateX(16px)',
+                  transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1), transform 420ms cubic-bezier(0.4, 0, 0.2, 1)',
                 }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
@@ -238,7 +242,7 @@ export default function App() {
                 position: 'fixed', inset: 0, zIndex: 40,
                 background: 'rgba(0,0,0,0.5)',
                 opacity:    panelIn ? 1 : 0,
-                transition: 'opacity 300ms ease-in-out',
+                transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             />
             {/* Sheet */}
@@ -250,9 +254,9 @@ export default function App() {
                 maxHeight:  '85vh',
                 overflowY:  'auto',
                 transform:  panelIn ? 'translateY(0)' : 'translateY(100%)',
-                transition: 'transform 300ms ease-in-out',
+                transition: 'transform 420ms cubic-bezier(0.4, 0, 0.2, 1)',
                 borderRadius: '12px 12px 0 0',
-                background: '#232221',  // solid page bg — matches desktop panel appearance
+                background: '#262523',  // matches desktop panel surface color
               }}
             >
               <PlayerDetailPanel
