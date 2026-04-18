@@ -232,9 +232,7 @@ export default function App() {
                 <div style={{
                   width:      360,
                   opacity:    panelIn ? 1 : 0,
-                  transform:  panelIn ? 'translateX(0)' : 'translateX(360px)',
-                  transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1), transform 420ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  willChange: 'transform, opacity',
+                  transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1)',
                 }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
