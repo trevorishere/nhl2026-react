@@ -21,11 +21,14 @@ const COL_X = {
 // Total scroll content width = ER1 + 240 + right padding (76px) = 1984
 const CONTENT_W = 1984;
 
-// ─── Match vertical positions ─────────────────────────────────────────────────
+// ─── Label height: 11px text × 1.4 line-height ≈ 16px + 8px gap below ────────
+const LABEL_H = 24;
+
+// ─── Match vertical positions (relative to content area below label) ──────────
 const R1_TOPS   = [0, 157, 314, 471];
 const R2_TOPS   = [79, 393];
 const CONF_TOP  = 236;
-const COL_H     = 588;
+const COL_H     = 588 + LABEL_H;
 
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function MobileBracket({ picks, onPick, onReset }) {
@@ -67,10 +70,20 @@ export default function MobileBracket({ picks, onPick, onReset }) {
     setActiveRound(idx);
   }
 
+  // ── Column title label ────────────────────────────────────────────────────
+  const labelStyle = {
+    position: 'absolute', top: 0, left: 0, right: 0,
+    textAlign: 'center',
+    fontFamily: FF, fontSize: 11, fontWeight: 700,
+    letterSpacing: '0.33px', textTransform: 'uppercase',
+    color: 'rgba(255,255,255,0.7)', lineHeight: '1.4',
+    margin: 0, pointerEvents: 'none',
+  };
+
   // ── Shared match renderer ──────────────────────────────────────────────────
   function MatchCol({ match, top }) {
     return (
-      <div style={{ position: 'absolute', top, display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <div style={{ position: 'absolute', top: top + LABEL_H, display: 'flex', flexDirection: 'column', gap: 1 }}>
         {[0, 1].map(i => (
           <MobileTeamButton
             key={i}
@@ -245,6 +258,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── West R1 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.WR1 + 32, top: 0, width: 240, height: COL_H }}>
+            <p style={labelStyle}>First Round</p>
             {westR1.map((m, i) => (
               <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
             ))}
@@ -252,6 +266,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── West R2 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.WR2 + 16, top: 0, width: 240, height: COL_H }}>
+            <p style={labelStyle}>Second Round</p>
             {[semis[0], semis[1]].map((m, i) => (
               <MatchCol key={m.id} match={m} top={R2_TOPS[i]} />
             ))}
@@ -259,17 +274,19 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── WCF ──────────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.WCF + 16, top: 0, width: 240, height: COL_H }}>
+            <p style={labelStyle}>Western Conference<br />Final</p>
             <MatchCol match={wcf} top={CONF_TOP} />
           </div>
 
           {/* ── Cup Final + trophy + champ pill ──────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.CUP + 16, top: 0, width: 240, height: COL_H }}>
+            <p style={labelStyle}>Cup Final</p>
             <img
               src={`${import.meta.env.BASE_URL}stcup.svg`}
               alt="Stanley Cup"
               style={{
                 position: 'absolute',
-                top: CONF_TOP - 80,
+                top: CONF_TOP - 80 + LABEL_H,
                 left: '50%', transform: 'translateX(-50%)',
                 width: 46, height: 68,
                 objectFit: 'contain',
@@ -279,7 +296,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
             {champ && (
               <div style={{
                 position: 'absolute',
-                top: CONF_TOP - 42,
+                top: CONF_TOP - 42 + LABEL_H,
                 left: '50%', transform: 'translateX(-50%)',
                 zIndex: 5,
                 width: 155, height: 30,
@@ -301,11 +318,13 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── ECF ──────────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ECF + 16, top: 0, width: 240, height: COL_H }}>
+            <p style={labelStyle}>Eastern Conference<br />Final</p>
             <MatchCol match={ecf} top={CONF_TOP} />
           </div>
 
           {/* ── East R2 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ER2 + 16, top: 0, width: 240, height: COL_H }}>
+            <p style={labelStyle}>Second Round</p>
             {[semis[2], semis[3]].map((m, i) => (
               <MatchCol key={m.id} match={m} top={R2_TOPS[i]} />
             ))}
@@ -313,6 +332,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
           {/* ── East R1 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ER1 + 16, top: 0, width: 240, height: COL_H }}>
+            <p style={labelStyle}>First Round</p>
             {eastR1.map((m, i) => (
               <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
             ))}
