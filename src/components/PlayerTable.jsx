@@ -47,8 +47,8 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 // ─── Table column definitions ──────────────────────────────────────────────────
 // mobileHide: true → hidden below sm breakpoint (640px)
 const COLUMNS = [
-  { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '40px', mobileWidth: '12%' },
-  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '52%' },
+  { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '40px', mobileWidth: '14%' },
+  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '50%' },
   { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileWidth: '16%' },
   { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '10%', mobileHide: true },
   { key: 'SeasonPPG',            label: 'Season PPG', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
