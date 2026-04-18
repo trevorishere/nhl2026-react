@@ -48,11 +48,11 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 // mobileHide: true → hidden below sm breakpoint (640px)
 const COLUMNS = [
   { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%',  mobileWidth: '8%'  },
-  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '44%' },
-  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileWidth: '24%' },
+  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '56%' },
+  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileWidth: '16%' },
   { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '10%', mobileHide: true },
   { key: 'SeasonPPG',            label: 'Season PPG', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
-  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileWidth: '24%' },
+  { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileWidth: '20%' },
   { key: 'dynamicExpectedGames', label: 'Proj Games', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
 ];
 
