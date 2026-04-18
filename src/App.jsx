@@ -225,11 +225,15 @@ export default function App() {
                 className="flex-shrink-0 sticky top-4 overflow-hidden"
                 style={{
                   width:      panelIn ? 360 : 0,
-                  transition: 'width 420ms cubic-bezier(0.4, 0, 0.2, 1)',
-                  willChange: 'width',
+                  transition: 'width 300ms ease-in-out',
                 }}
               >
-                <div style={{ width: 360 }}>
+                <div style={{
+                  width:      360,
+                  opacity:    panelIn ? 1 : 0,
+                  transform:  panelIn ? 'translateX(0)' : 'translateX(20px)',
+                  transition: 'opacity 300ms ease-in-out, transform 300ms ease-in-out',
+                }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
                     injuries={injuries}
