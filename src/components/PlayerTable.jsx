@@ -48,8 +48,8 @@ function calcExpectedGames(team, effectivePicks, seriesLengths, mode) {
 // mobileHide: true → hidden below sm breakpoint (640px)
 const COLUMNS = [
   { key: '#',                    label: '#',          sortable: false, align: 'left',  width: '4%',  mobileWidth: '8%'  },
-  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '52%' },
-  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileWidth: '16%' },
+  { key: 'name',                 label: 'Player',     sortable: true,  align: 'left',  width: '40%', mobileWidth: '44%' },
+  { key: 'team',                 label: 'Team',       sortable: true,  align: 'left',  width: '10%', mobileWidth: '24%' },
   { key: 'pos',                  label: 'Pos',        sortable: true,  align: 'left',  width: '10%', mobileHide: true },
   { key: 'SeasonPPG',            label: 'Season PPG', sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileHide: true },
   { key: 'dynamicPoints',        label: 'Proj Pts',   sortable: true,  align: 'right', defaultDir: 'desc', width: '12%', mobileWidth: '24%' },
@@ -492,7 +492,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     key={col.key}
                     style={{ width: (isMobile && col.mobileWidth) ? col.mobileWidth : (col.width ?? 'auto'), background: '#212224', boxShadow: '0 2px 0 #393836' }}
                     className={[
-                      'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 font-bold select-none overflow-hidden',
+                      'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 font-bold select-none overflow-hidden align-middle',
                       isRight ? 'text-right' : 'text-left',
                       clickable ? 'cursor-pointer' : '',
                       (isActive || isHovered) ? 'text-primary' : 'text-muted',
@@ -507,7 +507,11 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                     {isRight ? (
                       <div className="flex items-center justify-end gap-2 min-w-0 overflow-hidden">
                         {col.sortable && !editMode && <SortArrow col={col} />}
-                        <span className="truncate">{col.label}</span>
+                        {(isMobile && col.key === 'dynamicPoints') ? (
+                          <span className="leading-tight text-center">Proj<br />Pts</span>
+                        ) : (
+                          <span className="truncate">{col.label}</span>
+                        )}
                       </div>
                     ) : (
                       <div className="flex items-center gap-2 min-w-0 overflow-hidden">
