@@ -97,8 +97,8 @@ export default function MobileBracket({ picks, onPick, onReset }) {
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ height: 18, display: 'flex', alignItems: 'center' }}>
               <span style={{
-                fontFamily: FF, fontSize: 9, fontWeight: 700,
-                color: C.muted, letterSpacing: '0.55px', textTransform: 'uppercase',
+                fontFamily: FF, fontSize: 10, fontWeight: 700,
+                color: C.muted, letterSpacing: '0.75px', textTransform: 'uppercase',
               }}>Western Conference</span>
             </div>
             <div style={{ display: 'flex', height: 40 }}>
@@ -167,8 +167,8 @@ export default function MobileBracket({ picks, onPick, onReset }) {
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ height: 18, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
               <span style={{
-                fontFamily: FF, fontSize: 9, fontWeight: 700,
-                color: C.muted, letterSpacing: '0.55px', textTransform: 'uppercase',
+                fontFamily: FF, fontSize: 10, fontWeight: 700,
+                color: C.muted, letterSpacing: '0.75px', textTransform: 'uppercase',
               }}>Eastern Conference</span>
             </div>
             <div style={{ display: 'flex', height: 40 }}>

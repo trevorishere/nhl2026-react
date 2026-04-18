@@ -90,7 +90,7 @@ export function ctrlBtnStyle(hovering, opts = {}) {
 /** Shared layout for dropdown option rows. Combine with a hover className. */
 export const dropItemBase = {
   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-  height: 40, padding: '0 12px', cursor: 'pointer',
+  height: 36, padding: '0 12px', cursor: 'pointer',
 };
 
 /** Floating dropdown panel wrapper. */
