@@ -24,7 +24,7 @@ const sectionLabel = {
 };
 
 // ── Main panel ────────────────────────────────────────────────────────────────
-export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
+export default function PlayerDetailPanel({ player, injuries = {}, onClose, contentVisible = true }) {
   const { data, loading, error } = usePlayerDetail(player);
   const inj = injuries[normalizeName(player.name)] ?? null;
 
@@ -56,12 +56,18 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
 
   return (
     <div style={{
-      background: C.surface,
+      background: '#262829',
       borderRadius: 16,
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
     }}>
+
+      {/* ── Content — fades on player switch ───────────────────────────────── */}
+      <div style={{
+        opacity:    contentVisible ? 1 : 0,
+        transition: 'opacity 150ms ease-in-out',
+      }}>
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{
@@ -278,6 +284,8 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           </p>
         )}
 
+      </div>
+      {/* ── end content fade wrapper ─────────────────────────────────────────── */}
       </div>
     </div>
   );

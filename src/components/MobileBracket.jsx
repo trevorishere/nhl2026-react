@@ -260,8 +260,6 @@ export default function MobileBracket({ picks, onPick, onReset }) {
           overflowX: 'auto',
           overflowY: 'hidden',
           WebkitOverflowScrolling: 'touch',
-          marginLeft: -16,
-          marginRight: -16,
         }}
       >
         <div style={{

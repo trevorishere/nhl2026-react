@@ -12,7 +12,7 @@ export const C = {
   textMuted:  'rgba(223, 225, 231, 0.7)', // 70% warm-white (header metadata)
   muted:      '#969AA0',               // secondary labels, placeholders
   border:     '#373739',               // dividers, borders, dropdown bg
-  surface:    '#262523',               // panel background
+  surface:    '#262829',               // panel background
   btnDefault: 'rgba(57,56,54,0.5)',    // buttons / dropdowns at rest
   btnHover:   '#444241',               // buttons / dropdowns on hover
   toggleOff:  'rgba(72,72,72,0.5)',    // toggle track — off state

@@ -12,12 +12,14 @@ export default function App() {
   const [picks, setPicks] = useState({});
   const [mode, setMode] = useState('normal');
   const [seriesLengths, setSeriesLengths] = useState({});
-  const [selectedPlayer, setSelectedPlayer] = useState(null); // for row highlight
-  const [panelPlayer,   setPanelPlayer]   = useState(null);   // player in DOM (lingers during close)
-  const [panelIn,       setPanelIn]       = useState(false);   // CSS open state
-  const panelTimerRef  = useRef(null);
-  const tableCardRef   = useRef(null);
-  const modeInitRef    = useRef(false);
+  const [selectedPlayer,  setSelectedPlayer]  = useState(null); // for row highlight
+  const [panelPlayer,    setPanelPlayer]    = useState(null);   // player in DOM (lingers during close)
+  const [panelIn,        setPanelIn]        = useState(false);  // CSS open state
+  const [contentVisible, setContentVisible] = useState(true);   // content crossfade
+  const panelTimerRef   = useRef(null);
+  const contentTimerRef = useRef(null);
+  const tableCardRef    = useRef(null);
+  const modeInitRef     = useRef(false);
   const [injuries, setInjuries] = useState({});
 
   // Animate table card on advanced mode toggle (skip initial render)
@@ -61,17 +63,30 @@ export default function App() {
   }
 
   function handlePlayerSelect(player) {
-    if (panelTimerRef.current) clearTimeout(panelTimerRef.current);
+    if (panelTimerRef.current)  clearTimeout(panelTimerRef.current);
+    if (contentTimerRef.current) clearTimeout(contentTimerRef.current);
 
     if (player) {
-      // Open (or switch player): mount immediately, then trigger CSS enter
-      setSelectedPlayer(player);
-      setPanelPlayer(player);
-      requestAnimationFrame(() => requestAnimationFrame(() => setPanelIn(true)));
+      if (panelIn) {
+        // Panel already open — crossfade content: fade out, swap, fade in
+        setSelectedPlayer(player);
+        setContentVisible(false);
+        contentTimerRef.current = setTimeout(() => {
+          setPanelPlayer(player);
+          setContentVisible(true);
+        }, 150); // half of 300ms total
+      } else {
+        // Fresh open: mount immediately, then trigger CSS enter
+        setSelectedPlayer(player);
+        setPanelPlayer(player);
+        setContentVisible(true);
+        requestAnimationFrame(() => requestAnimationFrame(() => setPanelIn(true)));
+      }
     } else {
       // Close: start CSS exit, then unmount after transition completes
       setSelectedPlayer(null);
       setPanelIn(false);
+      setContentVisible(true); // reset for next open
       panelTimerRef.current = setTimeout(() => setPanelPlayer(null), 430);
     }
   }
@@ -204,7 +219,7 @@ export default function App() {
               />
             </div>
 
-            {/* Desktop detail panel — width animates 0→360 to push the table */}
+            {/* Desktop detail panel — slides in from the right */}
             {panelPlayer && !isMobile && (
               <div
                 className="flex-shrink-0 sticky top-4 overflow-hidden"
@@ -217,13 +232,15 @@ export default function App() {
                 <div style={{
                   width:      360,
                   opacity:    panelIn ? 1 : 0,
-                  transform:  panelIn ? 'translateX(0)' : 'translateX(16px)',
-                  transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1), transform 420ms cubic-bezier(0.4, 0, 0.2, 1)',
+                  transform:  panelIn ? 'translateX(0)' : 'translateX(360px)',
+                  transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1), transform 420ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  willChange: 'transform, opacity',
                 }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
                     injuries={injuries}
                     onClose={() => handlePlayerSelect(null)}
+                    contentVisible={contentVisible}
                   />
                 </div>
               </div>
@@ -256,13 +273,14 @@ export default function App() {
                 transform:  panelIn ? 'translateY(0)' : 'translateY(100%)',
                 transition: 'transform 420ms cubic-bezier(0.4, 0, 0.2, 1)',
                 borderRadius: '12px 12px 0 0',
-                background: '#262523',  // matches desktop panel surface color
+                background: '#262829',  // matches desktop panel surface color
               }}
             >
               <PlayerDetailPanel
                 player={panelPlayer}
                 injuries={injuries}
                 onClose={() => handlePlayerSelect(null)}
+                contentVisible={contentVisible}
               />
             </div>
           </>
