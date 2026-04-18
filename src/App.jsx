@@ -224,18 +224,17 @@ export default function App() {
               <div
                 className="flex-shrink-0 sticky top-4 overflow-hidden"
                 style={{
-                  width:          panelIn ? 360 : 0,
-                  transition:     'width 420ms cubic-bezier(0.4, 0, 0.2, 1)',
-                  willChange:     'width',
-                  display:        'flex',
-                  justifyContent: 'flex-end',   // card anchors to right → right side revealed first
+                  width:      panelIn ? 360 : 0,
+                  transition: 'width 420ms cubic-bezier(0.4, 0, 0.2, 1)',
+                  willChange: 'width',
                 }}
               >
                 <div style={{
                   width:      360,
-                  flexShrink: 0,
                   opacity:    panelIn ? 1 : 0,
-                  transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1)',
+                  transform:  panelIn ? 'translateX(0)' : 'translateX(120px)',
+                  transition: 'opacity 360ms cubic-bezier(0.4, 0, 0.2, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1)',
+                  willChange: 'transform, opacity',
                 }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
