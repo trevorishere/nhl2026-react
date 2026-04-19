@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { RotateCcw } from 'lucide-react';
 import Bracket from './components/Bracket';
 import MobileBracket from './components/MobileBracket';
