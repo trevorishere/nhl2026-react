@@ -4,6 +4,7 @@ import { BASE_DATA } from '../data/players';
 import { CHALK_PICKS, ROUND1_MATCHUPS, ROUND_PROGRESSION } from '../data/constants';
 import { getPosition } from '../data/positions';
 import { FF, C, T, ctrlBtnStyle, dropItemBase, dropPanel } from '../styles/tokens';
+import { normalizeName } from '../utils/normalize';
 import {
   DndContext, closestCenter,
   PointerSensor, KeyboardSensor,
@@ -15,8 +16,6 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { utils, writeFile } from 'xlsx';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 
 // ─── Shared class strings ──────────────────────────────────────────────────────
 const TD = 'px-2 h-[48px] sm:border-b sm:border-border font-normal'; // base table cell
@@ -60,20 +59,14 @@ const COLUMNS = [
 const rowId = (p) => p.name + '|' + p.team;
 
 // ─── Injury lookup helpers ─────────────────────────────────────────────────────
-function normalizeName(name) {
-  return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-}
 function getInjury(playerName, injuries) {
   return injuries[normalizeName(playerName)] ?? null;
 }
 
 // ─── Sortable row sub-component ───────────────────────────────────────────────
-function SortableRow({ player, globalRank, editMode, injuries }) {
+function SortableRow({ player, globalRank, injuries }) {
   const id = rowId(player);
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id,
-    disabled: !editMode,
-  });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -84,15 +77,13 @@ function SortableRow({ player, globalRank, editMode, injuries }) {
 
   return (
     <tr ref={setNodeRef} style={style} className="hover:bg-[rgba(255,255,255,0.05)] transition-colors">
-      {editMode && (
-        <td
+      <td
           className="px-2 py-2.5 border-b border-border text-muted cursor-grab active:cursor-grabbing"
           {...attributes}
           {...listeners}
         >
           <GripVertical size={14} />
         </td>
-      )}
       <td className={`${TD} truncate sm:pl-3`}>{globalRank}</td>
       <td className={`${TD} overflow-hidden pl-0 sm:pl-2`}>
         <span className="flex items-center gap-3 min-w-0">
@@ -301,8 +292,6 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
   }
 
   const teamOptions  = [...new Set(ROUND1_MATCHUPS.flatMap((m) => m.teams))].sort();
-  const hasSavedList = customOrder !== null;
-
   // ── Dropdown button style (extends ctrlBtnStyle with space-between layout) ──
   const dropBtnStyle = (hovering) => ctrlBtnStyle(hovering, {
     gap: 8, padding: '0 12px', justifyContent: 'space-between',
@@ -480,7 +469,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
           <thead>
             <tr>
               {editMode && (
-                <th className="px-2 h-[40px] sticky top-0 w-6" style={{ background: '#212224', boxShadow: '0 2px 0 #393836' }} />
+                <th className="px-2 h-[40px] sticky top-0 w-6" style={{ background: C.card, boxShadow: '0 2px 0 #393836' }} />
               )}
               {COLUMNS.map((col) => {
                 const isActive  = !editMode && sortConfig.key === col.key;
@@ -490,7 +479,7 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                 return (
                   <th
                     key={col.key}
-                    style={{ width: (isMobile && col.mobileWidth) ? col.mobileWidth : (col.width ?? 'auto'), background: '#212224', boxShadow: '0 2px 0 #393836', color: (isActive || isHovered) ? C.text : C.muted, transition: 'color 0.15s ease' }}
+                    style={{ width: (isMobile && col.mobileWidth) ? col.mobileWidth : (col.width ?? 'auto'), background: C.card, boxShadow: '0 2px 0 #393836', color: (isActive || isHovered) ? C.text : C.muted, transition: 'color 0.15s ease' }}
                     className={[
                       'px-2 h-[40px] text-[11px] uppercase tracking-[0.065em] sticky top-0 font-bold select-none overflow-hidden align-middle',
                       isRight ? 'text-right' : 'text-left',
@@ -547,7 +536,6 @@ export default function PlayerTable({ picks, mode, seriesLengths, onPlayerSelect
                         key={rowId(p)}
                         player={p}
                         globalRank={globalRank}
-                        editMode={editMode}
                         injuries={injuries}
                       />
                     );

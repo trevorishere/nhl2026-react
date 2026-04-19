@@ -2,10 +2,7 @@ import { AlertCircle, X } from 'lucide-react';
 import { usePlayerDetail, toiToSeconds, secondsToToi } from '../hooks/usePlayerDetail';
 import { TEAM_STYLES } from '../data/constants';
 import { FF, C, T } from '../styles/tokens';
-
-function normalizeName(name) {
-  return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-}
+import { normalizeName } from '../utils/normalize';
 
 function Skeleton({ width, height }) {
   return (
@@ -56,7 +53,7 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose, cont
 
   return (
     <div style={{
-      background: '#262829',
+      background: C.surface,
       borderRadius: 16,
       overflow: 'hidden',
       display: 'flex',

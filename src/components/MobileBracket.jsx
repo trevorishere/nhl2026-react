@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { RotateCcw } from 'lucide-react';
-import MobileTeamButton from './MobileTeamButton';
+import TeamButton from './TeamButton';
 import { ROUND1_MATCHUPS } from '../data/constants';
 import { FF, C, ctrlBtnStyle } from '../styles/tokens';
 
@@ -101,7 +101,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
     return (
       <div style={{ position: 'absolute', top: top + LABEL_H, display: 'flex', flexDirection: 'column', gap: 1 }}>
         {[0, 1].map(i => (
-          <MobileTeamButton
+          <TeamButton mobile
             key={i}
             team={match.teams[i]}
             matchId={match.id}

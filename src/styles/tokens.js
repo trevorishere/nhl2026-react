@@ -18,6 +18,7 @@ export const C = {
   toggleOff:  'rgba(72,72,72,0.5)',    // toggle track — off state
   toggleOn:   '#4e4e4e',               // toggle track — on state
   accent:     '#4f98a3',               // projected-points teal
+  card:       '#212224',               // table/card background
   injBg:      'rgba(255,0,0,0.1)',     // injury card background
   injBorder:  'rgba(255,0,0,0.3)',     // injury card border
   injLabel:   '#ff1a1a',               // injury type label
@@ -101,36 +102,3 @@ export const dropPanel = {
   minWidth: 120, overflow: 'hidden', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
 };
 
-// ── Toggle pill styles ────────────────────────────────────────────────────────
-
-export const toggleTrack = (on) => ({
-  cursor: 'pointer',
-  background: on ? C.toggleOn : C.toggleOff,
-  height: 24, width: 64, borderRadius: 9,
-  position: 'relative', flexShrink: 0,
-  transition: 'background 0.2s ease',
-});
-
-export const toggleKnob = (on) => ({
-  position: 'absolute',
-  background: on ? C.text : C.muted,
-  height: 16, width: 28, borderRadius: 7,
-  top: 4, left: on ? 31 : 5,
-  transition: 'left 0.2s ease, background 0.2s ease',
-});
-
-export const toggleLabelOn = (on) => ({
-  position: 'absolute', left: 9, top: '50%',
-  transform: 'translateY(-50%)',
-  ...T.toggleLabel,
-  opacity: on ? 1 : 0,
-  transition: 'opacity 0.2s ease',
-});
-
-export const toggleLabelOff = (on) => ({
-  position: 'absolute', right: 6, top: '50%',
-  transform: 'translateY(-50%)',
-  ...T.toggleLabel,
-  opacity: on ? 0 : 0.57,
-  transition: 'opacity 0.2s ease',
-});

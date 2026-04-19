@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { RotateCcw } from 'lucide-react';
 import Bracket from './components/Bracket';
 import MobileBracket from './components/MobileBracket';
@@ -6,19 +6,17 @@ import PlayerTable from './components/PlayerTable';
 import PlayerDetailPanel from './components/PlayerDetailPanel';
 import Toggle from './components/Toggle';
 import { CHALK_PICKS, PICK_DEPS } from './data/constants';
-import { FF, C, ctrlBtnStyle } from './styles/tokens';
+import { C, ctrlBtnStyle } from './styles/tokens';
+import { usePanelState } from './hooks/usePanelState';
+
+const PANEL_W = 360; // detail panel width in px
 
 export default function App() {
   const [picks, setPicks] = useState({});
   const [mode, setMode] = useState('normal');
   const [seriesLengths, setSeriesLengths] = useState({});
-  const [selectedPlayer,  setSelectedPlayer]  = useState(null); // for row highlight
-  const [panelPlayer,    setPanelPlayer]    = useState(null);   // player in DOM (lingers during close)
-  const [panelIn,        setPanelIn]        = useState(false);  // CSS open state
-  const [contentVisible, setContentVisible] = useState(true);   // content crossfade
-  const panelTimerRef   = useRef(null);
-  const contentTimerRef = useRef(null);
-  const tableCardRef    = useRef(null);
+  const { selectedPlayer, panelPlayer, panelIn, contentVisible, handlePlayerSelect } = usePanelState();
+  const tableCardRef = useRef(null);
   const modeInitRef     = useRef(false);
   const [injuries, setInjuries] = useState({});
 
@@ -60,35 +58,6 @@ export default function App() {
 
   function autoPick() {
     setPicks(CHALK_PICKS);
-  }
-
-  function handlePlayerSelect(player) {
-    if (panelTimerRef.current)  clearTimeout(panelTimerRef.current);
-    if (contentTimerRef.current) clearTimeout(contentTimerRef.current);
-
-    if (player) {
-      if (panelIn) {
-        // Panel already open — crossfade content: fade out, swap, fade in
-        setSelectedPlayer(player);
-        setContentVisible(false);
-        contentTimerRef.current = setTimeout(() => {
-          setPanelPlayer(player);
-          setContentVisible(true);
-        }, 150); // half of 300ms total
-      } else {
-        // Fresh open: mount immediately, then trigger CSS enter
-        setSelectedPlayer(player);
-        setPanelPlayer(player);
-        setContentVisible(true);
-        requestAnimationFrame(() => requestAnimationFrame(() => setPanelIn(true)));
-      }
-    } else {
-      // Close: start CSS exit, then unmount after transition completes
-      setSelectedPlayer(null);
-      setPanelIn(false);
-      setContentVisible(true); // reset for next open
-      panelTimerRef.current = setTimeout(() => setPanelPlayer(null), 430);
-    }
   }
 
   const isAdvanced = mode === 'advanced';
@@ -199,9 +168,9 @@ export default function App() {
           )}
         </section>
 
-        {/* Player rankings — #212123 card floats on app bg with 48px padding around it */}
+        {/* Player rankings — card floats on app bg with 48px padding */}
         <section style={{ padding: isMobile ? 0 : '0 48px 48px', marginTop: 24 }}>
-          <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: '#212224', padding: isMobile ? '32px 16px 32px' : '48px 48px 56px', overflow: 'clip' }}>
+          <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: C.card, padding: isMobile ? '32px 16px 32px' : '48px 48px 56px', overflow: 'clip' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
             <div style={{ flex: '1 1 0', minWidth: 0 }}>
@@ -221,15 +190,15 @@ export default function App() {
               <div
                 className="flex-shrink-0 sticky top-4"
                 style={{
-                  width:      panelIn ? 360 : 0,
+                  width:      panelIn ? PANEL_W : 0,
                   overflow:   'visible',
                   transition: 'width 380ms ease-in-out',
                   willChange: 'width',
                 }}
               >
                 <div style={{
-                  width:      360,
-                  transform:  panelIn ? 'translateX(0)' : 'translateX(360px)',
+                  width:      PANEL_W,
+                  transform:  panelIn ? 'translateX(0)' : `translateX(${PANEL_W}px)`,
                   transition: 'transform 380ms ease-in-out',
                   willChange: 'transform',
                 }}>
@@ -270,7 +239,7 @@ export default function App() {
                 transform:  panelIn ? 'translateY(0)' : 'translateY(100%)',
                 transition: 'transform 420ms cubic-bezier(0.4, 0, 0.2, 1)',
                 borderRadius: '12px 12px 0 0',
-                background: '#262829',  // matches desktop panel surface color
+                background: C.surface,
               }}
             >
               <PlayerDetailPanel
