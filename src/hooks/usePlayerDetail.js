@@ -6,7 +6,7 @@ const TTL    = 5 * 60 * 1000; // 5 minutes
 const SEASON = '20252026';
 
 // api-web.nhle.com does not send CORS headers, so browser fetches are blocked
-// in production. Use the Vite dev proxy in development and allorigins.win as a
+// in production. Use the Vite dev proxy in development and codetabs.com as a
 // CORS proxy in production.
 const NHL_BASE = 'https://api-web.nhle.com';
 
@@ -14,7 +14,7 @@ function nhlUrl(path) {
   if (import.meta.env.DEV) {
     return `/nhl-api${path}`;
   }
-  return `https://api.allorigins.win/raw?url=${encodeURIComponent(NHL_BASE + path)}`;
+  return `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(NHL_BASE + path)}`;
 }
 
 export function usePlayerDetail(player) {
