@@ -94,20 +94,20 @@ export default function App() {
     <div className="max-w-[1600px] mx-auto sm:px-6 py-6" style={{ position: 'relative', zIndex: 1, overflowX: 'hidden' }}>
       {/* Header */}
       <header className="mb-8 px-4 sm:px-0" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-        {/* Left decorative line */}
-        <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.12)' }} />
+        {/* Left decorative line — fades from title outward */}
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, rgba(255,255,255,0.15), transparent)' }} />
 
         {/* Centered title block */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
           <img
             src={`${import.meta.env.BASE_URL}header.svg`}
             alt="NHL Playoffs '26 Draft Guide"
-            style={{ width: isMobile ? 180 : 274, height: isMobile ? 49 : 74, display: 'block' }}
+            style={{ width: isMobile ? 180 : 274, height: isMobile ? 45 : 68, display: 'block' }}
           />
         </div>
 
-        {/* Right decorative line */}
-        <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.12)' }} />
+        {/* Right decorative line — fades from title outward */}
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, rgba(255,255,255,0.15), transparent)' }} />
       </header>
 
       {/* Main grid */}

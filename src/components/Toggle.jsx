@@ -12,14 +12,14 @@ export default function Toggle({ on, onChange }) {
       onMouseLeave={() => setHovering(false)}
       style={ctrlBtnStyle(false, { gap: 5, padding: '0 16px' })}
     >
-      {/* Label and value brighten when ON or hovering; pipe always muted */}
-      <span style={{ color: active ? C.text : C.muted, transition: 'color 0.15s ease' }}>Projected Games</span>
-      <span style={{ color: C.muted }}> | </span>
+      {/* Label and value brighten when ON or hovering; pipe stays at half opacity */}
+      <span style={{ color: active ? C.text : '#c5c9cd', transition: 'color 0.15s ease' }}>Projected Games</span>
+      <span style={{ color: 'rgba(197,201,205,0.5)' }}> | </span>
       {/* Fixed-width span sized to "OFF" so button never resizes */}
       <span style={{
         display: 'inline-block',
         minWidth: 26,
-        color: active ? C.text : C.muted,
+        color: active ? C.text : '#c5c9cd',
         transition: 'color 0.15s ease',
       }}>
         {on ? 'ON' : 'OFF'}
