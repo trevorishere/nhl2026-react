@@ -1,24 +1,37 @@
 import { useState, useEffect, useRef } from 'react';
 import { RotateCcw } from 'lucide-react';
 import Bracket from './components/Bracket';
+import MobileBracket from './components/MobileBracket';
 import PlayerTable from './components/PlayerTable';
 import PlayerDetailPanel from './components/PlayerDetailPanel';
 import Toggle from './components/Toggle';
 import { CHALK_PICKS, PICK_DEPS } from './data/constants';
-import { FF, C, T, ctrlBtnStyle } from './styles/tokens';
+import { C, ctrlBtnStyle } from './styles/tokens';
+import { usePanelState } from './hooks/usePanelState';
+
+const PANEL_W = 360; // detail panel width in px
 
 export default function App() {
   const [picks, setPicks] = useState({});
   const [mode, setMode] = useState('normal');
   const [seriesLengths, setSeriesLengths] = useState({});
-  const [selectedPlayer, setSelectedPlayer] = useState(null); // for row highlight
-  const [panelPlayer,   setPanelPlayer]   = useState(null);   // player in DOM (lingers during close)
-  const [panelIn,       setPanelIn]       = useState(false);   // CSS open state
-  const panelTimerRef = useRef(null);
+  const { selectedPlayer, panelPlayer, panelIn, contentVisible, handlePlayerSelect } = usePanelState();
+  const tableCardRef = useRef(null);
+  const modeInitRef     = useRef(false);
   const [injuries, setInjuries] = useState({});
 
+  // Animate table card on advanced mode toggle (skip initial render)
   useEffect(() => {
-    fetch('/injuries.json')
+    if (!modeInitRef.current) { modeInitRef.current = true; return; }
+    const el = tableCardRef.current;
+    if (!el) return;
+    el.classList.remove('table-mode-on', 'table-mode-off');
+    void el.offsetWidth; // force reflow so animation restarts
+    el.classList.add(mode === 'advanced' ? 'table-mode-on' : 'table-mode-off');
+  }, [mode]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}injuries.json`)
       .then((r) => r.json())
       .then((d) => setInjuries(d.players || {}))
       .catch(() => {}); // silently fail if file not yet generated
@@ -47,22 +60,6 @@ export default function App() {
     setPicks(CHALK_PICKS);
   }
 
-  function handlePlayerSelect(player) {
-    if (panelTimerRef.current) clearTimeout(panelTimerRef.current);
-
-    if (player) {
-      // Open (or switch player): mount immediately, then trigger CSS enter
-      setSelectedPlayer(player);
-      setPanelPlayer(player);
-      requestAnimationFrame(() => requestAnimationFrame(() => setPanelIn(true)));
-    } else {
-      // Close: start CSS exit, then unmount after transition completes
-      setSelectedPlayer(null);
-      setPanelIn(false);
-      panelTimerRef.current = setTimeout(() => setPanelPlayer(null), 310);
-    }
-  }
-
   const isAdvanced = mode === 'advanced';
   const [resetHover, setResetHover] = useState(false);
   const [autopickHover, setAutopickHover] = useState(false);
@@ -76,105 +73,107 @@ export default function App() {
   }, []);
 
   return (
-    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
-      {/* Header — centered title + subtitle */}
-      <header className="text-center mb-8">
-        <h1 style={{
-          fontFamily: FF,
-          fontSize: 32,
-          fontWeight: 600,
-          color: C.text,
-          letterSpacing: '0.32px',
-          margin: 0,
-          lineHeight: '27px',
-        }}>
-          NHL Playoffs Draft Guide 2026
-        </h1>
-        <p style={{
-          fontFamily: FF,
-          fontSize: 16,
-          fontWeight: 500,
-          color: C.muted,
-          letterSpacing: '0.32px',
-          marginTop: 12,
-          lineHeight: '21px',
-        }}>
-          Pick your bracket. Get your draft list.
-        </p>
+    <div style={{ position: 'relative' }}>
+      {/* Background texture — natural size, centered at top */}
+      <img
+        src={`${import.meta.env.BASE_URL}bg-top.jpg`}
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 1440,
+          height: 'auto',
+          pointerEvents: 'none',
+          userSelect: 'none',
+          zIndex: 0,
+          display: 'block',
+        }}
+      />
+    <div className="max-w-[1600px] mx-auto sm:px-6 py-6" style={{ position: 'relative', zIndex: 1, overflowX: 'hidden' }}>
+      {/* Header */}
+      <header className="mb-8 px-4 sm:px-0" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+        {/* Left decorative line — fades from title outward */}
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, rgba(255,255,255,0.15), transparent)' }} />
+
+        {/* Centered title block */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+          <img
+            src={`${import.meta.env.BASE_URL}header.svg`}
+            alt="NHL Playoffs '26 Draft Guide"
+            style={{ width: isMobile ? 180 : 274, height: isMobile ? 45 : 68, display: 'block' }}
+          />
+        </div>
+
+        {/* Right decorative line — fades from title outward */}
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, rgba(255,255,255,0.15), transparent)' }} />
       </header>
 
       {/* Main grid */}
       <div className="flex flex-col gap-5">
-        {/* Bracket — no card wrapper, sits on bare background */}
+        {/* Bracket section — mobile gets its own experience, desktop gets full bracket */}
         <section className="bracket-section pt-2">
-          <div style={{ maxWidth: 1232, margin: '0 auto' }}>
 
-          {/* Controls bar: Reset + Autopick (centered) | Advanced Mode toggle (right) */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: 40, marginBottom: 32 }}>
-            {/* Left: empty spacer */}
-            <div />
+          {/* ── Mobile bracket (< sm) ─────────────────────────────────────── */}
+          {isMobile && (
+            <MobileBracket
+              picks={picks}
+              onPick={makePick}
+              onReset={resetBracket}
+            />
+          )}
 
-            {/* Center: action buttons */}
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <button
-                style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px' })}
-                onClick={resetBracket}
-                onMouseEnter={() => setResetHover(true)}
-                onMouseLeave={() => setResetHover(false)}
-              >
-                <RotateCcw size={14} color={C.text} strokeWidth={2} />
-                Reset
-              </button>
-              <button
-                style={ctrlBtnStyle(autopickHover, { padding: '0 16px' })}
-                onClick={autoPick}
-                onMouseEnter={() => setAutopickHover(true)}
-                onMouseLeave={() => setAutopickHover(false)}
-              >
-                Autopick Favorites
-              </button>
+          {/* ── Desktop bracket (≥ sm) ────────────────────────────────────── */}
+          {!isMobile && (
+            <div style={{ maxWidth: 1232, margin: '0 auto' }}>
+              {/* Controls bar */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32 }}>
+                <button
+                  style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' })}
+                  onClick={resetBracket}
+                  onMouseEnter={() => setResetHover(true)}
+                  onMouseLeave={() => setResetHover(false)}
+                >
+                  <RotateCcw size={14} color="currentColor" strokeWidth={2} />
+                  Reset
+                </button>
+                <button
+                  style={ctrlBtnStyle(autopickHover, { padding: '0 18px' })}
+                  onClick={autoPick}
+                  onMouseEnter={() => setAutopickHover(true)}
+                  onMouseLeave={() => setAutopickHover(false)}
+                >
+                  Autopick Favorites
+                </button>
+                <Toggle
+                  on={isAdvanced}
+                  onChange={() => setMode(isAdvanced ? 'normal' : 'advanced')}
+                />
+              </div>
+
+              {/* Bracket */}
+              <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', marginLeft: -12, marginRight: -12 }}>
+                <div style={{ minWidth: 988, paddingLeft: 12, paddingRight: 12 }}>
+                  <Bracket
+                    picks={picks}
+                    onPick={makePick}
+                    mode={mode}
+                    seriesLengths={seriesLengths}
+                    onSeriesLength={setSeriesLength}
+                  />
+                </div>
+              </div>
             </div>
-
-            {/* Right: Advanced Mode toggle */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
-              <span style={T.label}>Advanced Mode</span>
-              <Toggle
-                on={isAdvanced}
-                onChange={() => setMode(isAdvanced ? 'normal' : 'advanced')}
-              />
-            </div>
-          </div>
-
-          {/* Scroll container: scrolls horizontally on mobile, full bracket on desktop */}
-          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', marginLeft: -12, marginRight: -12 }}>
-            <div style={{ minWidth: 988, paddingLeft: 12, paddingRight: 12 }}>
-              <Bracket
-                picks={picks}
-                onPick={makePick}
-                mode={mode}
-                seriesLengths={seriesLengths}
-                onSeriesLength={setSeriesLength}
-              />
-            </div>
-          </div>
-          </div>
+          )}
         </section>
 
-        {/* Player rankings */}
-        <section className="sm:px-20" style={{ paddingTop: 64 }}>
-          <div style={{ maxWidth: 1232, margin: '0 auto' }}>
-
-          {/* Draft List title — Figma 181:4407 */}
-          <h2 style={{
-            fontFamily: FF, fontSize: 32, fontWeight: 700,
-            color: C.text, letterSpacing: '0.64px',
-            textAlign: 'center', marginBottom: 40, marginTop: 0,
-          }}>
-            Draft List
-          </h2>
+        {/* Player rankings — card floats on app bg with 48px padding */}
+        <section style={{ padding: isMobile ? 0 : '0 48px 48px', marginTop: 24 }}>
+          <div ref={tableCardRef} style={{ maxWidth: 1232, margin: '0 auto', width: '100%', background: C.card, padding: isMobile ? '32px 16px 32px' : '48px 48px 56px', overflow: 'clip' }}>
           <div className="flex items-start" style={{ gap: 48 }}>
             {/* Table — shrinks when desktop panel is open */}
-            <div className={panelPlayer && !isMobile ? 'flex-1 min-w-0' : 'w-full'}>
+            <div style={{ flex: '1 1 0', minWidth: 0 }}>
               <PlayerTable
                 picks={picks}
                 mode={mode}
@@ -182,28 +181,32 @@ export default function App() {
                 onPlayerSelect={handlePlayerSelect}
                 selectedPlayer={selectedPlayer}
                 injuries={injuries}
+                isMobile={isMobile}
               />
             </div>
 
-            {/* Desktop detail panel — width animates 0→336 to push the table */}
+            {/* Desktop detail panel — slides in from the right */}
             {panelPlayer && !isMobile && (
               <div
-                className="flex-shrink-0 sticky top-4 overflow-hidden"
+                className="flex-shrink-0 sticky top-4"
                 style={{
-                  width:      panelIn ? 336 : 0,
-                  transition: 'width 300ms ease-in-out',
+                  width:      panelIn ? PANEL_W : 0,
+                  overflow:   'visible',
+                  transition: 'width 380ms ease-in-out',
+                  willChange: 'width',
                 }}
               >
                 <div style={{
-                  width:      336,
-                  opacity:    panelIn ? 1 : 0,
-                  transform:  panelIn ? 'translateX(0)' : 'translateX(20px)',
-                  transition: 'opacity 300ms ease-in-out, transform 300ms ease-in-out',
+                  width:      PANEL_W,
+                  transform:  panelIn ? 'translateX(0)' : `translateX(${PANEL_W}px)`,
+                  transition: 'transform 380ms ease-in-out',
+                  willChange: 'transform',
                 }}>
                   <PlayerDetailPanel
                     player={panelPlayer}
                     injuries={injuries}
                     onClose={() => handlePlayerSelect(null)}
+                    contentVisible={contentVisible}
                   />
                 </div>
               </div>
@@ -222,7 +225,7 @@ export default function App() {
                 position: 'fixed', inset: 0, zIndex: 40,
                 background: 'rgba(0,0,0,0.5)',
                 opacity:    panelIn ? 1 : 0,
-                transition: 'opacity 300ms ease-in-out',
+                transition: 'opacity 420ms cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             />
             {/* Sheet */}
@@ -234,20 +237,22 @@ export default function App() {
                 maxHeight:  '85vh',
                 overflowY:  'auto',
                 transform:  panelIn ? 'translateY(0)' : 'translateY(100%)',
-                transition: 'transform 300ms ease-in-out',
+                transition: 'transform 420ms cubic-bezier(0.4, 0, 0.2, 1)',
                 borderRadius: '12px 12px 0 0',
-                background: '#232221',  // solid page bg — matches desktop panel appearance
+                background: C.surface,
               }}
             >
               <PlayerDetailPanel
                 player={panelPlayer}
                 injuries={injuries}
                 onClose={() => handlePlayerSelect(null)}
+                contentVisible={contentVisible}
               />
             </div>
           </>
         )}
       </div>
+    </div>
     </div>
   );
 }
