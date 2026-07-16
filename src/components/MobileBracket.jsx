@@ -4,9 +4,6 @@ import TeamButton from './TeamButton';
 import { ROUND1_MATCHUPS } from '../data/constants';
 import { FF, C, ctrlBtnStyle } from '../styles/tokens';
 
-// ─── Snap positions (scrollLeft values for each round) ────────────────────────
-const SNAPS = [0, 227, 513, 799, 1085, 1371, 1657];
-
 // ─── Column x-positions within scroll content (240px wide each) ───────────────
 // All columns use left = COL_X + 16 → equal 46px gap between every column
 const COL_X = {
@@ -18,6 +15,17 @@ const COL_X = {
   ER2:  1430,
   ER1:  1716,
 };
+
+// Column order for nav indices 0–6
+const COL_KEYS = ['WR1', 'WR2', 'WCF', 'CUP', 'ECF', 'ER2', 'ER1'];
+
+// Center X of each column (left offset + 16px padding + half of 240px width)
+const COL_CENTER = COL_KEYS.map(k => COL_X[k] + 16 + 120);
+
+/** Compute scrollLeft to center column `idx` in the given viewport width */
+function snapFor(idx, viewportW) {
+  return Math.max(0, Math.min(COL_CENTER[idx] - viewportW / 2, CONTENT_W - viewportW));
+}
 
 // Total scroll content width = ER1(1716) + 16 offset + 240 col + 16 right pad = 1988
 const CONTENT_W = 1988;
@@ -73,16 +81,19 @@ export default function MobileBracket({ picks, onPick, onReset }) {
   const handleScroll = useCallback(() => {
     if (!scrollRef.current) return;
     const sl = scrollRef.current.scrollLeft;
+    const vp = scrollRef.current.clientWidth;
     let closest = 0, minDist = Infinity;
-    SNAPS.forEach((s, i) => {
-      const d = Math.abs(sl - s);
+    COL_KEYS.forEach((_, i) => {
+      const d = Math.abs(sl - snapFor(i, vp));
       if (d < minDist) { minDist = d; closest = i; }
     });
     setActiveRound(closest);
   }, []);
 
   function scrollToRound(idx) {
-    scrollRef.current?.scrollTo({ left: SNAPS[idx], behavior: 'smooth' });
+    if (!scrollRef.current) return;
+    const vp = scrollRef.current.clientWidth;
+    scrollRef.current.scrollTo({ left: snapFor(idx, vp), behavior: 'smooth' });
     setActiveRound(idx);
   }
 
