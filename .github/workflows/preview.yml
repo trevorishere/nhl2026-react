@@ -26,7 +26,7 @@ jobs:
       - name: Build preview
         run: npm run build
         env:
-          BASE_URL: /nhl2026-react/pr-${{ github.event.pull_request.number }}/
+          BASE_URL: /pr-${{ github.event.pull_request.number }}/
 
       - name: Deploy preview to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -54,7 +54,7 @@ jobs:
             <!-- nhl2026-preview -->
             ## 🚀 Preview deployed
 
-            **URL:** https://trevorishere.github.io/nhl2026-react/pr-${{ github.event.pull_request.number }}/
+            **URL:** https://playoffs26.trevorishere.com/pr-${{ github.event.pull_request.number }}/
 
             | | |
             |---|---|

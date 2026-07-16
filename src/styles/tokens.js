@@ -8,16 +8,17 @@ export const FF = 'Figtree, sans-serif';
 
 // ── Color tokens ─────────────────────────────────────────────────────────────
 export const C = {
-  text:       '#e7e4df',               // primary warm-white text
-  textMuted:  'rgba(231,228,223,0.7)', // 70% warm-white (header metadata)
-  muted:      '#a09d96',               // secondary labels, placeholders
-  border:     '#393836',               // dividers, borders, dropdown bg
-  surface:    'rgba(57,56,54,0.1)',    // panel background
+  text:       '#DFE3E7',               // primary warm-white text
+  textMuted:  'rgba(223, 225, 231, 0.7)', // 70% warm-white (header metadata)
+  muted:      '#969AA0',               // secondary labels, placeholders
+  border:     '#373739',               // dividers, borders, dropdown bg
+  surface:    '#262829',               // panel background
   btnDefault: 'rgba(57,56,54,0.5)',    // buttons / dropdowns at rest
   btnHover:   '#444241',               // buttons / dropdowns on hover
   toggleOff:  'rgba(72,72,72,0.5)',    // toggle track — off state
   toggleOn:   '#4e4e4e',               // toggle track — on state
   accent:     '#4f98a3',               // projected-points teal
+  card:       '#212224',               // table/card background
   injBg:      'rgba(255,0,0,0.1)',     // injury card background
   injBorder:  'rgba(255,0,0,0.3)',     // injury card border
   injLabel:   '#ff1a1a',               // injury type label
@@ -74,12 +75,13 @@ export const T = {
 export function ctrlBtnStyle(hovering, opts = {}) {
   return {
     display: 'flex', alignItems: 'center',
-    height: 40,
-    background: hovering ? C.btnHover : C.btnDefault,
-    border: 'none', borderRadius: 4, cursor: 'pointer',
-    fontFamily: FF, fontSize: 13, fontWeight: 700,
-    color: C.muted, letterSpacing: '0.65px', textTransform: 'uppercase',
-    whiteSpace: 'nowrap', transition: 'background 0.15s ease',
+    height: 36,
+    background: 'transparent',
+    border: '2px solid rgba(197,201,205,0.5)', borderRadius: 8, cursor: 'pointer',
+    fontFamily: FF, fontSize: 12, fontWeight: 700,
+    color: hovering ? C.text : '#c5c9cd',
+    letterSpacing: '0.6px', textTransform: 'uppercase',
+    whiteSpace: 'nowrap', transition: 'color 0.15s ease',
     ...opts,
   };
 }
@@ -89,46 +91,14 @@ export function ctrlBtnStyle(hovering, opts = {}) {
 /** Shared layout for dropdown option rows. Combine with a hover className. */
 export const dropItemBase = {
   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-  height: 40, padding: '0 12px', cursor: 'pointer',
+  height: 36, padding: '0 12px', cursor: 'pointer',
 };
 
 /** Floating dropdown panel wrapper. */
 export const dropPanel = {
   position: 'absolute', top: 'calc(100% + 4px)', left: 0,
-  zIndex: 50, background: C.border, borderRadius: 4,
+  zIndex: 50, background: '#1D1D1F', borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.1)',
   minWidth: 120, overflow: 'hidden', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
 };
 
-// ── Toggle pill styles ────────────────────────────────────────────────────────
-
-export const toggleTrack = (on) => ({
-  cursor: 'pointer',
-  background: on ? C.toggleOn : C.toggleOff,
-  height: 24, width: 64, borderRadius: 9,
-  position: 'relative', flexShrink: 0,
-  transition: 'background 0.2s ease',
-});
-
-export const toggleKnob = (on) => ({
-  position: 'absolute',
-  background: on ? C.text : C.muted,
-  height: 16, width: 28, borderRadius: 7,
-  top: 4, left: on ? 31 : 5,
-  transition: 'left 0.2s ease, background 0.2s ease',
-});
-
-export const toggleLabelOn = (on) => ({
-  position: 'absolute', left: 9, top: '50%',
-  transform: 'translateY(-50%)',
-  ...T.toggleLabel,
-  opacity: on ? 1 : 0,
-  transition: 'opacity 0.2s ease',
-});
-
-export const toggleLabelOff = (on) => ({
-  position: 'absolute', right: 6, top: '50%',
-  transform: 'translateY(-50%)',
-  ...T.toggleLabel,
-  opacity: on ? 0 : 0.57,
-  transition: 'opacity 0.2s ease',
-});

@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Satoshi', 'sans-serif'],
+        sans: ['Figtree', 'sans-serif'],
       },
       colors: {
         bg: 'var(--bg)',

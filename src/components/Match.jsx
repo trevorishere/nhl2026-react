@@ -1,13 +1,18 @@
+import { useState } from 'react';
 import TeamButton from './TeamButton';
-import { FF } from '../styles/tokens';
+import { FF, C } from '../styles/tokens';
 
 export default function Match({ match, picks, onPick, mode, seriesLengths, onSeriesLength }) {
   const teams = match.teams || [null, null];
   const hasLabel = !!match.label;
   const selectedGames = seriesLengths?.[match.id] ?? null;
+  const [hoveredGame, setHoveredGame] = useState(null);
+
+  // Left-to-right stagger: GAMES=0, digits 4–7 = indices 1–4 → total 180+120=300ms
+  const reveal = (idx) => `digitReveal 180ms ease-out ${idx * 30}ms both`;
 
   return (
-    <div className="flex flex-col" style={{ gap: hasLabel ? '8px' : '0' }}>
+    <div className="flex flex-col" style={{ gap: '8px' }}>
       {hasLabel && (
         <p
           className="text-[11px] font-bold uppercase text-center"
@@ -40,6 +45,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
             matchId={match.id}
             picks={picks}
             onPick={onPick}
+            position={i === 0 ? 'top' : 'bottom'}
           />
         ))}
       </div>
@@ -50,7 +56,7 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
       {mode === 'advanced' && (
         <div
           className="flex items-center"
-          style={{ paddingLeft: 8, paddingRight: 6, paddingTop: 2, paddingBottom: 12 }}
+          style={{ paddingLeft: 8, paddingRight: 6, paddingTop: 0, paddingBottom: 12 }}
         >
           {/* GAMES label — 10px Figtree Bold, muted */}
           <span
@@ -61,9 +67,10 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
               letterSpacing: '0.05em',
               textTransform: 'uppercase',
               color: 'rgba(255,255,255,0.35)',
-              marginRight: 8,
+              marginRight: 18,
               flexShrink: 0,
               lineHeight: 1,
+              animation: reveal(0),
             }}
           >
             GAMES
@@ -71,25 +78,30 @@ export default function Match({ match, picks, onPick, mode, seriesLengths, onSer
 
           {/* 4 · 5 · 6 · 7  — selected gets filled circle, others plain text */}
           <div className="flex items-center" style={{ gap: 4 }}>
-            {[4, 5, 6, 7].map((n) => {
+            {[4, 5, 6, 7].map((n, idx) => {
               const selected = selectedGames === n;
+              const hovered  = !selected && hoveredGame === n;
               return (
                 <button
                   key={n}
                   onClick={() => onSeriesLength(match.id, n)}
-                  className="cursor-pointer flex items-center justify-center transition-colors"
+                  onMouseEnter={() => setHoveredGame(n)}
+                  onMouseLeave={() => setHoveredGame(null)}
+                  className="cursor-pointer flex items-center justify-center"
                   style={{
-                    width: 22,
-                    height: 22,
+                    width: 24,
+                    height: 24,
                     borderRadius: '50%',
                     border: 'none',
                     padding: 0,
-                    background: selected ? 'var(--primary)' : 'transparent',
-                    color: selected ? '#fff' : 'rgba(255,255,255,0.45)',
+                    background: selected ? 'rgba(255,255,255,0.2)' : 'transparent',
+                    color: selected ? '#fff' : hovered ? C.text : 'rgba(255,255,255,0.45)',
                     fontFamily: FF,
                     fontSize: 11,
                     fontWeight: 700,
                     lineHeight: 1,
+                    transition: 'color 0.15s ease',
+                    animation: reveal(idx + 1),
                   }}
                 >
                   {n}

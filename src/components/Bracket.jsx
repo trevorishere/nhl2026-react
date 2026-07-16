@@ -1,67 +1,67 @@
 import BracketColumn from './BracketColumn';
 import { ROUND1_MATCHUPS } from '../data/constants';
+import { FF } from '../styles/tokens';
 
 // ─── Card dimensions ──────────────────────────────────────────────────────────
-const CARD_W = 156;         // each team card width
-const MATCH_H_NORMAL   = 117; // 58 + 1px gap + 58  (no game selector)
+const CARD_W = 168;           // each team card width (Figma 206:17206)
+const MATCH_H_NORMAL   = 117; // 58 + 1px gap + 58
 const MATCH_H_ADVANCED = 161; // 117 + 44px game-selector block
 
-// ─── Vertical layout — from Figma frame 93:86555 (1440w) ─────────────────────
+// ─── Vertical layout — from Figma frame 206:17206 (1200w) ────────────────────
 //
-// R1 match positions taken directly from Figma: uniform 197px spacing.
-// Semi/Final tops are hardcoded from Figma container y values.
-// Same anchor positions for BOTH modes; advanced just adds game-selector height.
+// R1 match tops: uniform 189px spacing (was 197px in old Figma).
+// Semi/Final tops come from the Figma container y values.
+// Bottom semis (S2/S4) have no label — buttons sit flush at top of container.
 //
-const R1_TOPS = [0, 197, 394, 591];
+const R1_TOPS = [0, 189, 378, 567];
 
-// Semis: from Figma y positions of the R2 label containers
-const SEMI_TOP_0 = 91;   // Figma y=90.5
-const SEMI_TOP_1 = 478;  // Figma y=477.5
+// Top semis: label "R2" above buttons — container at y=70.5
+const SEMI_TOP_0 = 70;
 
-// Conference Finals: from Figma y positions of WCF/ECF label containers
-const LABEL_H      = 19; // single-line label height (R2, Cup Final)
-const CONF_LABEL_H = 38; // two-line conf-final label height
-const FINAL_TOP    = 275; // Figma WCF y=274.5
+// Bottom semis: no label, buttons at y=474.5
+const SEMI_TOP_1 = 474;
 
-// Cup Final: from Figma y position of Cup label container
-const CUP_TOP = 284; // Figma y=283.5
+// Conference Finals: two-line label above buttons — container at y=265.5
+const FINAL_TOP = 266;
+
+// Cup Final: single-line label above buttons — container at y=269
+const CUP_TOP = 269;
+
+// Stanley Cup SVG sits above the Cup Final match in the centre column
+const CUP_SVG_TOP = 128;
 
 const SEMIS_AND_FINAL_TOPS = [SEMI_TOP_0, FINAL_TOP, SEMI_TOP_1];
 const CUP_TOPS = [CUP_TOP];
 
-// ─── Column widths ────────────────────────────────────────────────────────────
+// ─── Column layout ────────────────────────────────────────────────────────────
 //
-//  R1 col        : 156px — exactly one card wide
-//  Semis+Final   : 307px — semi at left=40, conf-final at left=151 (156+307=463)
-//  Cup Final     : 306px — card centred at left=75 (75+156=231, centre of 306px)
-//  No column gap — spacing is built into the left offsets within each column
+//  Natural bracket width = 168+286+292+286+168 = 1200px (Figma frame 206:17206)
 //
-//  Natural bracket width = 156+307+306+307+156 = 1232px (Figma frame 93:86555)
+//  West: top+bottom semis at left=32; WCF flush-right (left=calc(100%-168px)=118px)
+//  East: ECF flush-left (left=0);    top+bottom semis at left=86
 //
-// West: semis fixed 40px from left edge; WCF right-aligned to column
-const WEST_SEMIS_LEFTS = [40, 'calc(100% - 156px)', 40];
-// East: ECF left-aligned at 0; semis have fixed 40px right margin
-const EAST_SEMIS_LEFTS = ['calc(100% - 196px)', 0, 'calc(100% - 196px)'];
+// West: semis 32px from left edge; WCF flush-right
+const WEST_SEMIS_LEFTS = [32, 'calc(100% - 168px)', 32];
+// East: ECF flush-left; semis 32px from right edge (calc(100% - 168px - 32px))
+const EAST_SEMIS_LEFTS = ['calc(100% - 200px)', 0, 'calc(100% - 200px)'];
 
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Bracket({ picks, onPick, mode, seriesLengths, onSeriesLength }) {
-  // Column height depends on mode (R1 match height + bottom padding)
   const matchH = mode === 'advanced' ? MATCH_H_ADVANCED : MATCH_H_NORMAL;
   const COL_H  = R1_TOPS[3] + matchH + 20;
 
   const r1 = ROUND1_MATCHUPS;
   const getPick = (id) => picks[id] || null;
 
-  // R1: no per-matchup labels
   const westR1 = r1.filter((m) => m.id.startsWith('W')).map((m) => ({ ...m, label: '' }));
   const eastR1 = r1.filter((m) => m.id.startsWith('E')).map((m) => ({ ...m, label: '' }));
 
   const semis = [
-    { id: 'S1', teams: [getPick('E1'), getPick('E2')], label: 'R2' },
-    { id: 'S2', teams: [getPick('E3'), getPick('E4')], label: 'R2' },
-    { id: 'S3', teams: [getPick('W1'), getPick('W2')], label: 'R2' },
-    { id: 'S4', teams: [getPick('W3'), getPick('W4')], label: 'R2' },
+    { id: 'S1', teams: [getPick('E1'), getPick('E2')], label: 'R2' }, // top east semi
+    { id: 'S2', teams: [getPick('E3'), getPick('E4')], label: ''   }, // bottom east semi — no label
+    { id: 'S3', teams: [getPick('W1'), getPick('W2')], label: 'R2' }, // top west semi
+    { id: 'S4', teams: [getPick('W3'), getPick('W4')], label: ''   }, // bottom west semi — no label
   ];
 
   const finals = [
@@ -88,63 +88,69 @@ export default function Bracket({ picks, onPick, mode, seriesLengths, onSeriesLe
 
   return (
     <div style={{ position: 'relative' }}>
-      {/* Bracket grid — fluid width, no scaling */}
-      <div className="bracket-grid" style={{ height: COL_H }}>
+      <div className="bracket-grid" style={{ height: COL_H, position: 'relative' }}>
         {/* Col 1: West R1 */}
-        <BracketColumn
-          matches={westR1}
-          tops={R1_TOPS}
-          colHeight={COL_H}
-          {...columnProps}
-        />
-        {/* Col 2: West Semis + Conference Final */}
-        <BracketColumn
-          matches={westSemisAndFinal}
-          tops={SEMIS_AND_FINAL_TOPS}
-          lefts={WEST_SEMIS_LEFTS}
-          colHeight={COL_H}
-          {...columnProps}
-        />
-        {/* Col 3: Stanley Cup Final */}
-        <BracketColumn
-          matches={[cup]}
-          tops={CUP_TOPS}
-          lefts={['calc(50% - 78px)']}
-          colHeight={COL_H}
-          {...columnProps}
-        />
-        {/* Col 4: East Semis + Conference Final */}
-        <BracketColumn
-          matches={eastSemisAndFinal}
-          tops={SEMIS_AND_FINAL_TOPS}
-          lefts={EAST_SEMIS_LEFTS}
-          colHeight={COL_H}
-          {...columnProps}
-        />
-        {/* Col 5: East R1 */}
-        <BracketColumn
-          matches={eastR1}
-          tops={R1_TOPS}
-          colHeight={COL_H}
-          {...columnProps}
-        />
+        <BracketColumn matches={westR1} tops={R1_TOPS} colHeight={COL_H} {...columnProps} />
 
-        {/* Champion pill — anchored to CUP_TOP, 24px gap below */}
-        {champ && (
-          <div style={{
-            position: 'absolute',
-            top: CUP_TOP,
-            left: '50%',
-            transform: 'translateX(-50%) translateY(-100%)',
-            paddingBottom: 24,
-            zIndex: 10,
-            whiteSpace: 'nowrap',
-          }}>
-            <span className="inline-flex items-center gap-2 bg-surface2 border border-border px-3 py-2 rounded-full text-[14px] font-bold text-primary">
-              {champ} wins the Cup!
-            </span>
-          </div>
-        )}
+        {/* Col 2: West Semis + Conference Final */}
+        <BracketColumn matches={westSemisAndFinal} tops={SEMIS_AND_FINAL_TOPS} lefts={WEST_SEMIS_LEFTS} colHeight={COL_H} {...columnProps} />
+
+        {/* Col 3: Stanley Cup SVG + Cup Final */}
+        <div style={{ position: 'relative', height: COL_H }}>
+          {/* Stanley Cup trophy */}
+          <img
+            src={`${import.meta.env.BASE_URL}stcup.svg`}
+            alt="Stanley Cup"
+            style={{
+              position: 'absolute',
+              top: CUP_SVG_TOP,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 68,
+              height: 101,
+              objectFit: 'contain',
+              pointerEvents: 'none',
+              userSelect: 'none',
+            }}
+          />
+          <BracketColumn matches={[cup]} tops={CUP_TOPS} lefts={['calc(50% - 84px)']} colHeight={COL_H} {...columnProps} />
+
+          {/* Champion pill — straddles cup icon and Cup Final series */}
+          {champ && (
+            <div style={{
+              position: 'absolute',
+              top: CUP_SVG_TOP + 45,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 10,
+              width: 155,
+              height: 38,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(24,24,24,0.95)',
+              border: '2px solid #747f92',
+              borderRadius: 4,
+            }}>
+              <span style={{
+                fontFamily: FF,
+                fontSize: 14,
+                fontWeight: 500,
+                color: '#ffffff',
+                letterSpacing: '0.28px',
+                whiteSpace: 'nowrap',
+              }}>
+                {champ} wins the Cup!
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Col 4: East Semis + Conference Final */}
+        <BracketColumn matches={eastSemisAndFinal} tops={SEMIS_AND_FINAL_TOPS} lefts={EAST_SEMIS_LEFTS} colHeight={COL_H} {...columnProps} />
+
+        {/* Col 5: East R1 */}
+        <BracketColumn matches={eastR1} tops={R1_TOPS} colHeight={COL_H} {...columnProps} />
       </div>
     </div>
   );

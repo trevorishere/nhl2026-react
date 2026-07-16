@@ -2,10 +2,7 @@ import { AlertCircle, X } from 'lucide-react';
 import { usePlayerDetail, toiToSeconds, secondsToToi } from '../hooks/usePlayerDetail';
 import { TEAM_STYLES } from '../data/constants';
 import { FF, C, T } from '../styles/tokens';
-
-function normalizeName(name) {
-  return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-}
+import { normalizeName } from '../utils/normalize';
 
 function Skeleton({ width, height }) {
   return (
@@ -24,7 +21,7 @@ const sectionLabel = {
 };
 
 // ── Main panel ────────────────────────────────────────────────────────────────
-export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
+export default function PlayerDetailPanel({ player, injuries = {}, onClose, contentVisible = true }) {
   const { data, loading, error } = usePlayerDetail(player);
   const inj = injuries[normalizeName(player.name)] ?? null;
 
@@ -57,86 +54,110 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
   return (
     <div style={{
       background: C.surface,
-      border: `1px solid ${C.border}`,
       borderRadius: 16,
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
     }}>
 
+      {/* ── Content — fades on player switch ───────────────────────────────── */}
+      <div style={{
+        opacity:    contentVisible ? 1 : 0,
+        transition: 'opacity 150ms ease-in-out',
+      }}>
+
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div style={{
         background: headerBg,
-        paddingLeft: 8, paddingRight: 16, paddingTop: 16, paddingBottom: 0,
-        position: 'relative',
+        height: 120,
+        padding: 16,
         flexShrink: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
       }}>
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute', top: 12, right: 12,
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: C.textMuted, padding: 2, lineHeight: 1,
-          }}
-          aria-label="Close"
-        >
-          <X size={16} />
-        </button>
+        {/* Inner row: left group + close button */}
+        <div style={{
+          display: 'flex',
+          flex: '1 0 0',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}>
 
-        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-          {/* Headshot — 88×64 rectangle */}
-          <div style={{
-            width: 88, height: 64, flexShrink: 0,
-            overflow: 'hidden',
-            boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
-            background: 'rgba(255,255,255,0.15)',
-          }}>
-            {headshot ? (
-              <img
-                src={headshot}
-                alt={player.name}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }}
-              />
-            ) : loading ? (
-              <div style={{ width: '100%', height: '100%', background: 'rgba(255,255,255,0.1)' }} />
-            ) : (
-              <div style={{
-                width: '100%', height: '100%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: FF, fontSize: 22, fontWeight: 800,
-                color: 'rgba(255,255,255,0.4)',
-              }}>
-                {player.name[0]}
-              </div>
-            )}
-          </div>
+          {/* Left: headshot + name/pos, vertically centered in full row height */}
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center', height: '100%' }}>
 
-          {/* Name + TEAM | POS */}
-          <div style={{ display: 'flex', flexDirection: 'column', paddingTop: 10 }}>
+            {/* Circular headshot */}
             <div style={{
-              fontFamily: FF, fontSize: 16, fontWeight: 800,
-              color: C.text, letterSpacing: '0.16px', lineHeight: '25px',
+              width: 83, height: 83, flexShrink: 0,
+              borderRadius: 60, overflow: 'hidden',
+              position: 'relative',
+              boxShadow: '0px 0px 10.879px 0px rgba(0,0,0,0.1)',
             }}>
-              {player.name}
+              {headshot ? (
+                <img
+                  src={headshot}
+                  alt={player.name}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              ) : (
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: FF, fontSize: 22, fontWeight: 800,
+                  color: 'rgba(255,255,255,0.4)',
+                }}>
+                  {player.name[0]}
+                </div>
+              )}
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'rgba(0,0,0,0.2)',
+                borderRadius: 60,
+              }} />
             </div>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{
-                fontFamily: FF, fontSize: 13, fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.65px',
-                color: C.textMuted, lineHeight: '19px',
+
+            {/* Name + TEAM | POS */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 2, minWidth: 0 }}>
+              <div style={{
+                fontFamily: FF, fontSize: 20, fontWeight: 700,
+                color: '#e7e4df', letterSpacing: '0.2px', lineHeight: '22px',
               }}>
-                {player.team}
-              </span>
-              <span style={{ fontFamily: FF, fontSize: 12, letterSpacing: '0.6px', color: C.textMuted }}>|</span>
-              <span style={{
-                fontFamily: FF, fontSize: 13, fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.65px',
-                color: C.textMuted, lineHeight: '19px',
-              }}>
-                {player.pos}
-              </span>
+                {player.name}
+              </div>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <span style={{
+                  fontFamily: FF, fontSize: 12, fontWeight: 700,
+                  textTransform: 'uppercase', letterSpacing: '0.6px',
+                  color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
+                }}>{player.team}</span>
+                <span style={{ fontFamily: FF, fontSize: 12, color: 'rgba(231,228,223,0.7)', letterSpacing: '0.6px' }}>|</span>
+                <span style={{
+                  fontFamily: FF, fontSize: 12, fontWeight: 700,
+                  textTransform: 'uppercase', letterSpacing: '0.6px',
+                  color: 'rgba(231,228,223,0.7)', lineHeight: '19px',
+                }}>{player.pos}</span>
+              </div>
             </div>
           </div>
+
+          {/* Close button — top-right */}
+          <button
+            onClick={onClose}
+            style={{
+              width: 28, height: 28, flexShrink: 0,
+              borderRadius: 14,
+              background: 'rgba(255,255,255,0.1)',
+              border: 'none', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: 'rgba(231,228,223,0.7)',
+            }}
+            aria-label="Close"
+          >
+            <X size={14} />
+          </button>
         </div>
       </div>
 
@@ -260,6 +281,8 @@ export default function PlayerDetailPanel({ player, injuries = {}, onClose }) {
           </p>
         )}
 
+      </div>
+      {/* ── end content fade wrapper ─────────────────────────────────────────── */}
       </div>
     </div>
   );
