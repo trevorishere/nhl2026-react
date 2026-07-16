@@ -16,8 +16,9 @@ export default function App() {
   const [mode, setMode] = useState('normal');
   const [seriesLengths, setSeriesLengths] = useState({});
   const { selectedPlayer, panelPlayer, panelIn, contentVisible, handlePlayerSelect } = usePanelState();
-  const tableCardRef = useRef(null);
+  const tableCardRef    = useRef(null);
   const modeInitRef     = useRef(false);
+  const preAutopickRef  = useRef(null);
   const [injuries, setInjuries] = useState({});
 
   // Animate table card on advanced mode toggle (skip initial render)
@@ -57,7 +58,13 @@ export default function App() {
   }
 
   function autoPick() {
-    setPicks(CHALK_PICKS);
+    if (isAutopick) {
+      setPicks(preAutopickRef.current || {});
+      preAutopickRef.current = null;
+    } else {
+      preAutopickRef.current = { ...picks };
+      setPicks(CHALK_PICKS);
+    }
   }
 
   const isAdvanced = mode === 'advanced';
@@ -143,7 +150,7 @@ export default function App() {
                 </button>
                 <button
                   style={{
-                    ...ctrlBtnStyle(autopickHover, { padding: '0 18px' }),
+                    ...ctrlBtnStyle(autopickHover, { gap: 5, padding: '0 16px' }),
                     background: isAutopick ? C.text : 'transparent',
                     color: isAutopick ? '#18191A' : autopickHover ? C.text : '#c5c9cd',
                     transition: 'background 0.15s ease, color 0.15s ease',
@@ -152,7 +159,9 @@ export default function App() {
                   onMouseEnter={() => setAutopickHover(true)}
                   onMouseLeave={() => setAutopickHover(false)}
                 >
-                  Autopick Favorites
+                  <span>Autopick Favorites</span>
+                  <span style={{ color: isAutopick ? 'rgba(24,25,26,0.5)' : 'rgba(197,201,205,0.5)' }}> | </span>
+                  <span style={{ display: 'inline-block', minWidth: 26 }}>{isAutopick ? 'ON' : 'OFF'}</span>
                 </button>
                 <Toggle
                   on={isAdvanced}
