@@ -246,7 +246,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         </div>
 
         {/* Divider */}
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 24 }} />
+        <div style={{ height: 1, background: 'rgba(255,255,255,0.08)' }} />
       </div>
 
       {/* Reset button — fixed to bottom-right corner */}
@@ -270,6 +270,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         onScroll={handleScroll}
         className="mobile-bracket-strip"
         style={{
+          marginTop: 24,
           overflowX: 'auto',
           overflowY: 'hidden',
           WebkitOverflowScrolling: 'touch',
