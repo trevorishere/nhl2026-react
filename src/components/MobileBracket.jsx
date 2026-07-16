@@ -54,6 +54,24 @@ const TROPHY_TOP = CONF_TOP - 80 + LABEL_H - 24;      // 180 → 156 (moved up 2
 const CUP_LABEL_TOP  = TROPHY_TOP - 8 - 16;           // 8px above trophy: 132
 const PILL_TOP   = TROPHY_TOP + Math.round(TROPHY_H / 2) - 15; // centered on trophy: 185
 
+// ─── Match column — defined outside parent so React never sees a new type ─────
+function MatchCol({ match, top, picks, onPick }) {
+  return (
+    <div style={{ position: 'absolute', top: top + LABEL_H, display: 'flex', flexDirection: 'column', gap: 1 }}>
+      {[0, 1].map(i => (
+        <TeamButton mobile
+          key={i}
+          team={match.teams[i]}
+          matchId={match.id}
+          picks={picks}
+          onPick={onPick}
+          position={i === 0 ? 'top' : 'bottom'}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function MobileBracket({ picks, onPick, onReset }) {
   const [activeRound, setActiveRound] = useState(0);
@@ -106,24 +124,6 @@ export default function MobileBracket({ picks, onPick, onReset }) {
     color: 'rgba(255,255,255,0.7)', lineHeight: '1.4',
     margin: 0, pointerEvents: 'none',
   };
-
-  // ── Shared match renderer ──────────────────────────────────────────────────
-  function MatchCol({ match, top }) {
-    return (
-      <div style={{ position: 'absolute', top: top + LABEL_H, display: 'flex', flexDirection: 'column', gap: 1 }}>
-        {[0, 1].map(i => (
-          <TeamButton mobile
-            key={i}
-            team={match.teams[i]}
-            matchId={match.id}
-            picks={picks}
-            onPick={onPick}
-            position={i === 0 ? 'top' : 'bottom'}
-          />
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div style={{ paddingTop: 8, overflowX: 'hidden' }}>
@@ -285,7 +285,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
           <div style={{ position: 'absolute', left: COL_X.WR1 + 16, top: 0, width: 240, height: COL_H }}>
             <p style={{ ...labelStyle, top: 0 }}>First Round</p>
             {westR1.map((m, i) => (
-              <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
+              <MatchCol key={m.id} match={m} top={R1_TOPS[i]} picks={picks} onPick={onPick} />
             ))}
           </div>
 
@@ -293,14 +293,14 @@ export default function MobileBracket({ picks, onPick, onReset }) {
           <div style={{ position: 'absolute', left: COL_X.WR2 + 16, top: 0, width: 240, height: COL_H }}>
             <p style={{ ...labelStyle, top: R2_LABEL_TOP }}>Second Round</p>
             {[semis[0], semis[1]].map((m, i) => (
-              <MatchCol key={m.id} match={m} top={R2_TOPS[i]} />
+              <MatchCol key={m.id} match={m} top={R2_TOPS[i]} picks={picks} onPick={onPick} />
             ))}
           </div>
 
           {/* ── WCF ──────────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.WCF + 16, top: 0, width: 240, height: COL_H }}>
             <p style={{ ...labelStyle, top: CONF_LABEL_TOP }}>Western<br />Conference Final</p>
-            <MatchCol match={wcf} top={CONF_TOP} />
+            <MatchCol match={wcf} top={CONF_TOP} picks={picks} onPick={onPick} />
           </div>
 
           {/* ── Cup Final + trophy + champ pill ──────────────────────────────── */}
@@ -338,20 +338,20 @@ export default function MobileBracket({ picks, onPick, onReset }) {
                 </span>
               </div>
             )}
-            <MatchCol match={cup} top={CONF_TOP} />
+            <MatchCol match={cup} top={CONF_TOP} picks={picks} onPick={onPick} />
           </div>
 
           {/* ── ECF ──────────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ECF + 16, top: 0, width: 240, height: COL_H }}>
             <p style={{ ...labelStyle, top: CONF_LABEL_TOP }}>Eastern<br />Conference Final</p>
-            <MatchCol match={ecf} top={CONF_TOP} />
+            <MatchCol match={ecf} top={CONF_TOP} picks={picks} onPick={onPick} />
           </div>
 
           {/* ── East R2 ──────────────────────────────────────────────────────── */}
           <div style={{ position: 'absolute', left: COL_X.ER2 + 16, top: 0, width: 240, height: COL_H }}>
             <p style={{ ...labelStyle, top: R2_LABEL_TOP }}>Second Round</p>
             {[semis[2], semis[3]].map((m, i) => (
-              <MatchCol key={m.id} match={m} top={R2_TOPS[i]} />
+              <MatchCol key={m.id} match={m} top={R2_TOPS[i]} picks={picks} onPick={onPick} />
             ))}
           </div>
 
@@ -359,7 +359,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
           <div style={{ position: 'absolute', left: COL_X.ER1 + 16, top: 0, width: 240, height: COL_H }}>
             <p style={{ ...labelStyle, top: 0 }}>First Round</p>
             {eastR1.map((m, i) => (
-              <MatchCol key={m.id} match={m} top={R1_TOPS[i]} />
+              <MatchCol key={m.id} match={m} top={R1_TOPS[i]} picks={picks} onPick={onPick} />
             ))}
           </div>
 
