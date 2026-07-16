@@ -93,7 +93,7 @@ export default function App() {
       />
     <div className="max-w-[1600px] mx-auto sm:px-6 py-6" style={{ position: 'relative', zIndex: 1, overflowX: 'hidden' }}>
       {/* Header */}
-      <header className="mb-8 px-4 sm:px-0" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+      <header className="mb-2 sm:mb-8 px-4 sm:px-0" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
         {/* Left decorative line — fades from title outward */}
         <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, rgba(255,255,255,0.15), transparent)' }} />
 
