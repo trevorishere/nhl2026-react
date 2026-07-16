@@ -254,6 +254,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         style={{
           ...ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' }),
           position: 'fixed', bottom: 20, right: 20, zIndex: 100,
+          background: '#18191A',
         }}
         onClick={onReset}
         onMouseEnter={() => setResetHover(true)}
