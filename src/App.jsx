@@ -61,6 +61,9 @@ export default function App() {
   }
 
   const isAdvanced = mode === 'advanced';
+  const isAutopick = Object.keys(CHALK_PICKS).length > 0 &&
+    Object.keys(picks).length === Object.keys(CHALK_PICKS).length &&
+    Object.entries(CHALK_PICKS).every(([k, v]) => picks[k] === v);
   const [resetHover, setResetHover] = useState(false);
   const [autopickHover, setAutopickHover] = useState(false);
 
@@ -139,7 +142,12 @@ export default function App() {
                   Reset
                 </button>
                 <button
-                  style={ctrlBtnStyle(autopickHover, { padding: '0 18px' })}
+                  style={{
+                    ...ctrlBtnStyle(autopickHover, { padding: '0 18px' }),
+                    background: isAutopick ? C.text : 'transparent',
+                    color: isAutopick ? '#18191A' : autopickHover ? C.text : '#c5c9cd',
+                    transition: 'background 0.15s ease, color 0.15s ease',
+                  }}
                   onClick={autoPick}
                   onMouseEnter={() => setAutopickHover(true)}
                   onMouseLeave={() => setAutopickHover(false)}
