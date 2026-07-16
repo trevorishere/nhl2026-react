@@ -102,6 +102,28 @@
   }
 }
 
+/* Player/draft list section — matches bracket-section side padding at each breakpoint */
+.player-section {
+  padding-left: 48px;
+  padding-right: 48px;
+  padding-bottom: 48px;
+}
+
+@media (max-width: 1040px) {
+  .player-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 639px) {
+  .player-section {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+}
+
 /* Hide scrollbar on mobile bracket strip */
 .mobile-bracket-strip::-webkit-scrollbar { display: none; }
 .mobile-bracket-strip {
