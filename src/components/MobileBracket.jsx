@@ -247,20 +247,21 @@ export default function MobileBracket({ picks, onPick, onReset }) {
 
         {/* Divider */}
         <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: 20 }} />
-
-        {/* Reset button */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
-          <button
-            style={ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' })}
-            onClick={onReset}
-            onMouseEnter={() => setResetHover(true)}
-            onMouseLeave={() => setResetHover(false)}
-          >
-            <RotateCcw size={14} color="currentColor" strokeWidth={2} />
-            Reset
-          </button>
-        </div>
       </div>
+
+      {/* Reset button — fixed to bottom-right corner */}
+      <button
+        style={{
+          ...ctrlBtnStyle(resetHover, { gap: 6, padding: '0 16px 0 14px' }),
+          position: 'fixed', bottom: 20, right: 20, zIndex: 100,
+        }}
+        onClick={onReset}
+        onMouseEnter={() => setResetHover(true)}
+        onMouseLeave={() => setResetHover(false)}
+      >
+        <RotateCcw size={14} color="currentColor" strokeWidth={2} />
+        Reset
+      </button>
 
       {/* ── Horizontal scroll bracket ─────────────────────────────────────────── */}
       <div
