@@ -270,7 +270,7 @@ export default function MobileBracket({ picks, onPick, onReset }) {
         onScroll={handleScroll}
         className="mobile-bracket-strip"
         style={{
-          marginTop: 24,
+          marginTop: 48,
           overflowX: 'auto',
           overflowY: 'hidden',
           WebkitOverflowScrolling: 'touch',
